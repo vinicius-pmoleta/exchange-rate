@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 project.ext {
     support_version = '25.3.1'
@@ -34,6 +35,10 @@ android {
         main.java.srcDirs += 'src/test/kotlin'
         main.java.srcDirs += 'src/androidTest/kotlin'
     }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -57,14 +62,14 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // DAGGER
-    compile "com.google.dagger:dagger-android:$dagger_version"
-    compile "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    compile "com.google.dagger:dagger:$dagger_version"
 
     // RETROFIT
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     // TEST
     testCompile 'junit:junit:4.12'
