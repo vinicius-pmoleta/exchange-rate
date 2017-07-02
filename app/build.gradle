@@ -35,10 +35,10 @@ android {
         main.java.srcDirs += 'src/test/kotlin'
         main.java.srcDirs += 'src/androidTest/kotlin'
     }
+}
 
-    kapt {
-        generateStubs = true
-    }
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -62,8 +62,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // DAGGER
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     compile "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // RETROFIT
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
