@@ -29,13 +29,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "EXCHANGE_RATE_API_KEY", "$System.env.EXCHANGE_RATE_APP_API_KEY"
+            buildConfigField "String", "EXCHANGE_RATE_API_KEY", getExchangeRateApiKey()
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "EXCHANGE_RATE_API_KEY", "$System.env.EXCHANGE_RATE_APP_API_KEY"
+            buildConfigField 'String', 'EXCHANGE_RATE_API_KEY', getExchangeRateApiKey()
         }
     }
 
@@ -83,4 +83,10 @@ dependencies {
     // TEST
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.22'
+}
+
+def getExchangeRateApiKey() {
+    def props = new Properties()
+    file("$rootDir/keys/private.properties").withInputStream { props.load(it) }
+    return "\"" + props.get("EXCHANGE_RATE_APP_API_KEY") + "\""
 }
