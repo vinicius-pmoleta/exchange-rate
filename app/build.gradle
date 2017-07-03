@@ -24,9 +24,18 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix ".debug"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "EXCHANGE_RATE_API_KEY", "$System.env.EXCHANGE_RATE_APP_API_KEY"
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "EXCHANGE_RATE_API_KEY", "$System.env.EXCHANGE_RATE_APP_API_KEY"
         }
     }
 
