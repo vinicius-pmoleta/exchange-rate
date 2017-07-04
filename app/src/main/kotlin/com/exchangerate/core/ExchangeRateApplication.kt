@@ -6,6 +6,7 @@ import com.exchangerate.core.di.component.DaggerApplicationComponent
 import com.exchangerate.core.di.module.ApplicationModule
 import com.exchangerate.core.di.module.NetworkModule
 import com.exchangerate.core.di.module.RepositoryModule
+import com.exchangerate.core.di.module.SchedulerModule
 
 class ExchangeRateApplication : Application() {
 
@@ -22,6 +23,7 @@ class ExchangeRateApplication : Application() {
                 .applicationModule(ApplicationModule(this))
                 .networkModule(NetworkModule())
                 .repositoryModule(RepositoryModule())
+                .schedulerModule(SchedulerModule())
                 .build()
     }
 
