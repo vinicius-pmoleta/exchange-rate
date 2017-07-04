@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
+import com.exchangerate.features.usage.di.UsageFeatureModule
+import com.exchangerate.features.usage.di.UsageUseCasesModule
 import javax.inject.Inject
 
 class UsageActivity : AppCompatActivity(), UsageContract.View {
@@ -16,11 +18,14 @@ class UsageActivity : AppCompatActivity(), UsageContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.usage_activity)
         initializeInjector()
+        presenter.loadCurrentUsage()
     }
 
     private fun initializeInjector() {
         DaggerUsageFeatureComponent.builder()
                 .applicationComponent((application as ExchangeRateApplication).applicationComponent)
+                .usageFeatureModule(UsageFeatureModule(this))
+                .usageUseCasesModule(UsageUseCasesModule())
                 .build().inject(this)
     }
 

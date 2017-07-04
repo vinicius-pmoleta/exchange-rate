@@ -1,6 +1,6 @@
 package com.exchangerate.core.di.module
 
-import com.exchangerate.core.data.repository.UsageRepository
+import com.exchangerate.core.data.repository.remote.UsageRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

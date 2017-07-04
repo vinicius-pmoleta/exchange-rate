@@ -1,5 +1,6 @@
 package com.exchangerate.core.di.module
 
+import com.exchangerate.core.data.repository.remote.interceptor.AuthenticationInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -20,6 +21,7 @@ class NetworkModule {
 
         val builder = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(AuthenticationInterceptor())
 
         return builder.build()
     }
@@ -28,7 +30,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl("https://openexchangerates.org/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)

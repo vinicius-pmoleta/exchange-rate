@@ -1,6 +1,6 @@
 package com.exchangerate.features.usage.di
 
-import com.exchangerate.core.data.usecase.FetchUsageUseCase
+import com.exchangerate.features.usage.usecase.FetchUsageUseCase
 import com.exchangerate.core.di.scope.ActivityScoped
 import com.exchangerate.features.usage.UsageContract
 import com.exchangerate.features.usage.UsagePresenter

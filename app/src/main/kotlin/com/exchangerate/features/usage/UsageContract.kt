@@ -4,6 +4,10 @@ interface UsageContract {
 
     interface View {}
 
-    interface Action {}
+    interface Action {
+
+        fun loadCurrentUsage()
+
+    }
 
 }
