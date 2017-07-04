@@ -2,7 +2,7 @@ package com.exchangerate.features.usage.di
 
 import com.exchangerate.core.di.component.ApplicationComponent
 import com.exchangerate.core.di.scope.ActivityScoped
-import com.exchangerate.features.usage.UsageActivity
+import com.exchangerate.features.usage.presentation.UsageActivity
 import dagger.Component
 
 @ActivityScoped
