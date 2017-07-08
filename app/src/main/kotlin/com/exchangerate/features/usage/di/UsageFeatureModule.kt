@@ -1,9 +1,9 @@
 package com.exchangerate.features.usage.di
 
-import com.exchangerate.features.usage.usecase.FetchUsageUseCase
 import com.exchangerate.core.di.scope.ActivityScoped
 import com.exchangerate.features.usage.presentation.UsageContract
 import com.exchangerate.features.usage.presentation.UsagePresenter
+import com.exchangerate.features.usage.usecase.FetchUsageUseCase
 import dagger.Module
 import dagger.Provides
 

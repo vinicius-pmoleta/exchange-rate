@@ -15,10 +15,6 @@ class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchU
                 params = Unit))
     }
 
-    override fun releaseResources() {
-        disposeAll()
-    }
-
     fun handleCurrentUsage(usage: Usage) {
         Log.d("TEST", usage.toString())
         val remainingPercentage = 100 * (usage.remaining.toFloat() / usage.quota.toFloat())
@@ -29,4 +25,5 @@ class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchU
     fun handleErrorFetchingUsage(error: Throwable) {
         Log.e("TEST", "Error", error)
     }
+
 }

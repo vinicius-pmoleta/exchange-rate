@@ -3,13 +3,7 @@ package com.exchangerate.core.structure
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-interface BasePresenterContract {
-
-    fun releaseResources()
-
-}
-
-abstract class BasePresenter {
+abstract class BasePresenter : BaseContract.Action {
 
     private val disposables = CompositeDisposable()
 
@@ -20,6 +14,10 @@ abstract class BasePresenter {
 
     fun disposeAll() {
         disposables.dispose()
+    }
+
+    override fun releaseResources() {
+        disposeAll()
     }
 
 }

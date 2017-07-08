@@ -1,6 +1,6 @@
 package com.exchangerate.features.usage.presentation
 
-import com.exchangerate.core.structure.BasePresenterContract
+import com.exchangerate.core.structure.BaseContract
 import com.exchangerate.features.usage.data.UsageViewModel
 
 interface UsageContract {
@@ -11,7 +11,7 @@ interface UsageContract {
 
     }
 
-    interface Action : BasePresenterContract {
+    interface Action : BaseContract.Action {
 
         fun loadCurrentUsage()
 
