@@ -9,6 +9,8 @@ interface UsageContract {
 
         fun displayCurrentUsage(usage: UsageViewModel)
 
+        fun displayErrorUsageNotFetched()
+
     }
 
     interface Action : BaseContract.Action {

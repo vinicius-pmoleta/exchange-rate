@@ -1,6 +1,7 @@
 package com.exchangerate.features.usage.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.structure.BaseActivity
@@ -29,6 +30,10 @@ class UsageActivity : BaseActivity<UsageContract.Action>(), UsageContract.View {
 
     override fun displayCurrentUsage(usage: UsageViewModel) {
         usageStatusView.text = usage.toString()
+    }
+
+    override fun displayErrorUsageNotFetched() {
+        Toast.makeText(this, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
     }
 
 }

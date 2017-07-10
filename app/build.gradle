@@ -41,8 +41,8 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-        main.java.srcDirs += 'src/test/kotlin'
-        main.java.srcDirs += 'src/androidTest/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 }
 
@@ -81,8 +81,9 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     // TEST
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
 }
 
 def getExchangeRateApiKey() {

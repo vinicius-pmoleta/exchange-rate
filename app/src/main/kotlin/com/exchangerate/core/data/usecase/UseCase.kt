@@ -3,12 +3,11 @@ package com.exchangerate.core.data.usecase
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.OnErrorNotImplementedException
 
 abstract class UseCase<T: Any, in Params>(val configuration: ExecutionConfiguration) {
 
     private val onNextStub: (Any) -> Unit = {}
-    private val onErrorStub: (Throwable) -> Unit = { throw OnErrorNotImplementedException(it) }
+    private val onErrorStub: (Throwable) -> Unit = { throw RuntimeException("Not implemented", it) }
     private val onCompleteStub: () -> Unit = {}
 
     abstract fun buildUseCaseObservable(params: Params): Flowable<T>

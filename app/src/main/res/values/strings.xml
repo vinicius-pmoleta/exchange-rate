@@ -1,3 +1,8 @@
 <resources>
-  <string name="app_name">Exchange rate</string>
+
+    <string name="app_name">Exchange rate</string>
+
+    <!-- Default -->
+    <string name="default_error_remote_message">Error fetching remote data</string>
+
 </resources>
