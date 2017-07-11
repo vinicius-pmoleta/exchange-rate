@@ -100,6 +100,6 @@ dependencies {
 }
 
 def getApiKey() {
-    def value = ext.findValueFor("EXCHANGE_RATE_APP_API_KEY")
+    def value = ext.environment.findValueFor("EXCHANGE_RATE_APP_API_KEY")
     return "\"$value\""
 }
