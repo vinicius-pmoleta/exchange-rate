@@ -3,10 +3,8 @@ package com.exchangerate.features.usage.presentation
 import com.exchangerate.features.usage.data.Usage
 import com.exchangerate.features.usage.data.UsageViewModel
 import com.exchangerate.features.usage.usecase.FetchUsageUseCase
-import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.*
+import io.reactivex.disposables.Disposable
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,7 +26,7 @@ class UsagePresenterTest {
     }
 
     @Test
-    fun verifyUsageResultWhenUseCaseExecuteWithSuccess() {
+    fun `assert the usage result from use case when executed with success`() {
         val usage: Usage = Usage(10, 100, 90, 2)
 
         presenter.handleCurrentUsage(usage)
@@ -43,7 +41,7 @@ class UsagePresenterTest {
     }
 
     @Test
-    fun verifyErrorDisplayedWhenUseCaseExecuteWithError() {
+    fun `verify that error is displayed when use case is executed with error`() {
         presenter.handleErrorFetchingUsage()
         verify(view, times(1)).displayErrorUsageNotFetched()
     }

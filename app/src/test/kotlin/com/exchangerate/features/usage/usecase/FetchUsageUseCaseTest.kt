@@ -27,14 +27,14 @@ class FetchUsageUseCaseTest {
     }
 
     @Test
-    fun verifyUsageExtractedFromResponse() {
+    fun `verify that usage is extracted from valid response`() {
         val usage = Usage(10, 100, 90, 1)
         val data = Data("active", usage)
         val response = UsageResponse(200, data)
 
         given(usageRepository.getUsage()).willReturn(Flowable.just(response))
 
-        val testSubscriber = useCase.buildUseCaseObservable(Unit).test()
+        val testSubscriber = useCase.buildUseCaseObservable().test()
         testSubscriber.assertNoErrors()
         testSubscriber.assertValue(usage)
         testSubscriber.assertComplete()

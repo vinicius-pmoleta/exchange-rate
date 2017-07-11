@@ -3,7 +3,7 @@ package com.exchangerate.core.structure
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BasePresenter : BaseContract.Action {
+open class BasePresenter : BaseContract.Action {
 
     private val disposables = CompositeDisposable()
 

@@ -10,12 +10,12 @@ abstract class UseCase<T: Any, in Params>(val configuration: ExecutionConfigurat
     private val onErrorStub: (Throwable) -> Unit = { throw RuntimeException("Not implemented", it) }
     private val onCompleteStub: () -> Unit = {}
 
-    abstract fun buildUseCaseObservable(params: Params): Flowable<T>
+    abstract fun buildUseCaseObservable(params: Params? = null): Flowable<T>
 
     fun execute(onNext: (T) -> Unit = onNextStub,
                 onError: (Throwable) -> Unit = onErrorStub,
                 onComplete: () -> Unit = onCompleteStub,
-                params: Params): Disposable {
+                params: Params? = null): Disposable {
 
         val transformer = FlowableTransformer<T, T> {
             it
@@ -29,7 +29,7 @@ abstract class UseCase<T: Any, in Params>(val configuration: ExecutionConfigurat
     fun execute(onNext: (T) -> Unit = onNextStub,
                 onError: (Throwable) -> Unit = onErrorStub,
                 onComplete: () -> Unit = onCompleteStub,
-                params: Params, transformer: FlowableTransformer<T, T>): Disposable {
+                params: Params? = null, transformer: FlowableTransformer<T, T>): Disposable {
 
         return buildUseCaseObservable(params)
                 .compose(transformer)

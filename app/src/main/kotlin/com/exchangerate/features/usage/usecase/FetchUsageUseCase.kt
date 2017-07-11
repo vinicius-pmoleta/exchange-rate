@@ -11,7 +11,7 @@ class FetchUsageUseCase(
         executionConfiguration: ExecutionConfiguration
 ) : UseCase<Usage, Unit>(executionConfiguration) {
 
-    override fun buildUseCaseObservable(params: Unit): Flowable<Usage> {
+    override fun buildUseCaseObservable(params: Unit?): Flowable<Usage> {
         return usageRepository.getUsage()
                 .map({ response -> response.data.usage })
     }

@@ -10,8 +10,7 @@ class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchU
     override fun loadCurrentUsage() {
         addDisposable(fetchUsageUseCase.execute(
                 onNext = { handleCurrentUsage(it) },
-                onError = { handleErrorFetchingUsage() },
-                params = Unit))
+                onError = { handleErrorFetchingUsage() }))
     }
 
     fun handleCurrentUsage(usage: Usage) {
