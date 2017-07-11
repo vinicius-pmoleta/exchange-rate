@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "../environment/environment.gradle"
+
 project.ext {
     support_version = '25.3.1'
     firebase_version = '10.2.4'
@@ -26,13 +28,13 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            buildConfigField "String", "EXCHANGE_RATE_API_KEY", getExchangeRateApiKey()
+            buildConfigField "String", "EXCHANGE_RATE_API_KEY", getApiKey()
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField 'String', 'EXCHANGE_RATE_API_KEY', getExchangeRateApiKey()
+            buildConfigField 'String', 'EXCHANGE_RATE_API_KEY', getApiKey()
         }
     }
 
@@ -97,8 +99,7 @@ dependencies {
     testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
 }
 
-def getExchangeRateApiKey() {
-    def props = new Properties()
-    file("$rootDir/keys/private.properties").withInputStream { props.load(it) }
-    return "\"" + props.get("EXCHANGE_RATE_APP_API_KEY") + "\""
+def getApiKey() {
+    def value = ext.findValueFor("EXCHANGE_RATE_APP_API_KEY")
+    return "\"$value\""
 }

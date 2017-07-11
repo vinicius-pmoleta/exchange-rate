@@ -1,0 +1,17 @@
+def findValueFor(key) {
+    def value = lookForSystemKey(key)
+    return value ? value : lookForPropertyKey(key)
+}
+
+def lookForSystemKey(key) {
+    def systemValue = System.getenv(key)
+    return systemValue ? systemValue : null
+}
+
+def lookForPropertyKey(key) {
+    def props = new Properties()
+    file("../environment/private.properties").withInputStream { props.load(it) }
+    return props.get(key)
+}
+
+ext.findValueFor = this.&findValueFor
