@@ -2,7 +2,7 @@ package com.exchangerate.features.usage.di
 
 import com.exchangerate.core.di.component.ApplicationComponent
 import com.exchangerate.core.di.scope.ActivityScoped
-import com.exchangerate.features.usage.presentation.UsageActivity
+import com.exchangerate.features.usage.presentation.UsageFragment
 import dagger.Component
 
 @ActivityScoped
@@ -15,6 +15,6 @@ import dagger.Component
 )
 interface UsageFeatureComponent {
 
-    fun inject(activity: UsageActivity)
+    fun inject(fragment: UsageFragment)
 
 }

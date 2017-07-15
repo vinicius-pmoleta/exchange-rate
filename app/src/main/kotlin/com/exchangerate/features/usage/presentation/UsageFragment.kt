@@ -1,30 +1,35 @@
 package com.exchangerate.features.usage.presentation
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
-import com.exchangerate.core.structure.BaseActivity
+import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.usage.data.UsageViewModel
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
 import com.exchangerate.features.usage.di.UsageUseCasesModule
-import kotlinx.android.synthetic.main.usage_activity.*
+import kotlinx.android.synthetic.main.usage_fragment.*
 
-class UsageActivity : BaseActivity<UsageContract.Action>(), UsageContract.View {
+class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
     override fun initializeDependencyInjector() {
         DaggerUsageFeatureComponent.builder()
-                .applicationComponent((application as ExchangeRateApplication).applicationComponent)
+                .applicationComponent((activity.application as ExchangeRateApplication).applicationComponent)
                 .usageFeatureModule(UsageFeatureModule(this))
                 .usageUseCasesModule(UsageUseCasesModule())
                 .build().inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.usage_activity)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.usage_fragment, container, false)
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         presenter.loadCurrentUsage()
     }
 
@@ -33,7 +38,7 @@ class UsageActivity : BaseActivity<UsageContract.Action>(), UsageContract.View {
     }
 
     override fun displayErrorUsageNotFetched() {
-        Toast.makeText(this, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
     }
 
 }
