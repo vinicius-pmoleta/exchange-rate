@@ -16,6 +16,10 @@ import kotlinx.android.synthetic.main.usage_fragment.*
 
 class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
+    companion object {
+        val TAG: String = UsageFragment::class.java.simpleName
+    }
+
     override fun initializeDependencyInjector() {
         DaggerUsageFeatureComponent.builder()
                 .applicationComponent((activity.application as ExchangeRateApplication).applicationComponent)

@@ -7,6 +7,8 @@ interface HomeContract {
     interface View {
 
         fun showUsage()
+        fun showConversion()
+        fun showAlerts()
 
     }
 
