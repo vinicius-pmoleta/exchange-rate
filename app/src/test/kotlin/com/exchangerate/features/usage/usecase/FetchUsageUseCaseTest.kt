@@ -19,11 +19,11 @@ class FetchUsageUseCaseTest {
     private val usageRepository: UsageRepository = mock()
     private val executionConfiguration: ExecutionConfiguration = mock()
 
-    private lateinit var useCase: LiveFetchUsageUseCase
+    private lateinit var useCase: FetchUsageLiveUseCase
 
     @Before
     fun setup() {
-        useCase = LiveFetchUsageUseCase(usageRepository, executionConfiguration)
+        useCase = FetchUsageLiveUseCase(usageRepository, executionConfiguration)
     }
 
     @Test

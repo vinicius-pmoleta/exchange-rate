@@ -11,11 +11,13 @@ interface UsageContract {
 
         fun displayErrorUsageNotFetched()
 
+        fun provideUsageDataHolder(): UsageDataHolder
+
     }
 
     interface Action : BaseContract.Action {
 
-        fun loadCurrentUsage(liveUsageViewModel: LiveUsageViewModel)
+        fun loadCurrentUsage()
 
     }
 

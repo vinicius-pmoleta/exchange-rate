@@ -6,7 +6,7 @@ import com.exchangerate.core.data.usecase.LiveUseCase
 import com.exchangerate.features.usage.data.Usage
 import io.reactivex.Flowable
 
-class LiveFetchUsageUseCase(
+class FetchUsageLiveUseCase(
         val usageRepository: UsageRepository,
         executionConfiguration: ExecutionConfiguration
 ) : LiveUseCase<Usage, Unit>(executionConfiguration) {

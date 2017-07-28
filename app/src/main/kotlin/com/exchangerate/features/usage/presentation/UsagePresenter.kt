@@ -5,27 +5,22 @@ import android.arch.lifecycle.Observer
 import com.exchangerate.core.structure.BasePresenter
 import com.exchangerate.features.usage.data.Usage
 import com.exchangerate.features.usage.data.UsageViewModel
-import com.exchangerate.features.usage.usecase.LiveFetchUsageUseCase
-import org.reactivestreams.Subscription
+import com.exchangerate.features.usage.usecase.FetchUsageLiveUseCase
 
-class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: LiveFetchUsageUseCase) : BasePresenter(), UsageContract.Action {
+class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchUsageLiveUseCase) : BasePresenter(), UsageContract.Action {
 
-    override fun loadCurrentUsage(liveUsageViewModel: LiveUsageViewModel) {
-        if (liveUsageViewModel.source != null) {
-            handleCurrentUsage(liveUsageViewModel.source?.value)
+    override fun loadCurrentUsage() {
+        val usageDataHolder = view.provideUsageDataHolder()
+        usageDataHolder.data?.let {
+            handleCurrentUsage(usageDataHolder.data?.value)
             return
         }
 
         val liveUsage: LiveData<Usage> = fetchUsageUseCase.execute(
-                onSubscribe = { handleSubscription(it) },
                 onError = { handleErrorFetchingUsage() })
 
-        liveUsageViewModel.source = liveUsage
+        usageDataHolder.data = liveUsage
         liveUsage.observe(view.provideLifecycleOwner(), Observer { usage -> handleCurrentUsage(usage) })
-    }
-
-    fun handleSubscription(subscription: Subscription) {
-        // TODO
     }
 
     fun handleCurrentUsage(usage: Usage?) {

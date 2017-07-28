@@ -4,8 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.exchangerate.features.usage.data.Usage
 
-class LiveUsageViewModel : ViewModel() {
+class UsageDataHolder : ViewModel() {
 
-    var source: LiveData<Usage>? = null
+    var data: LiveData<Usage>? = null
 
 }

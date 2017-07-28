@@ -37,12 +37,7 @@ class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val liveUsageViewModel = ViewModelProviders.of(this).get(LiveUsageViewModel::class.java)
-        presenter.loadCurrentUsage(liveUsageViewModel)
-    }
-
-    override fun provideLifecycleOwner(): LifecycleOwner {
-        return this
+        presenter.loadCurrentUsage()
     }
 
     override fun displayCurrentUsage(usage: UsageViewModel) {
@@ -51,6 +46,14 @@ class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
     override fun displayErrorUsageNotFetched() {
         Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun provideLifecycleOwner(): LifecycleOwner {
+        return this
+    }
+
+    override fun provideUsageDataHolder(): UsageDataHolder {
+        return ViewModelProviders.of(this).get(UsageDataHolder::class.java)
     }
 
 }
