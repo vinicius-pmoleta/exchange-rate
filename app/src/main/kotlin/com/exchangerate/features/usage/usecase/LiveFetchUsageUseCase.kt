@@ -2,14 +2,14 @@ package com.exchangerate.features.usage.usecase
 
 import com.exchangerate.core.data.repository.remote.UsageRepository
 import com.exchangerate.core.data.usecase.ExecutionConfiguration
-import com.exchangerate.core.data.usecase.UseCase
+import com.exchangerate.core.data.usecase.LiveUseCase
 import com.exchangerate.features.usage.data.Usage
 import io.reactivex.Flowable
 
-class FetchUsageUseCase(
+class LiveFetchUsageUseCase(
         val usageRepository: UsageRepository,
         executionConfiguration: ExecutionConfiguration
-) : UseCase<Usage, Unit>(executionConfiguration) {
+) : LiveUseCase<Usage, Unit>(executionConfiguration) {
 
     override fun buildUseCaseObservable(params: Unit?): Flowable<Usage> {
         return usageRepository.getUsage()

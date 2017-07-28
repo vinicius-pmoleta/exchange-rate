@@ -5,7 +5,7 @@ import com.exchangerate.features.usage.data.UsageViewModel
 
 interface UsageContract {
 
-    interface View {
+    interface View : BaseContract.View {
 
         fun displayCurrentUsage(usage: UsageViewModel)
 
@@ -15,7 +15,7 @@ interface UsageContract {
 
     interface Action : BaseContract.Action {
 
-        fun loadCurrentUsage()
+        fun loadCurrentUsage(liveUsageViewModel: LiveUsageViewModel)
 
     }
 

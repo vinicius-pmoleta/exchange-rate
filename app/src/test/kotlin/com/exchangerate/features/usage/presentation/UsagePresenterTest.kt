@@ -2,9 +2,11 @@ package com.exchangerate.features.usage.presentation
 
 import com.exchangerate.features.usage.data.Usage
 import com.exchangerate.features.usage.data.UsageViewModel
-import com.exchangerate.features.usage.usecase.FetchUsageUseCase
-import com.nhaarman.mockito_kotlin.*
-import io.reactivex.disposables.Disposable
+import com.exchangerate.features.usage.usecase.LiveFetchUsageUseCase
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -16,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class UsagePresenterTest {
 
     private val view: UsageContract.View = mock()
-    private val fetchUsageUseCase: FetchUsageUseCase = mock()
+    private val fetchUsageUseCase: LiveFetchUsageUseCase = mock()
 
     lateinit var presenter: UsagePresenter
 

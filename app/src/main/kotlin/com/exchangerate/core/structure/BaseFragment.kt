@@ -1,10 +1,10 @@
 package com.exchangerate.core.structure
 
+import android.arch.lifecycle.LifecycleFragment
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import javax.inject.Inject
 
-abstract class BaseFragment<Presenter : BaseContract.Action> : Fragment() {
+abstract class BaseFragment<Presenter : BaseContract.Action> : LifecycleFragment() {
 
     @Inject
     lateinit var presenter: Presenter

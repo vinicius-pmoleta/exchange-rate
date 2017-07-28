@@ -10,6 +10,7 @@ project.ext {
     firebase_version = '10.2.4'
     dagger_version = '2.10'
     retrofit_version = '2.3.0'
+    architecture_components_version = '1.0.0-alpha5'
 }
 
 android {
@@ -93,6 +94,12 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+
+    // ARCHITECTURE COMPONENTS
+    compile "android.arch.lifecycle:runtime:$architecture_components_version"
+    compile "android.arch.lifecycle:extensions:$architecture_components_version"
+    compile "android.arch.lifecycle:reactivestreams:$architecture_components_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$architecture_components_version"
 
     // TEST
     testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

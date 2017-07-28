@@ -1,5 +1,7 @@
 package com.exchangerate.features.usage.presentation
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
 import com.exchangerate.features.usage.di.UsageUseCasesModule
 import kotlinx.android.synthetic.main.usage_fragment.*
+
 
 class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
@@ -34,7 +37,12 @@ class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.loadCurrentUsage()
+        val liveUsageViewModel = ViewModelProviders.of(this).get(LiveUsageViewModel::class.java)
+        presenter.loadCurrentUsage(liveUsageViewModel)
+    }
+
+    override fun provideLifecycleOwner(): LifecycleOwner {
+        return this
     }
 
     override fun displayCurrentUsage(usage: UsageViewModel) {
