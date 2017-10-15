@@ -3,34 +3,51 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-apply from: "../environment/environment.gradle"
+apply from: "${rootDir}/environment/environment.gradle"
 
 project.ext {
-    support_version = '25.3.1'
-    firebase_version = '10.2.4'
-    dagger_version = '2.10'
+    support_version = '26.1.0'
+    firebase_version = '11.4.2'
+    dagger_version = '2.11'
     retrofit_version = '2.3.0'
+    architecture_components_version = '1.0.0-alpha9-1'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "com.exchangerate"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("../environment/release-keystore.jks")
+            storePassword getPrivateConfig("EXCHANGE_RATE_RELEASE_SIGNING_STORE_PASSWORD")
+            keyAlias getPrivateConfig("EXCHANGE_RATE_RELEASE_SIGNING_KEY_ALIAS")
+            keyPassword getPrivateConfig("EXCHANGE_RATE_RELEASE_SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+            testCoverageEnabled = true
+
             buildConfigField "String", "EXCHANGE_RATE_API_KEY", getApiKey()
         }
         release {
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+            debuggable false
+            testCoverageEnabled = true
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -94,13 +111,24 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
+    // ARCHITECTURE COMPONENTS
+    compile "android.arch.lifecycle:runtime:$architecture_components_version"
+    compile "android.arch.lifecycle:extensions:$architecture_components_version"
+    compile "android.arch.lifecycle:reactivestreams:$architecture_components_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$architecture_components_version"
+
     // TEST
-    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
 }
 
 def getApiKey() {
     def value = ext.environment.findValueFor("EXCHANGE_RATE_APP_API_KEY")
     return "\"$value\""
 }
+
+def getPrivateConfig(String key) {
+    return ext.environment.findValueFor(key)
+}
+

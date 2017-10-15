@@ -5,11 +5,13 @@ import com.exchangerate.features.usage.data.UsageViewModel
 
 interface UsageContract {
 
-    interface View {
+    interface View : BaseContract.View {
 
         fun displayCurrentUsage(usage: UsageViewModel)
 
         fun displayErrorUsageNotFetched()
+
+        fun provideUsageDataHolder(): UsageDataHolder
 
     }
 
