@@ -1,10 +1,10 @@
 package com.exchangerate.core.structure
 
+import android.arch.lifecycle.LifecycleActivity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import javax.inject.Inject
 
-abstract class BaseActivity<Presenter : BaseContract.Action> : AppCompatActivity() {
+abstract class BaseActivity<Presenter : BaseContract.Action> : LifecycleActivity() {
 
     @Inject
     lateinit var presenter: Presenter

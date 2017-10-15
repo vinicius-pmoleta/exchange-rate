@@ -8,4 +8,8 @@ class UsageDataHolder : ViewModel() {
 
     var data: LiveData<Usage>? = null
 
+    override fun onCleared() {
+        super.onCleared()
+    }
+
 }
