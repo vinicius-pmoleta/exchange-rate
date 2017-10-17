@@ -70,15 +70,15 @@ jobs:
 
       - run:
           name: Run Checks
-          command: ./gradlew --no-daemon --stacktrace lintRelease checkRelease
+          command: ./gradlew --no-daemon --stacktrace lintRelease checkRelease detektCheck
 
       - store_artifacts:
           path: ~/code/app/build/reports/
-          destination: lint_reports/app/
+          destination: lint_reports/
 
       - store_artifacts:
-          path: ~/code/base/build/reports/
-          destination: lint_reports/base/
+          path: ~/code/base/build/reports/detekt/
+          destination: deteckt/
 
   test:
     <<: *container_config

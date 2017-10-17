@@ -6,7 +6,7 @@ import android.view.MenuItem
 import com.exchangerate.R
 import com.exchangerate.core.structure.BaseActivity
 import com.exchangerate.features.usage.presentation.UsageFragment
-import kotlinx.android.synthetic.main.home_activity.*
+import kotlinx.android.synthetic.main.home_activity.homeNavigation
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeContract.View {
 
@@ -40,8 +40,8 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeContract.View {
     }
 
     private fun setupNavigation() {
-        homeNavigation.setOnNavigationItemSelectedListener({
-            item -> handleSelectedOption(item)
+        homeNavigation.setOnNavigationItemSelectedListener({ item ->
+            handleSelectedOption(item)
         })
     }
 
