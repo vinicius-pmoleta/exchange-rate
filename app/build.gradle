@@ -115,7 +115,7 @@ dependencies {
     compile "android.arch.lifecycle:runtime:$architecture_components_version"
     compile "android.arch.lifecycle:extensions:$architecture_components_version"
     compile "android.arch.lifecycle:reactivestreams:$architecture_components_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$architecture_components_version"
+    kapt "android.arch.lifecycle:compiler:$architecture_components_version"
 
     // TEST
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
