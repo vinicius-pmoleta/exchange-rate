@@ -12,7 +12,9 @@ class UsageUseCasesModule {
 
     @ActivityScoped
     @Provides
-    fun provideLiveFetchUsageUseCase(usageRepository: UsageRepository, executionConfiguration: ExecutionConfiguration): FetchUsageLiveUseCase {
+    fun provideLiveFetchUsageUseCase(
+            usageRepository: UsageRepository,
+            executionConfiguration: ExecutionConfiguration): FetchUsageLiveUseCase {
         return FetchUsageLiveUseCase(usageRepository, executionConfiguration)
     }
 

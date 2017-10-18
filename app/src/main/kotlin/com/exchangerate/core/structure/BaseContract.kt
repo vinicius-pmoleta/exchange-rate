@@ -10,10 +10,6 @@ interface BaseContract {
 
     }
 
-    interface Action {
-
-        fun releaseResources()
-
-    }
+    interface Action
 
 }

@@ -8,7 +8,8 @@ class AuthenticationInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain?): Response? {
         var request = chain?.request()
-        val url = request?.url()?.newBuilder()?.addQueryParameter("app_id", BuildConfig.EXCHANGE_RATE_API_KEY)?.build()
+        val url = request?.url()?.newBuilder()
+                ?.addQueryParameter("app_id", BuildConfig.EXCHANGE_RATE_API_KEY)?.build()
         request = request?.newBuilder()?.url(url)?.build()
         return chain?.proceed(request)
     }
