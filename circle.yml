@@ -97,9 +97,9 @@ jobs:
             export TEST_GROUPS_COUNT=${CIRCLE_NODE_TOTAL}
             echo "Running test group ${TEST_GROUP_INDEX} out of ${TEST_GROUPS_COUNT}..."
             ./gradlew --no-daemon --stacktrace testReleaseUnitTest testReleaseUnitTestCoverage
-            if [[ -f $CODECOV_REPORT_LOCATION ]]; then
-              curl https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.1/codacy-coverage-reporter-2.0.1-assembly.jar -o codacy-coverage.jar
-              java -cp codacy-coverage.jar com.codacy.CodacyCoverageReporter -l Java -r ${COVERAGE_REPORT_LOCATION}
+            if [[ -f COVERAGE_REPORT_LOCATION ]]; then
+              wget https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.1/codacy-coverage-reporter-2.0.1-assembly.jar -O codacy-coverage-reporter.jar
+              java -cp codacy-coverage-reporter.jar com.codacy.CodacyCoverageReporter -l Java -r ${COVERAGE_REPORT_LOCATION}
             fi
 
       - store_artifacts:
