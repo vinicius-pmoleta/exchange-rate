@@ -39,7 +39,6 @@ android {
 }
 
 project.afterEvaluate {
-
     android.applicationVariants.all { variant ->
         def name = variant.name
         def testTaskName = "test${name.capitalize()}UnitTest"

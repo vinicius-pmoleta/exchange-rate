@@ -92,20 +92,23 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            export CODECOV_REPORT_LOCATION=app/build/reports/jacoco/testReleaseUnitTestCoverage/testReleaseUnitTestCoverage.xml
+            export COVERAGE_REPORT_LOCATION=app/build/reports/jacoco/testReleaseUnitTestCoverage/testReleaseUnitTestCoverage.xml
             export TEST_GROUP_INDEX=${CIRCLE_NODE_INDEX}
             export TEST_GROUPS_COUNT=${CIRCLE_NODE_TOTAL}
             echo "Running test group ${TEST_GROUP_INDEX} out of ${TEST_GROUPS_COUNT}..."
-            ./gradlew --no-daemon --stacktrace testReleaseUnitTestCoverage
+            ./gradlew --no-daemon --stacktrace testReleaseUnitTest testReleaseUnitTestCoverage
             if [[ -f $CODECOV_REPORT_LOCATION ]]; then
-              curl https://codecov.io/bash -o codecov.sh
-              chmod +x codecov.sh
-              ./codecov.sh -X gcov -X coveragepy -f ${CODECOV_REPORT_LOCATION}
+              curl https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.1/codacy-coverage-reporter-2.0.1-assembly.jar -o codacy-coverage.jar
+              java -cp codacy-coverage.jar com.codacy.CodacyCoverageReporter -l Java -r ${COVERAGE_REPORT_LOCATION}
             fi
 
       - store_artifacts:
           path: app/build/reports/tests/
           destination: tests_reports/
+
+      - store_artifacts:
+          path: app/build/reports/jacoco/
+          destination: jacoco_reports/
 
       - store_test_results:
           path: ~/code/app/build/test-results
