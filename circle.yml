@@ -96,7 +96,7 @@ jobs:
             export TEST_GROUP_INDEX=${CIRCLE_NODE_INDEX}
             export TEST_GROUPS_COUNT=${CIRCLE_NODE_TOTAL}
             echo "Running test group ${TEST_GROUP_INDEX} out of ${TEST_GROUPS_COUNT}..."
-            ./gradlew --no-daemon --stacktrace testReleaseUnitTestCoverage
+            ./gradlew --no-daemon --stacktrace testReleaseUnitTest testReleaseUnitTestCoverage
             if [[ -f $CODECOV_REPORT_LOCATION ]]; then
               curl https://codecov.io/bash -o codecov.sh
               chmod +x codecov.sh
@@ -106,6 +106,10 @@ jobs:
       - store_artifacts:
           path: app/build/reports/tests/
           destination: tests_reports/
+
+      - store_artifacts:
+          path: app/build/reports/jacoco/
+          destination: jacoco_reports/
 
       - store_test_results:
           path: ~/code/app/build/test-results

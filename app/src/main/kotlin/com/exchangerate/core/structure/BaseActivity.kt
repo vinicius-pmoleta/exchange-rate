@@ -16,9 +16,4 @@ abstract class BaseActivity<Presenter : BaseContract.Action> : AppCompatActivity
         initializeDependencyInjector()
     }
 
-    override fun onStop() {
-        presenter.releaseResources()
-        super.onStop()
-    }
-
 }

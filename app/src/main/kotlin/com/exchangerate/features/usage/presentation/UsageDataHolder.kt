@@ -1,15 +1,7 @@
 package com.exchangerate.features.usage.presentation
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import com.exchangerate.core.data.live.LiveResult
+import com.exchangerate.core.structure.BaseDataHolder
 import com.exchangerate.features.usage.data.Usage
 
-class UsageDataHolder : ViewModel() {
-
-    var data: LiveData<Usage>? = null
-
-    override fun onCleared() {
-        super.onCleared()
-    }
-
-}
+class UsageDataHolder(val result: LiveResult<Usage>?) : BaseDataHolder()

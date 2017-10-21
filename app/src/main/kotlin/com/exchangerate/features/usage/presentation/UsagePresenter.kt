@@ -1,26 +1,26 @@
 package com.exchangerate.features.usage.presentation
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
-import com.exchangerate.core.structure.BasePresenter
+import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.features.usage.data.Usage
 import com.exchangerate.features.usage.data.UsageViewModel
 import com.exchangerate.features.usage.usecase.FetchUsageLiveUseCase
 
-class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchUsageLiveUseCase) : BasePresenter(), UsageContract.Action {
+class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchUsageLiveUseCase) : UsageContract.Action {
 
     override fun loadCurrentUsage() {
-        val usageDataHolder = view.provideUsageDataHolder()
-        usageDataHolder.data?.let {
-            handleCurrentUsage(usageDataHolder.data?.value)
+        val holder = view.provideUsageDataHolder()
+        if (LiveDataOperator.isDataAvailable(holder.result)) {
+            handleCurrentUsage(holder.result?.data?.value)
             return
         }
 
-        val liveUsage: LiveData<Usage> = fetchUsageUseCase.execute(
-                onError = { handleErrorFetchingUsage() })
-
-        usageDataHolder.data = liveUsage
-        liveUsage.observe(view.provideLifecycleOwner(), Observer { usage -> handleCurrentUsage(usage) })
+        val result = fetchUsageUseCase.executeLive(onSubscribe = holder::addSubscription)
+        result.observe(
+                view.provideLifecycleOwner(),
+                Observer { usage -> handleCurrentUsage(usage) },
+                Observer { handleErrorFetchingUsage() }
+        )
     }
 
     fun handleCurrentUsage(usage: Usage?) {
