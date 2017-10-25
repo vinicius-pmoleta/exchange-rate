@@ -11,7 +11,8 @@ project.ext {
     firebase_version = '11.4.2'
     dagger_version = '2.11'
     retrofit_version = '2.3.0'
-    architecture_components_version = '1.0.0-alpha9-1'
+    architecture_components_version = '1.0.0-rc1'
+    firebase_version = '11.4.2'
 }
 
 android {
@@ -112,10 +113,13 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     // ARCHITECTURE COMPONENTS
-    compile "android.arch.lifecycle:runtime:$architecture_components_version"
     compile "android.arch.lifecycle:extensions:$architecture_components_version"
     compile "android.arch.lifecycle:reactivestreams:$architecture_components_version"
     kapt "android.arch.lifecycle:compiler:$architecture_components_version"
+
+    // FIREBASE
+    compile "com.google.firebase:firebase-core:$firebase_version"
+    compile "com.google.firebase:firebase-crash:$firebase_version"
 
     // TEST
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -131,3 +135,5 @@ def getApiKey() {
 def getPrivateConfig(String key) {
     return ext.environment.findValueFor(key)
 }
+
+apply plugin: 'com.google.gms.google-services'
