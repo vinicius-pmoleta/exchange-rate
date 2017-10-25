@@ -6,7 +6,8 @@ import com.exchangerate.features.usage.data.Usage
 import com.exchangerate.features.usage.data.UsageViewModel
 import com.exchangerate.features.usage.usecase.FetchUsageLiveUseCase
 
-class UsagePresenter(val view: UsageContract.View, val fetchUsageUseCase: FetchUsageLiveUseCase) : UsageContract.Action {
+class UsagePresenter(val view: UsageContract.View,
+                     private val fetchUsageUseCase: FetchUsageLiveUseCase) : UsageContract.Action {
 
     override fun loadCurrentUsage() {
         val holder = view.provideUsageDataHolder()
