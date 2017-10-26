@@ -1,7 +1,7 @@
 buildscript {
 
     project.ext {
-        gradle_version = '3.0.0-beta7'
+        gradle_version = '3.0.0-rc2'
         googleServices_version = '3.1.0'
         kotlin_version = '1.1.51'
         detekt_version = '1.0.0.RC4-3'
