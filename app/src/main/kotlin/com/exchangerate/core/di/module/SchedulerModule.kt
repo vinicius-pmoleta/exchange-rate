@@ -26,7 +26,9 @@ class SchedulerModule {
 
     @Provides
     @Singleton
-    fun provideExecutionConfiguration(executionScheduler: ExecutionScheduler, postExecutionScheduler: PostExecutionScheduler): ExecutionConfiguration {
+    fun provideExecutionConfiguration(executionScheduler: ExecutionScheduler,
+                                      postExecutionScheduler: PostExecutionScheduler)
+            : ExecutionConfiguration {
         return ExecutionConfiguration(executionScheduler, postExecutionScheduler)
     }
 
