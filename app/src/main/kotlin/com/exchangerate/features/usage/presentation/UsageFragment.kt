@@ -10,11 +10,11 @@ import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.structure.BaseFragment
-import com.exchangerate.features.usage.data.UsageViewModel
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
 import com.exchangerate.features.usage.di.UsageUseCasesModule
-import kotlinx.android.synthetic.main.usage_fragment.*
+import com.exchangerate.features.usage.presentation.model.UsageScreenModel
+import kotlinx.android.synthetic.main.usage_fragment.usageStatusView
 
 
 class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
@@ -40,7 +40,7 @@ class UsageFragment : BaseFragment<UsageContract.Action>(), UsageContract.View {
         presenter.loadCurrentUsage()
     }
 
-    override fun displayCurrentUsage(usage: UsageViewModel) {
+    override fun displayCurrentUsage(usage: UsageScreenModel) {
         usageStatusView.text = usage.toString()
     }
 
