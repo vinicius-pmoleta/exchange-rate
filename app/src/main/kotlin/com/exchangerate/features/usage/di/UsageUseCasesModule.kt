@@ -2,7 +2,7 @@ package com.exchangerate.features.usage.di
 
 import com.exchangerate.core.data.repository.remote.UsageRepository
 import com.exchangerate.core.data.usecase.ExecutionConfiguration
-import com.exchangerate.core.di.scope.ActivityScoped
+import com.exchangerate.core.di.ActivityScope
 import com.exchangerate.features.usage.usecase.FetchUsageLiveUseCase
 import dagger.Module
 import dagger.Provides
@@ -10,7 +10,7 @@ import dagger.Provides
 @Module
 class UsageUseCasesModule {
 
-    @ActivityScoped
+    @ActivityScope
     @Provides
     fun provideLiveFetchUsageUseCase(
             usageRepository: UsageRepository,
