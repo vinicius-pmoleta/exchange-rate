@@ -1,7 +1,7 @@
 buildscript {
 
     project.ext {
-        gradle_version = '3.0.0-rc2'
+        gradle_version = '3.0.0'
         googleServices_version = '3.1.0'
         kotlin_version = '1.1.51'
         detekt_version = '1.0.0.RC4-3'
@@ -36,14 +36,4 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply plugin: 'io.gitlab.arturbosch.detekt'
-
-detekt {
-    version = "$detekt_version"
-    profile("main") {
-        input = "$projectDir/app/src/main/kotlin"
-        config = "$projectDir/default-detekt-config.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "$projectDir/app/build/reports/detekt"
-    }
-}
+apply from: "${rootDir}/gradle/analysis.gradle"
