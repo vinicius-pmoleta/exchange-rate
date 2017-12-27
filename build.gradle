@@ -1,10 +1,10 @@
 buildscript {
 
     project.ext {
-        gradle_version = '3.0.0'
+        gradle_version = '3.0.1'
         googleServices_version = '3.1.0'
-        kotlin_version = '1.1.51'
-        detekt_version = '1.0.0.RC4-3'
+        kotlin_version = '1.2.0'
+        detekt_version = '1.0.0.RC5-6'
     }
 
     repositories {
