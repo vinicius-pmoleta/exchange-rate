@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.exchangerate.R
 import com.exchangerate.core.structure.BaseActivity
-import com.exchangerate.features.usage.presentation.UsageFragment
+import com.exchangerate.features.usage.mvi.UsageFragment
 import kotlinx.android.synthetic.main.home_activity.homeNavigation
 
 class HomeActivity : BaseActivity<HomePresenter>(), HomeContract.View {

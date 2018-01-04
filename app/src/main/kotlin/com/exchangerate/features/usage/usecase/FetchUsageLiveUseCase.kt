@@ -12,8 +12,7 @@ class FetchUsageLiveUseCase(
 ) : LiveUseCase<Usage, Unit>(executionConfiguration) {
 
     override fun buildUseCaseObservable(params: Unit?): Flowable<Usage> {
-        return usageRepository.getUsage()
-                .map({ response -> response.data.usage })
+        return Flowable.empty()
     }
 
 }

@@ -1,21 +1,15 @@
 package com.exchangerate.features.usage.di
 
+import com.exchangerate.core.data.repository.remote.UsageRepository
 import com.exchangerate.core.di.ActivityScope
-import com.exchangerate.features.usage.presentation.UsageContract
-import com.exchangerate.features.usage.presentation.UsagePresenter
+import com.exchangerate.features.usage.mvi.UsageInteractor
+import com.exchangerate.features.usage.mvi.UsagePresenter
 import com.exchangerate.features.usage.presentation.model.UsageScreenConverter
-import com.exchangerate.features.usage.usecase.FetchUsageLiveUseCase
 import dagger.Module
 import dagger.Provides
 
 @Module
-class UsageFeatureModule(val view: UsageContract.View) {
-
-    @ActivityScope
-    @Provides
-    fun provideView(): UsageContract.View {
-        return view
-    }
+class UsageFeatureModule {
 
     @ActivityScope
     @Provides
@@ -25,9 +19,14 @@ class UsageFeatureModule(val view: UsageContract.View) {
 
     @ActivityScope
     @Provides
-    fun providePresenter(fetchUsageUseCase: FetchUsageLiveUseCase,
-                         screenConverter: UsageScreenConverter): UsageContract.Action {
-        return UsagePresenter(view, fetchUsageUseCase, screenConverter)
+    fun providePresenter(interactor: UsageInteractor): UsagePresenter {
+        return UsagePresenter(interactor)
+    }
+
+    @ActivityScope
+    @Provides
+    fun provideInteractor(usageRepository: UsageRepository): UsageInteractor {
+        return UsageInteractor(usageRepository)
     }
 
 }

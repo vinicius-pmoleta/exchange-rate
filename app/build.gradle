@@ -2,13 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 apply from: "${rootDir}/environment/environment.gradle"
 apply from: "${rootDir}/gradle/quality.gradle"
 
 project.ext {
     support_version = '26.1.0'
-    firebase_version = '11.4.2'
+    firebase_version = '11.8.0'
     dagger_version = '2.11'
     retrofit_version = '2.3.0'
     architecture_components_version = '1.0.0'
@@ -123,6 +124,7 @@ dependencies {
     // FIREBASE
     compile "com.google.firebase:firebase-core:$firebase_version"
     compile "com.google.firebase:firebase-crash:$firebase_version"
+    compile "com.google.firebase:firebase-perf:$firebase_version"
 
     // TEST
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

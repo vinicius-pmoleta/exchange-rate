@@ -11,9 +11,9 @@ interface ReactiveInteractor {
 
     /**
      * Sends changes to data layer.
-     * It returns a [Single] that will emit the result of the send operation.
+     * It returns a [Single] that will emit the data of the send operation.
      *
-     * @param <Result> the type of the send operation result.
+     * @param <Result> the type of the send operation data.
      * @param <Params> required parameters for the send.
     </Params></Result> */
     interface SendInteractor<in Params, out Result> : ReactiveInteractor {
@@ -35,7 +35,7 @@ interface ReactiveInteractor {
     }
 
     /**
-     * The request interactor is used to request some result once. The returned observable is a single, emits once and then completes or errors.
+     * The request interactor is used to request some data once. The returned observable is a single, emits once and then completes or errors.
      *
      * @param <Params> the type of the returned data.
      * @param <Result> required parameters for the request.
