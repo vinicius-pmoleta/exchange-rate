@@ -2,6 +2,7 @@ package com.exchangerate.features.usage.mvi
 
 import com.exchangerate.core.structure.MviAction
 
-sealed class UsageAction : MviAction
+interface UsageAction : MviAction
 
-class LoadUsageAction : UsageAction()
+class StartLoadingUsageAction : UsageAction
+class LoadUsageAction : UsageAction

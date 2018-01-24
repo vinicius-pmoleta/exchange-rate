@@ -1,37 +1,39 @@
 package com.exchangerate.features.usage.mvi
 
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import com.exchangerate.core.structure.MviStore
 import com.exchangerate.core.structure.MviViewModel
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class UsageViewModel : ViewModel(), MviViewModel<UsageIntent, UsageViewState> {
-
-    private val intentSubjects: PublishSubject<UsageIntent> = PublishSubject.create()
-    private val statesObservable: Observable<UsageViewState> = compose()
-
-    private lateinit var presenter: UsagePresenter
-
-    fun bindPresenter(presenter: UsagePresenter) {
-        this.presenter = presenter
-    }
+class UsageViewModel(
+        private val interpreter: UsageInterpreter,
+        private val store: MviStore<UsageState>
+) : MviViewModel<UsageIntent, UsageState>, ViewModel() {
 
     override fun processIntents(intents: Observable<UsageIntent>) {
-        intents.subscribe(intentSubjects)
+        intents
+                .flatMap { intent ->
+                    Observable.fromIterable(interpreter.translate(intent))
+                }
+                .map { action -> store.dispatch(action) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
     }
 
-    override fun states(): Observable<UsageViewState> {
-        return statesObservable
-    }
+    override fun states(): Observable<UsageState> = store.stateObserver
+}
 
-    private fun compose(): Observable<UsageViewState> {
-        return intentSubjects
-                .compose(presenter.intentFilter())
-                .map { intent -> presenter.actionFromIntent(intent) }
-                .compose(presenter.actionProcessor())
-                .scan(UsageViewState(), presenter.reducer())
-                .replay(1)
-                .autoConnect(0)
-    }
+class UsageViewModelFactory @Inject constructor(
+        private val interpreter: UsageInterpreter,
+        private val store: MviStore<UsageState>
+) : ViewModelProvider.Factory {
 
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return UsageViewModel(interpreter, store) as T
+    }
 }
