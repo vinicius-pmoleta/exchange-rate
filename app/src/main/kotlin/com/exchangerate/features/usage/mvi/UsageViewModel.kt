@@ -6,6 +6,7 @@ import com.exchangerate.core.structure.MviStore
 import com.exchangerate.core.structure.MviViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -14,18 +15,25 @@ class UsageViewModel(
         private val store: MviStore<UsageState>
 ) : MviViewModel<UsageIntent, UsageState>, ViewModel() {
 
+    private lateinit var disposable: Disposable
+
     override fun processIntents(intents: Observable<UsageIntent>) {
-        intents
+        disposable = intents
                 .flatMap { intent ->
                     Observable.fromIterable(interpreter.translate(intent))
                 }
-                .map { action -> store.dispatch(action) }
+                .flatMap { action -> store.dispatch(action) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
 
     override fun states(): Observable<UsageState> = store.stateObserver
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
+    }
 }
 
 class UsageViewModelFactory @Inject constructor(

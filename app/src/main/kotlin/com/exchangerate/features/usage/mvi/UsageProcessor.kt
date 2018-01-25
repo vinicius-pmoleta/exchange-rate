@@ -7,6 +7,6 @@ import io.reactivex.Observable
 class UsageProcessor : MviProcessor {
 
     fun loadUsage() : Observable<Usage> {
-        return Observable.empty()
+        return Observable.just(Usage(1, 1, 1, 1))
     }
 }

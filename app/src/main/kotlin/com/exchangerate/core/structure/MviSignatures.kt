@@ -39,12 +39,16 @@ interface MviReducer<S : MviState> {
 
 class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
 
-    private val state = reducer.initialState()
+    private var state = reducer.initialState()
 
-    val stateObserver: BehaviorSubject<S> = BehaviorSubject.createDefault(reducer.initialState())
+    val stateObserver: BehaviorSubject<S> = BehaviorSubject
+            .createDefault(reducer.initialState())
 
-    fun dispatch(action: MviAction) {
-        val newState = reducer.reduce(action, state)
-        stateObserver.compose { newState }.publish()
+    fun dispatch(action: MviAction): Observable<S> {
+        return reducer.reduce(action, state)
+                .doOnNext { update ->
+                    state = update
+                    stateObserver.onNext(state)
+                }
     }
 }
