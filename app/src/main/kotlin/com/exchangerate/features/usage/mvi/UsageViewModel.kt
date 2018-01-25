@@ -19,9 +19,7 @@ class UsageViewModel(
 
     override fun processIntents(intents: Observable<UsageIntent>) {
         disposable = intents
-                .flatMap { intent ->
-                    Observable.fromIterable(interpreter.translate(intent))
-                }
+                .flatMap { intent -> Observable.fromIterable(interpreter.translate(intent)) }
                 .flatMap { action -> store.dispatch(action) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
