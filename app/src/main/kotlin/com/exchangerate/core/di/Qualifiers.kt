@@ -4,7 +4,7 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ForActivity
+annotation class ForFeature
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)

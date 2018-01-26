@@ -18,6 +18,11 @@ interface MviView<I : MviIntent, in S : MviState> {
     fun render(state: S)
 }
 
+interface MviRenderer<in S : MviState> {
+
+    fun render(state: S)
+}
+
 interface MviViewModel<I : MviIntent, S : MviState> {
 
     fun processIntents(intents: Observable<I>)

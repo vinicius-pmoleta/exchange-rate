@@ -1,9 +1,11 @@
-package com.exchangerate.features.usage.mvi
+package com.exchangerate.features.usage.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.core.structure.MviViewModel
+import com.exchangerate.features.usage.business.UsageInterpreter
+import com.exchangerate.features.usage.data.UsageState
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

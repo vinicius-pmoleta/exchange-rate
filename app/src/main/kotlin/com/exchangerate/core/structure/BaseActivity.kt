@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import javax.inject.Inject
 
-abstract class BaseActivity<Presenter : BaseContract.Action> : AppCompatActivity() {
-
-    @Inject
-    lateinit var presenter: Presenter
+abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun initializeDependencyInjector()
 
