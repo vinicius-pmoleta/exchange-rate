@@ -8,6 +8,8 @@ import com.exchangerate.core.structure.MviRenderer
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.model.UsageScreenConverter
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
+import com.jakewharton.rxbinding2.view.RxView
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.usage_fragment.view.*
 
 class UsageRenderer(private val screenConverter: UsageScreenConverter) : MviRenderer<UsageState> {
@@ -24,6 +26,10 @@ class UsageRenderer(private val screenConverter: UsageScreenConverter) : MviRend
                 renderError(view)
             }
         }
+    }
+
+    fun bindRefreshAction(view: View): Observable<Any> {
+        return RxView.clicks(view.usageRefreshActionView)
     }
 
     private fun renderLoading(isLoading: Boolean, view: View) {

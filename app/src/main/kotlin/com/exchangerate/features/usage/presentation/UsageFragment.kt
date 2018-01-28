@@ -45,10 +45,10 @@ class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UsageViewModel::class.java)
-        bind()
+        setup()
     }
 
-    private fun bind() {
+    private fun setup() {
         viewModel.liveStates().observe(this, Observer { state -> render(state) })
         viewModel.processIntents(intents())
     }
@@ -58,11 +58,18 @@ class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
         super.onDestroy()
     }
 
-    override fun intents(): Observable<UsageIntent> {
-        return Observable.just(LoadUsageIntent())
-    }
+    override fun intents(): Observable<UsageIntent> = Observable.merge(initialIntent(), refreshIntent())
 
     override fun render(state: UsageState?) {
         view?.run { renderer.render(state, this) }
+    }
+
+    private fun initialIntent(): Observable<UsageIntent> = Observable.just(LoadUsageIntent())
+
+    private fun refreshIntent(): Observable<UsageIntent> {
+        view?.run {
+            return renderer.bindRefreshAction(this).map { _ -> LoadUsageIntent() }
+        }
+        return Observable.empty()
     }
 }

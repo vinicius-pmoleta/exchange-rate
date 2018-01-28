@@ -48,6 +48,8 @@ open class MviViewModel<I : MviIntent, S : MviState>(
         }
 
         disposable = intents
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
                 .flatMap { intent -> Observable.fromIterable(interpreter.translate(intent)) }
                 .flatMap { action -> store.dispatch(action) }
                 .subscribeOn(Schedulers.io())
@@ -75,17 +77,24 @@ interface MviReducer<S : MviState> {
     fun initialState(): S
 }
 
+interface MviMiddleware {
+
+    fun intercept(oldState: MviState, action: MviAction, newState: MviState)
+}
+
 class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
 
     private var state = reducer.initialState()
+    private val middleware: List<MviMiddleware> = listOf(LoggerMiddleware())
 
     val stateObserver: BehaviorSubject<S> = BehaviorSubject
             .createDefault(reducer.initialState())
 
     fun dispatch(action: MviAction): Observable<S> {
         return reducer.reduce(action, state)
-                .doOnNext { update ->
-                    state = update
+                .doOnNext { newState ->
+                    middleware.forEach { it.intercept(state, action, newState) }
+                    state = newState
                     stateObserver.onNext(state)
                 }
     }
