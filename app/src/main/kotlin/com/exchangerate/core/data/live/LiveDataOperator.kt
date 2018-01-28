@@ -1,17 +1,17 @@
 package com.exchangerate.core.data.live
 
 import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
 
 class LiveDataOperator {
 
     companion object {
-        fun <T> isDataAvailable(result: LiveResult<T>?): Boolean {
-            return result?.data?.value != null
+        fun <T> isDataAvailable(data: LiveData<T>?): Boolean {
+            return data?.value != null
         }
 
-        fun <T> removeResultObservers(result: LiveResult<T>?, owner: LifecycleOwner) {
-            result?.data?.removeObservers(owner)
-            result?.error?.removeObservers(owner)
+        fun <T> removeResultObservers(data: LiveData<T>?, owner: LifecycleOwner) {
+            data?.removeObservers(owner)
         }
     }
 

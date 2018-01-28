@@ -9,5 +9,4 @@ class UsageScreenConverter {
         val usedPercentage = usage.sent.percent(usage.quota)
         return UsageScreenModel(usage.averagePerDay, usedPercentage, usage.remaining)
     }
-
 }

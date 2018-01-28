@@ -1,5 +1,6 @@
 package com.exchangerate.features.usage.presentation
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
+import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.core.structure.MviView
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
@@ -29,8 +30,6 @@ class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
     lateinit var renderer: UsageRenderer
 
     private lateinit var viewModel: UsageViewModel
-
-    private val disposables by lazy { CompositeDisposable() }
 
     override fun initializeDependencyInjector() {
         DaggerUsageFeatureComponent.builder()
@@ -50,12 +49,12 @@ class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
     }
 
     private fun bind() {
-        disposables.add(viewModel.states().subscribe(this::render))
+        viewModel.liveStates().observe(this, Observer { state -> render(state) })
         viewModel.processIntents(intents())
     }
 
     override fun onDestroy() {
-        disposables.dispose()
+        LiveDataOperator.removeResultObservers(viewModel.liveStates(), this)
         super.onDestroy()
     }
 
@@ -63,7 +62,7 @@ class UsageFragment : BaseFragment(), MviView<UsageIntent, UsageState> {
         return Observable.just(LoadUsageIntent())
     }
 
-    override fun render(state: UsageState) {
-        renderer.render(state)
+    override fun render(state: UsageState?) {
+        view?.run { renderer.render(state, this) }
     }
 }

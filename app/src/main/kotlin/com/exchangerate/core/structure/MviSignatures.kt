@@ -1,6 +1,10 @@
 package com.exchangerate.core.structure
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.view.View
+import com.exchangerate.core.data.live.LiveDataOperator
+import com.exchangerate.core.data.live.LiveDataReactiveConverter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,12 +23,12 @@ interface MviView<I : MviIntent, in S : MviState> {
 
     fun intents(): Observable<I>
 
-    fun render(state: S)
+    fun render(state: S?)
 }
 
 interface MviRenderer<in S : MviState> {
 
-    fun render(state: S)
+    fun render(state: S?, view: View)
 }
 
 open class MviViewModel<I : MviIntent, S : MviState>(
@@ -32,9 +36,17 @@ open class MviViewModel<I : MviIntent, S : MviState>(
         private val store: MviStore<S>
 ) : ViewModel() {
 
+    private val liveState: LiveData<S> by lazy {
+        LiveDataReactiveConverter.fromPublisher(store.stateObserver)
+    }
+
     private lateinit var disposable: Disposable
 
     fun processIntents(intents: Observable<I>) {
+        if (LiveDataOperator.isDataAvailable(liveState)) {
+            return
+        }
+
         disposable = intents
                 .flatMap { intent -> Observable.fromIterable(interpreter.translate(intent)) }
                 .flatMap { action -> store.dispatch(action) }
@@ -43,7 +55,7 @@ open class MviViewModel<I : MviIntent, S : MviState>(
                 .subscribe()
     }
 
-    fun states(): Observable<S> = store.stateObserver
+    fun liveStates(): LiveData<S> = liveState
 
     override fun onCleared() {
         super.onCleared()

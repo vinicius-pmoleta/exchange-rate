@@ -18,12 +18,6 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideScreenConverter(): UsageScreenConverter {
-        return UsageScreenConverter()
-    }
-
-    @FeatureScope
-    @Provides
     fun provideInterpreter(): UsageInterpreter {
         return UsageInterpreter()
     }
@@ -54,7 +48,13 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideRenderer(): UsageRenderer {
-        return UsageRenderer()
+    fun provideScreenConverter(): UsageScreenConverter {
+        return UsageScreenConverter()
+    }
+
+    @FeatureScope
+    @Provides
+    fun provideRenderer(screenConverter: UsageScreenConverter): UsageRenderer {
+        return UsageRenderer(screenConverter)
     }
 }
