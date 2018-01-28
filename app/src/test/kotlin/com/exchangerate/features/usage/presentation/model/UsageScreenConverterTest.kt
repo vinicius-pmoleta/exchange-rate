@@ -3,10 +3,7 @@ package com.exchangerate.features.usage.presentation.model
 import com.exchangerate.features.usage.data.Usage
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class UsageScreenConverterTest {
 
     private val screenConverter: UsageScreenConverter = UsageScreenConverter()
