@@ -2,7 +2,6 @@ package com.exchangerate.core.structure
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import android.view.View
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.data.live.LiveDataReactiveConverter
 import io.reactivex.Observable
@@ -26,9 +25,9 @@ interface MviView<I : MviIntent, in S : MviState> {
     fun render(state: S?)
 }
 
-interface MviRenderer<in S : MviState> {
+interface MviRenderer<in S : MviState, in V: MviView<*,*>> {
 
-    fun render(state: S?, view: View)
+    fun render(state: S?, view: V)
 }
 
 open class MviViewModel<I : MviIntent, S : MviState>(
