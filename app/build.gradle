@@ -2,16 +2,21 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 apply from: "${rootDir}/environment/environment.gradle"
 apply from: "${rootDir}/gradle/quality.gradle"
 
 project.ext {
     support_version = '26.1.0'
-    firebase_version = '11.4.2'
+    firebase_version = '11.8.0'
     dagger_version = '2.11'
     retrofit_version = '2.3.0'
-    architecture_components_version = '1.0.0-alpha9-1'
+    architecture_components_version = '1.1.0'
+    firebase_version = '11.8.0'
+    chuck_version = '1.1.0'
+    leak_canary_version = '1.5.4'
+    stetho_version = '1.5.0'
 }
 
 android {
@@ -112,15 +117,29 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     // ARCHITECTURE COMPONENTS
-    compile "android.arch.lifecycle:runtime:$architecture_components_version"
     compile "android.arch.lifecycle:extensions:$architecture_components_version"
     compile "android.arch.lifecycle:reactivestreams:$architecture_components_version"
     kapt "android.arch.lifecycle:compiler:$architecture_components_version"
 
+    // FIREBASE
+    compile "com.google.firebase:firebase-core:$firebase_version"
+    compile "com.google.firebase:firebase-crash:$firebase_version"
+    compile "com.google.firebase:firebase-perf:$firebase_version"
+
     // TEST
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    testImplementation 'io.mockk:mockk:1.7'
+
+
+    // DEVELOPMENT
+    debugCompile "com.readystatesoftware.chuck:library:$chuck_version"
+    releaseCompile "com.readystatesoftware.chuck:library-no-op:$chuck_version"
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
+    compile "com.facebook.stetho:stetho:$stetho_version"
+    compile "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
 }
 
 def getApiKey() {
@@ -131,3 +150,5 @@ def getApiKey() {
 def getPrivateConfig(String key) {
     return ext.environment.findValueFor(key)
 }
+
+apply plugin: 'com.google.gms.google-services'

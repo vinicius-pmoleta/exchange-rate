@@ -1,7 +1,11 @@
 package com.exchangerate.core.di.module
 
+import android.content.Context
 import com.exchangerate.BuildConfig
 import com.exchangerate.core.data.repository.remote.interceptor.AuthenticationInterceptor
+import com.exchangerate.core.di.ForApplication
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -18,13 +22,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(@ForApplication context: Context): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = if (BuildConfig.DEBUG) BODY else NONE
 
         val builder = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(AuthenticationInterceptor())
+                .addInterceptor(ChuckInterceptor(context))
+                .addInterceptor(StethoInterceptor())
 
         return builder.build()
     }

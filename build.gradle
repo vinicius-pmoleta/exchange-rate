@@ -1,10 +1,11 @@
 buildscript {
 
     project.ext {
-        gradle_version = '3.0.0-beta7'
-        googleServices_version = '3.0.0'
-        kotlin_version = '1.1.51'
-        detekt_version = '1.0.0.RC4-3'
+        gradle_version = '3.0.1'
+        googleServices_version = '3.1.0'
+        kotlin_version = '1.2.10'
+        detekt_version = '1.0.0.RC5-6'
+        firebase_plugin_version = '1.1.5'
     }
 
     repositories {
@@ -19,6 +20,7 @@ buildscript {
         classpath "com.google.gms:google-services:$googleServices_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+        classpath "com.google.firebase:firebase-plugins:$firebase_plugin_version"
     }
 }
 
@@ -36,14 +38,4 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply plugin: 'io.gitlab.arturbosch.detekt'
-
-detekt {
-    version = "$detekt_version"
-    profile("main") {
-        input = "$projectDir/app/src/main/kotlin"
-        config = "$projectDir/default-detekt-config.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-        output = "$projectDir/app/build/reports/detekt"
-    }
-}
+apply from: "${rootDir}/gradle/analysis.gradle"

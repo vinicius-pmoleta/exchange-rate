@@ -33,6 +33,10 @@ jobs:
           <<: *general_cache_key
 
       - run:
+          name: Add Google Services configuration
+          command: echo $GOOGLE_SERVICES_CONFIGURATION | base64 --decode > ~/code/app/google-services.json
+
+      - run:
           name: Setup dependencies
           command: ./gradlew --no-daemon --stacktrace androidDependencies
 

@@ -8,10 +8,9 @@ import com.exchangerate.core.structure.BaseActivity
 import com.exchangerate.features.usage.presentation.UsageFragment
 import kotlinx.android.synthetic.main.home_activity.homeNavigation
 
-class HomeActivity : BaseActivity<HomePresenter>(), HomeContract.View {
+class HomeActivity : BaseActivity() {
 
     override fun initializeDependencyInjector() {
-        presenter = HomePresenter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,16 +18,16 @@ class HomeActivity : BaseActivity<HomePresenter>(), HomeContract.View {
         setContentView(R.layout.home_activity)
 
         setupNavigation()
-        presenter.initialize()
+        showUsage()
     }
 
-    override fun showUsage() {
+    private fun showUsage() {
         replaceContentWith(UsageFragment.TAG, UsageFragment())
     }
 
-    override fun showConversion() {}
+    private fun showConversion() {}
 
-    override fun showAlerts() {}
+    private fun showAlerts() {}
 
     private fun replaceContentWith(tag: String, fragment: Fragment) {
         if (supportFragmentManager.findFragmentByTag(tag) == null) {

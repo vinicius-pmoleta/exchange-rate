@@ -10,4 +10,7 @@
     <string name="home_navigation_option_conversion">Conversion</string>
     <string name="home_navigation_option_alerts">Alerts</string>
 
+    <!-- Usage -->
+    <string name="usage_refresh_action_label">Refresh</string>
+
 </resources>

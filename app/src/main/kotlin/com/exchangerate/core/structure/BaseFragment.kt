@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import javax.inject.Inject
 
-abstract class BaseFragment<Presenter : BaseContract.Action> : Fragment() {
-
-    @Inject
-    lateinit var presenter: Presenter
+abstract class BaseFragment : Fragment() {
 
     abstract fun initializeDependencyInjector()
 

@@ -1,8 +1,8 @@
-package com.exchangerate.core.di.scope
+package com.exchangerate.core.di
 
 import javax.inject.Scope
 
 @Scope
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ActivityScoped
+annotation class FeatureScope
