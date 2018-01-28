@@ -3,7 +3,9 @@ package com.exchangerate.features.usage.di
 import com.exchangerate.core.data.repository.remote.UsageRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.usage.business.*
+import com.exchangerate.features.usage.business.UsageInterpreter
+import com.exchangerate.features.usage.business.UsageProcessor
+import com.exchangerate.features.usage.business.UsageReducer
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.UsageRenderer
 import com.exchangerate.features.usage.presentation.UsageViewModelFactory

@@ -9,9 +9,9 @@ import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.core.structure.MviView
+import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
-import com.exchangerate.features.usage.data.UsageState
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
