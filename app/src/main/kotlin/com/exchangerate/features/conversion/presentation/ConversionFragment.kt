@@ -1,4 +1,4 @@
-package com.exchangerate.features.exchange.presentation
+package com.exchangerate.features.conversion.presentation
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,33 +10,33 @@ import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
-import com.exchangerate.features.exchange.data.ExchangeState
-import com.exchangerate.features.exchange.di.DaggerExchangeFeatureComponent
-import com.exchangerate.features.exchange.di.ExchangeFeatureModule
+import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.di.ConversionFeatureModule
+import com.exchangerate.features.conversion.di.DaggerConversionFeatureComponent
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.exchange_fragment.view.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ExchangeFragment : BaseFragment(), ExchangeView {
+class ConversionFragment : BaseFragment(), ConversionView {
 
     companion object {
-        val TAG: String = ExchangeFragment::class.java.simpleName
+        val TAG: String = ConversionFragment::class.java.simpleName
     }
 
     @Inject
-    lateinit var viewModelFactory: ExchangeViewModelFactory
+    lateinit var viewModelFactory: ConversionViewModelFactory
 
     @Inject
-    lateinit var renderer: ExchangeRenderer
+    lateinit var renderer: ConversionRenderer
 
-    private lateinit var viewModel: ExchangeViewModel
+    private lateinit var viewModel: ConversionViewModel
 
     override fun initializeDependencyInjector() {
-        DaggerExchangeFeatureComponent.builder()
+        DaggerConversionFeatureComponent.builder()
                 .applicationComponent((activity.application as ExchangeRateApplication).applicationComponent)
-                .exchangeFeatureModule(ExchangeFeatureModule())
+                .conversionFeatureModule(ConversionFeatureModule())
                 .build().inject(this)
     }
 
@@ -46,7 +46,7 @@ class ExchangeFragment : BaseFragment(), ExchangeView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ExchangeViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ConversionViewModel::class.java)
         setup()
     }
 
@@ -60,7 +60,7 @@ class ExchangeFragment : BaseFragment(), ExchangeView {
         super.onDestroy()
     }
 
-    override fun intents(): Observable<ExchangeIntent> {
+    override fun intents(): Observable<ConversionIntent> {
         view?.run {
             return RxTextView
                     .textChanges(this.exchangeValueToConvertView)
@@ -75,7 +75,7 @@ class ExchangeFragment : BaseFragment(), ExchangeView {
                                             .filter { toCurrency -> toCurrency.length == 3 }
                                             .debounce(500, TimeUnit.MILLISECONDS)
                                             .map { toCurrency ->
-                                                LoadExchangeIntent(fromCurrency.toString(), toCurrency.toString(), value.toString().toFloat())
+                                                ApplyConversionIntent(fromCurrency.toString(), toCurrency.toString(), value.toString().toFloat())
                                             }
                                 }
                     }
@@ -83,7 +83,7 @@ class ExchangeFragment : BaseFragment(), ExchangeView {
         return Observable.empty()
     }
 
-    override fun render(state: ExchangeState?) {
+    override fun render(state: ConversionState?) {
         renderer.render(state, this)
     }
 }

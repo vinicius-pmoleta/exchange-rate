@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.MenuItem
 import com.exchangerate.R
 import com.exchangerate.core.structure.BaseActivity
-import com.exchangerate.features.exchange.presentation.ExchangeFragment
+import com.exchangerate.features.conversion.presentation.ConversionFragment
 import com.exchangerate.features.usage.presentation.UsageFragment
 import kotlinx.android.synthetic.main.home_activity.*
 
@@ -27,7 +27,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showConversion() {
-        replaceContentWith(ExchangeFragment.TAG, ExchangeFragment())
+        replaceContentWith(ConversionFragment.TAG, ConversionFragment())
     }
 
     private fun showAlerts() {}

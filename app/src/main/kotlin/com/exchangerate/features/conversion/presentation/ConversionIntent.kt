@@ -1,11 +1,11 @@
-package com.exchangerate.features.exchange.presentation
+package com.exchangerate.features.conversion.presentation
 
 import com.exchangerate.core.structure.MviIntent
 
-interface ExchangeIntent : MviIntent
+interface ConversionIntent : MviIntent
 
-data class LoadExchangeIntent(
+data class ApplyConversionIntent(
         val currencyFrom: String,
         val currencyTo: String,
         val valueToConvert: Float
-) : ExchangeIntent
+) : ConversionIntent
