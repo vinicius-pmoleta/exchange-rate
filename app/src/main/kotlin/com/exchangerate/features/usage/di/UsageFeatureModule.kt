@@ -1,6 +1,6 @@
 package com.exchangerate.features.usage.di
 
-import com.exchangerate.core.data.repository.remote.UsageRepository
+import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.usage.business.UsageInterpreter
@@ -9,7 +9,7 @@ import com.exchangerate.features.usage.business.UsageReducer
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.UsageRenderer
 import com.exchangerate.features.usage.presentation.UsageViewModelFactory
-import com.exchangerate.features.usage.presentation.model.UsageScreenConverter
+import com.exchangerate.features.usage.presentation.UsageScreenConverter
 import dagger.Module
 import dagger.Provides
 
@@ -24,7 +24,7 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideProcessor(repository: UsageRepository): UsageProcessor {
+    fun provideProcessor(repository: RemoteExchangeRepository): UsageProcessor {
         return UsageProcessor(repository)
     }
 

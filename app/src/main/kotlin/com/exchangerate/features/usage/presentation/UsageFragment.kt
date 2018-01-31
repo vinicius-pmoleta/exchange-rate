@@ -14,6 +14,8 @@ import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
+import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
+import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable

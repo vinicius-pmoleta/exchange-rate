@@ -5,4 +5,8 @@ import com.exchangerate.core.structure.MviAction
 interface ConversionAction : MviAction
 
 class StartLoadingConversionAction : ConversionAction
-class LoadConversionAction : ConversionAction
+data class LoadConversionAction(
+        val currencyFrom: String,
+        val currencyTo: String,
+        val valueToConvert: Float
+) : ConversionAction

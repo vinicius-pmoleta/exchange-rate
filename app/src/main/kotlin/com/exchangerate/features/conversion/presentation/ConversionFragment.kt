@@ -13,6 +13,9 @@ import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.conversion.data.ConversionState
 import com.exchangerate.features.conversion.di.ConversionFeatureModule
 import com.exchangerate.features.conversion.di.DaggerConversionFeatureComponent
+import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
+import com.exchangerate.features.conversion.presentation.model.ConversionIntent
+import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.exchange_fragment.view.*
@@ -85,5 +88,14 @@ class ConversionFragment : BaseFragment(), ConversionView {
 
     override fun render(state: ConversionState?) {
         renderer.render(state, this)
+    }
+
+    override fun renderLoading(isLoading: Boolean) {
+    }
+
+    override fun renderData(conversion: ConversionScreenModel) {
+    }
+
+    override fun renderError() {
     }
 }

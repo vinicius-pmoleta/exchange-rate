@@ -6,6 +6,7 @@ import com.exchangerate.core.structure.MviStore
 import com.exchangerate.core.structure.MviViewModel
 import com.exchangerate.features.conversion.business.ConversionInterpreter
 import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import javax.inject.Inject
 
 class ConversionViewModel(

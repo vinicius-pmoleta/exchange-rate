@@ -1,4 +1,4 @@
-package com.exchangerate.features.usage.data
+package com.exchangerate.core.data.repository.remote.data
 
 import com.squareup.moshi.Json
 

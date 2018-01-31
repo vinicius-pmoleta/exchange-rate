@@ -1,6 +1,7 @@
 package com.exchangerate.features.usage.presentation.model
 
 import com.exchangerate.features.usage.data.Usage
+import com.exchangerate.features.usage.presentation.UsageScreenConverter
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

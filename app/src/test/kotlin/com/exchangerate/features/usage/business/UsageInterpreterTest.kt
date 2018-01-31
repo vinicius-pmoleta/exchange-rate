@@ -2,8 +2,8 @@ package com.exchangerate.features.usage.business
 
 import com.exchangerate.features.usage.data.LoadUsageAction
 import com.exchangerate.features.usage.data.StartLoadingUsageAction
-import com.exchangerate.features.usage.presentation.LoadUsageIntent
-import com.exchangerate.features.usage.presentation.UsageIntent
+import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
+import com.exchangerate.features.usage.presentation.model.UsageIntent
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

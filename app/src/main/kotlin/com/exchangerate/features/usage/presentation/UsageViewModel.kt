@@ -6,6 +6,7 @@ import com.exchangerate.core.structure.MviStore
 import com.exchangerate.core.structure.MviViewModel
 import com.exchangerate.features.usage.business.UsageInterpreter
 import com.exchangerate.features.usage.data.UsageState
+import com.exchangerate.features.usage.presentation.model.UsageIntent
 import javax.inject.Inject
 
 class UsageViewModel(

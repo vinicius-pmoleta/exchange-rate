@@ -1,19 +1,20 @@
 package com.exchangerate.features.conversion.business
 
-import android.util.Log
 import com.exchangerate.core.structure.MviAction
 import com.exchangerate.core.structure.MviIntentInterpreter
 import com.exchangerate.features.conversion.data.LoadConversionAction
 import com.exchangerate.features.conversion.data.StartLoadingConversionAction
-import com.exchangerate.features.conversion.presentation.ApplyConversionIntent
-import com.exchangerate.features.conversion.presentation.ConversionIntent
+import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
+import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 
 class ConversionInterpreter : MviIntentInterpreter<ConversionIntent> {
 
     override fun translate(intent: ConversionIntent): List<MviAction> {
-        Log.d("TEST", "Intent is " + intent)
         return when (intent) {
-            is ApplyConversionIntent -> listOf(StartLoadingConversionAction(), LoadConversionAction())
+            is ApplyConversionIntent -> listOf(
+                    StartLoadingConversionAction(),
+                    LoadConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert)
+            )
             else -> emptyList()
         }
     }

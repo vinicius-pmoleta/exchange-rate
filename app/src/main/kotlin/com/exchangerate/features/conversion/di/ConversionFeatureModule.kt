@@ -1,5 +1,6 @@
 package com.exchangerate.features.conversion.di
 
+import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.conversion.business.ConversionInterpreter
@@ -7,6 +8,7 @@ import com.exchangerate.features.conversion.business.ConversionProcessor
 import com.exchangerate.features.conversion.business.ConversionReducer
 import com.exchangerate.features.conversion.data.ConversionState
 import com.exchangerate.features.conversion.presentation.ConversionRenderer
+import com.exchangerate.features.conversion.presentation.ConversionScreenConverter
 import com.exchangerate.features.conversion.presentation.ConversionViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -22,8 +24,8 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideProcessor(): ConversionProcessor {
-        return ConversionProcessor()
+    fun provideProcessor(repository: RemoteExchangeRepository): ConversionProcessor {
+        return ConversionProcessor(repository)
     }
 
     @FeatureScope
@@ -46,7 +48,13 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideRenderer(): ConversionRenderer {
-        return ConversionRenderer()
+    fun provideConverter(): ConversionScreenConverter {
+        return ConversionScreenConverter()
+    }
+
+    @FeatureScope
+    @Provides
+    fun provideRenderer(converter: ConversionScreenConverter): ConversionRenderer {
+        return ConversionRenderer(converter)
     }
 }

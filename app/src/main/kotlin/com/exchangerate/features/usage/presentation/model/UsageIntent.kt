@@ -1,4 +1,4 @@
-package com.exchangerate.features.usage.presentation
+package com.exchangerate.features.usage.presentation.model
 
 import com.exchangerate.core.structure.MviIntent
 

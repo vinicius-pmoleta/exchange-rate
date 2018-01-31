@@ -4,8 +4,8 @@ import com.exchangerate.core.structure.MviAction
 import com.exchangerate.core.structure.MviIntentInterpreter
 import com.exchangerate.features.usage.data.LoadUsageAction
 import com.exchangerate.features.usage.data.StartLoadingUsageAction
-import com.exchangerate.features.usage.presentation.LoadUsageIntent
-import com.exchangerate.features.usage.presentation.UsageIntent
+import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
+import com.exchangerate.features.usage.presentation.model.UsageIntent
 
 class UsageInterpreter : MviIntentInterpreter<UsageIntent> {
 
