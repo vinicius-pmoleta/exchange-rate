@@ -17,7 +17,9 @@ class ConversionReducer(private val processor: ConversionProcessor) : MviReducer
                             data = state.data.copy(
                                     fromCurrency = action.currencyFrom,
                                     toCurrency = action.currencyTo,
-                                    valueToConvert = action.valueToConvert
+                                    valueToConvert = action.valueToConvert,
+                                    convertedValue = 0F,
+                                    rate = 0F
                             )
                     )
             )
