@@ -7,7 +7,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <EditText
-        android:id="@+id/exchangeCurrencyToView"
+        android:id="@+id/conversionCurrencyToView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -16,13 +16,27 @@
         android:ems="10"
         android:inputType="textCapCharacters"
         android:singleLine="true"
-        tools:text="EUR"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_currency_value_divider"
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
-        app:layout_constraintTop_toBottomOf="@+id/exchangeCurrencyFromView" />
+        app:layout_constraintTop_toBottomOf="@+id/conversionCurrencyFromView"
+        tools:text="EUR" />
 
     <TextView
-        android:id="@+id/exchangeConvertedValueView"
+        android:id="@+id/conversionRateView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_currency_value_divider"
+        app:layout_constraintTop_toBottomOf="@+id/conversionConvertedValueView"
+        tools:text="1.234" />
+
+    <TextView
+        android:id="@+id/conversionConvertedValueView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,24 +46,24 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_currency_value_divider"
-        app:layout_constraintTop_toBottomOf="@+id/exchangeValueToConvertView"
+        app:layout_constraintTop_toBottomOf="@+id/conversionValueToConvertView"
         tools:text="1000.00" />
 
     <EditText
-        android:id="@+id/exchangeValueToConvertView"
+        android:id="@+id/conversionValueToConvertView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:singleLine="true"
-        tools:text="1200.00"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_currency_value_divider"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1200.00" />
 
     <EditText
-        android:id="@+id/exchangeCurrencyFromView"
+        android:id="@+id/conversionCurrencyFromView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -57,10 +71,10 @@
         android:ems="10"
         android:inputType="textCapCharacters"
         android:singleLine="true"
-        tools:text="USD"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_currency_value_divider"
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
-        app:layout_constraintTop_toTopOf="@+id/exchangeValueToConvertView" />
+        app:layout_constraintTop_toTopOf="@+id/conversionValueToConvertView"
+        tools:text="USD" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_vertical_start"

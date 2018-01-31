@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
@@ -18,7 +19,7 @@ import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.exchange_fragment.view.*
+import kotlinx.android.synthetic.main.conversion_fragment.view.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -44,7 +45,7 @@ class ConversionFragment : BaseFragment(), ConversionView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.exchange_fragment, container, false)
+        return inflater?.inflate(R.layout.conversion_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -66,15 +67,15 @@ class ConversionFragment : BaseFragment(), ConversionView {
     override fun intents(): Observable<ConversionIntent> {
         view?.run {
             return RxTextView
-                    .textChanges(this.exchangeValueToConvertView)
+                    .textChanges(this.conversionValueToConvertView)
                     .filter { value -> value.isNotEmpty() }
                     .switchMap { value ->
                         RxTextView
-                                .textChanges(this.exchangeCurrencyFromView)
+                                .textChanges(this.conversionCurrencyFromView)
                                 .filter { fromCurrency -> fromCurrency.length == 3 }
                                 .switchMap { fromCurrency ->
                                     RxTextView
-                                            .textChanges(this.exchangeCurrencyToView)
+                                            .textChanges(this.conversionCurrencyToView)
                                             .filter { toCurrency -> toCurrency.length == 3 }
                                             .debounce(500, TimeUnit.MILLISECONDS)
                                             .map { toCurrency ->
@@ -94,8 +95,11 @@ class ConversionFragment : BaseFragment(), ConversionView {
     }
 
     override fun renderData(conversion: ConversionScreenModel) {
+        view?.conversionConvertedValueView?.text = conversion.convertedValue
+        view?.conversionRateView?.text = conversion.rate
     }
 
     override fun renderError() {
+        Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
     }
 }

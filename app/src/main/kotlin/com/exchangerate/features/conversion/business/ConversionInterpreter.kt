@@ -12,7 +12,7 @@ class ConversionInterpreter : MviIntentInterpreter<ConversionIntent> {
     override fun translate(intent: ConversionIntent): List<MviAction> {
         return when (intent) {
             is ApplyConversionIntent -> listOf(
-                    StartLoadingConversionAction(),
+                    StartLoadingConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert),
                     LoadConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert)
             )
             else -> emptyList()

@@ -10,8 +10,17 @@ import io.reactivex.Observable
 class ConversionReducer(private val processor: ConversionProcessor) : MviReducer<ConversionState> {
 
     override fun reduce(action: MviAction, state: ConversionState): Observable<ConversionState> {
-        return when(action) {
-            is StartLoadingConversionAction -> Observable.just(state.copy(isLoading = true))
+        return when (action) {
+            is StartLoadingConversionAction -> Observable.just(
+                    state.copy(
+                            isLoading = true,
+                            data = state.data.copy(
+                                    fromCurrency = action.currencyFrom,
+                                    toCurrency = action.currencyTo,
+                                    valueToConvert = action.valueToConvert
+                            )
+                    )
+            )
             is LoadConversionAction -> processor
                     .applyConversion(action.valueToConvert, action.currencyFrom, action.currencyTo)
                     .map { conversion ->

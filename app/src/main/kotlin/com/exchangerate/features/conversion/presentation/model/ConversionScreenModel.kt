@@ -1,4 +1,6 @@
 package com.exchangerate.features.conversion.presentation.model
 
-class ConversionScreenModel {
-}
+data class ConversionScreenModel(
+        val rate: String,
+        val convertedValue: String
+)

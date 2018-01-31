@@ -6,6 +6,8 @@ import com.exchangerate.features.conversion.presentation.model.ConversionScreenM
 class ConversionScreenConverter {
 
     fun prepareForPresentation(data: ConversionData): ConversionScreenModel {
-        return ConversionScreenModel()
+        val rate = "%.3f".format(data.rate)
+        val value = "%.2f".format(data.convertedValue)
+        return ConversionScreenModel(rate, value)
     }
 }
