@@ -1,6 +1,10 @@
 package com.exchangerate.features.usage.business
 
-import com.exchangerate.features.usage.data.*
+import com.exchangerate.core.data.repository.remote.data.Usage
+import com.exchangerate.features.usage.data.LoadUsageAction
+import com.exchangerate.features.usage.data.StartLoadingUsageAction
+import com.exchangerate.features.usage.data.UsageAction
+import com.exchangerate.features.usage.data.UsageState
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Observable

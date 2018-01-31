@@ -1,9 +1,9 @@
 package com.exchangerate.features.usage.business
 
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
-import com.exchangerate.features.usage.data.Data
-import com.exchangerate.features.usage.data.Usage
-import com.exchangerate.features.usage.data.UsageResponse
+import com.exchangerate.core.data.repository.remote.data.Data
+import com.exchangerate.core.data.repository.remote.data.Usage
+import com.exchangerate.core.data.repository.remote.data.UsageResponse
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single

@@ -1,6 +1,6 @@
 package com.exchangerate.features.usage.presentation
 
-import com.exchangerate.features.usage.data.Usage
+import com.exchangerate.core.data.repository.remote.data.Usage
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 import io.mockk.Called
