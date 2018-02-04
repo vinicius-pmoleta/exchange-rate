@@ -15,3 +15,7 @@ data class LoadConversionAction(
         val currencyTo: String,
         val valueToConvert: Float
 ) : ConversionAction
+
+class StartLoadingCurrenciesAction : ConversionAction
+
+class LoadCurrenciesAction : ConversionAction

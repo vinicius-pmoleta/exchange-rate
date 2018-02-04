@@ -2,9 +2,7 @@ package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviAction
 import com.exchangerate.core.structure.MviReducer
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.LoadConversionAction
-import com.exchangerate.features.conversion.data.StartLoadingConversionAction
+import com.exchangerate.features.conversion.data.*
 import io.reactivex.Observable
 
 class ConversionReducer(private val processor: ConversionProcessor) : MviReducer<ConversionState> {
@@ -14,12 +12,15 @@ class ConversionReducer(private val processor: ConversionProcessor) : MviReducer
             is StartLoadingConversionAction -> Observable.just(
                     state.copy(
                             isLoading = true,
-                            data = state.data.copy(
+                            conversionData = state.conversionData.copy(
                                     fromCurrency = action.currencyFrom,
                                     toCurrency = action.currencyTo,
                                     valueToConvert = action.valueToConvert,
                                     convertedValue = 0F,
                                     rate = 0F
+                            ),
+                            currencyData = state.currencyData.copy(
+                                    isInitialized = true
                             )
                     )
             )
@@ -28,9 +29,30 @@ class ConversionReducer(private val processor: ConversionProcessor) : MviReducer
                     .map { conversion ->
                         state.copy(
                                 isLoading = false,
-                                data = state.data.copy(
+                                conversionData = state.conversionData.copy(
                                         convertedValue = conversion.convertedValue,
                                         rate = conversion.rate
+                                )
+                        )
+                    }
+                    .onErrorReturn { error ->
+                        state.copy(isLoading = false, error = error)
+                    }
+            is StartLoadingCurrenciesAction -> Observable.just(
+                    state.copy(
+                            isLoading = true,
+                            currencyData = state.currencyData.copy(
+                                    isInitialized = false
+                            )
+                    )
+            )
+            is LoadCurrenciesAction -> processor
+                    .loadCurrencies()
+                    .map { currencies ->
+                        state.copy(
+                                isLoading = false,
+                                currencyData = state.currencyData.copy(
+                                        currencies = currencies
                                 )
                         )
                     }

@@ -4,3 +4,7 @@ data class ConversionScreenModel(
         val rate: String,
         val convertedValue: String
 )
+
+data class CurrencyScreenModel(
+        val currencies: List<String>
+)

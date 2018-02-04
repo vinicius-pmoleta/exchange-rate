@@ -8,9 +8,14 @@ class ConversionRenderer(private val screenConverter: ConversionScreenConverter)
     override fun render(state: ConversionState?, view: ConversionView) {
         state?.apply {
             view.renderLoading(state.isLoading)
-            state.data.apply {
+            state.currencyData.apply {
+                if (!this.isInitialized) {
+                    view.renderCurrencyData(this.currencies)
+                }
+            }
+            state.conversionData.apply {
                 val screenModel = screenConverter.prepareForPresentation(this)
-                view.renderData(screenModel)
+                view.renderConversionData(screenModel)
             }
             state.error?.apply {
                 view.renderError()

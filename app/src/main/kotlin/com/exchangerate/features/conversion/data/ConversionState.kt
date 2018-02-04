@@ -10,8 +10,14 @@ data class ConversionData(
         val rate: Float = 0F
 )
 
+data class CurrenciesData(
+        val isInitialized: Boolean = false,
+        val currencies: List<Currency> = emptyList()
+)
+
 data class ConversionState(
         val isLoading: Boolean = false,
-        val data: ConversionData = ConversionData(),
+        val conversionData: ConversionData = ConversionData(),
+        val currencyData: CurrenciesData = CurrenciesData(),
         val error: Throwable? = null
 ) : MviState

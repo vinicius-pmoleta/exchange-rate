@@ -4,6 +4,8 @@ import com.exchangerate.core.structure.MviIntent
 
 interface ConversionIntent : MviIntent
 
+class LoadCurrenciesIntent : ConversionIntent
+
 data class ApplyConversionIntent(
         val currencyFrom: String,
         val currencyTo: String,

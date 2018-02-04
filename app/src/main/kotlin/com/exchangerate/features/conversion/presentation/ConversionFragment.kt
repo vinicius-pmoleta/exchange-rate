@@ -6,20 +6,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.data.Currency
 import com.exchangerate.features.conversion.di.ConversionFeatureModule
 import com.exchangerate.features.conversion.di.DaggerConversionFeatureComponent
 import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
+import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
+import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.conversion_fragment.*
 import kotlinx.android.synthetic.main.conversion_fragment.view.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -64,19 +70,51 @@ class ConversionFragment : BaseFragment(), ConversionView {
         super.onDestroy()
     }
 
-    override fun intents(): Observable<ConversionIntent> {
+    override fun intents(): Observable<ConversionIntent> = Observable.merge(initialIntent(), conversionIntent())
+
+    override fun render(state: ConversionState?) {
+        renderer.render(state, this)
+    }
+
+    override fun renderLoading(isLoading: Boolean) {
+        conversionProgressView.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun renderCurrencyData(currencies: List<Currency>) {
+        val codes = ArrayList<String>()
+        currencies.forEach { currency -> codes.add(currency.code) }
+
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, codes)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        view?.conversionCurrencyFromView?.adapter = adapter
+        view?.conversionCurrencyToView?.adapter = adapter
+    }
+
+    override fun renderConversionData(conversion: ConversionScreenModel) {
+        view?.conversionConvertedValueView?.text = conversion.convertedValue
+        view?.conversionRateView?.text = conversion.rate
+    }
+
+    override fun renderError() {
+        Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun initialIntent(): Observable<ConversionIntent> = Observable.just(LoadCurrenciesIntent())
+
+    private fun conversionIntent(): Observable<ConversionIntent> {
         view?.run {
             return RxTextView
                     .textChanges(this.conversionValueToConvertView)
                     .filter { value -> value.isNotEmpty() }
                     .switchMap { value ->
-                        RxTextView
-                                .textChanges(this.conversionCurrencyFromView)
-                                .filter { fromCurrency -> fromCurrency.length == 3 }
+                        RxAdapterView
+                                .itemSelections(this.conversionCurrencyFromView)
+                                .map { position -> this.conversionCurrencyFromView.getItemAtPosition(position) }
                                 .switchMap { fromCurrency ->
-                                    RxTextView
-                                            .textChanges(this.conversionCurrencyToView)
-                                            .filter { toCurrency -> toCurrency.length == 3 }
+                                    RxAdapterView
+                                            .itemSelections(this.conversionCurrencyToView)
+                                            .map { position -> this.conversionCurrencyToView.getItemAtPosition(position) }
                                             .debounce(500, TimeUnit.MILLISECONDS)
                                             .map { toCurrency ->
                                                 ApplyConversionIntent(fromCurrency.toString(), toCurrency.toString(), value.toString().toFloat())
@@ -85,21 +123,5 @@ class ConversionFragment : BaseFragment(), ConversionView {
                     }
         }
         return Observable.empty()
-    }
-
-    override fun render(state: ConversionState?) {
-        renderer.render(state, this)
-    }
-
-    override fun renderLoading(isLoading: Boolean) {
-    }
-
-    override fun renderData(conversion: ConversionScreenModel) {
-        view?.conversionConvertedValueView?.text = conversion.convertedValue
-        view?.conversionRateView?.text = conversion.rate
-    }
-
-    override fun renderError() {
-        Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
     }
 }
