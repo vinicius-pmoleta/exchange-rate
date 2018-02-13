@@ -2,7 +2,6 @@ package com.exchangerate.core.structure
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.data.live.LiveDataReactiveConverter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +24,7 @@ interface MviView<I : MviIntent, in S : MviState> {
     fun render(state: S?)
 }
 
-interface MviRenderer<in S : MviState, in V: MviView<*,*>> {
+interface MviRenderer<in S : MviState, in V : MviView<*, *>> {
 
     fun render(state: S?, view: V)
 }
@@ -42,10 +41,6 @@ open class MviViewModel<I : MviIntent, S : MviState>(
     private lateinit var disposable: Disposable
 
     fun processIntents(intents: Observable<I>) {
-        if (LiveDataOperator.isDataAvailable(liveState)) {
-            return
-        }
-
         disposable = intents
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())

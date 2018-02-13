@@ -31,10 +31,6 @@ import javax.inject.Inject
 
 class ConversionFragment : BaseFragment(), ConversionView {
 
-    companion object {
-        val TAG: String = ConversionFragment::class.java.simpleName
-    }
-
     @Inject
     lateinit var viewModelFactory: ConversionViewModelFactory
 
