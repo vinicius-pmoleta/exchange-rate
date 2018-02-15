@@ -23,9 +23,12 @@ import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesInt
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.conversion_fragment.*
-import kotlinx.android.synthetic.main.conversion_fragment.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.conversion_fragment.conversionProgressView
+import kotlinx.android.synthetic.main.conversion_fragment.view.conversionConvertedValueView
+import kotlinx.android.synthetic.main.conversion_fragment.view.conversionCurrencyFromView
+import kotlinx.android.synthetic.main.conversion_fragment.view.conversionCurrencyToView
+import kotlinx.android.synthetic.main.conversion_fragment.view.conversionRateView
+import kotlinx.android.synthetic.main.conversion_fragment.view.conversionValueToConvertView
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

@@ -20,7 +20,9 @@ import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.usage_fragment.view.*
+import kotlinx.android.synthetic.main.usage_fragment.view.usageLoadingView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageRefreshActionView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageStatusView
 import javax.inject.Inject
 
 class UsageFragment : BaseFragment(), UsageView {

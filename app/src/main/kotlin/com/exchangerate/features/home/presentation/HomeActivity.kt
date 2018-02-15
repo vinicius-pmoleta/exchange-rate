@@ -5,7 +5,8 @@ import com.exchangerate.R
 import com.exchangerate.core.structure.BaseActivity
 import com.exchangerate.features.conversion.presentation.ConversionFragment
 import com.exchangerate.features.usage.presentation.UsageFragment
-import kotlinx.android.synthetic.main.home_activity.*
+import kotlinx.android.synthetic.main.home_activity.homeContent
+import kotlinx.android.synthetic.main.home_activity.homeNavigation
 
 
 class HomeActivity : BaseActivity() {

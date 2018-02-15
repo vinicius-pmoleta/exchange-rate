@@ -49,7 +49,9 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: ConversionInterpreter, router: ConversionRouter, store: MviStore<ConversionState>): ConversionViewModelFactory {
+    fun provideViewModelFactory(interpreter: ConversionInterpreter,
+                                router: ConversionRouter,
+                                store: MviStore<ConversionState>): ConversionViewModelFactory {
         return ConversionViewModelFactory(interpreter, router, store)
     }
 

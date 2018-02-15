@@ -49,7 +49,9 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: UsageInterpreter, router: UsageRouter, store: MviStore<UsageState>): UsageViewModelFactory {
+    fun provideViewModelFactory(interpreter: UsageInterpreter,
+                                router: UsageRouter,
+                                store: MviStore<UsageState>): UsageViewModelFactory {
         return UsageViewModelFactory(interpreter, router, store)
     }
 
