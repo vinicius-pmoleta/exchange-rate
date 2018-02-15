@@ -1,26 +1,22 @@
 package com.exchangerate.features.conversion.business
 
-import com.exchangerate.core.structure.MviAction
 import com.exchangerate.core.structure.MviIntentInterpreter
-import com.exchangerate.features.conversion.data.LoadConversionAction
-import com.exchangerate.features.conversion.data.LoadCurrenciesAction
-import com.exchangerate.features.conversion.data.StartLoadingConversionAction
-import com.exchangerate.features.conversion.data.StartLoadingCurrenciesAction
+import com.exchangerate.features.conversion.data.*
 import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
 
-class ConversionInterpreter : MviIntentInterpreter<ConversionIntent> {
+class ConversionInterpreter : MviIntentInterpreter<ConversionIntent, ConversionAction> {
 
-    override fun translate(intent: ConversionIntent): List<MviAction> {
+    override fun translate(intent: ConversionIntent): List<ConversionAction> {
         return when (intent) {
             is ApplyConversionIntent -> listOf(
-                    StartLoadingConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert),
-                    LoadConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert)
+                    PrepareToApplyConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert),
+                    ApplyConversionAction(intent.currencyFrom, intent.currencyTo, intent.valueToConvert)
             )
             is LoadCurrenciesIntent -> listOf(
-                    StartLoadingCurrenciesAction(),
-                    LoadCurrenciesAction()
+                    PrepareToFetchCurrenciesAction(),
+                    FetchCurrenciesAction()
             )
             else -> emptyList()
         }

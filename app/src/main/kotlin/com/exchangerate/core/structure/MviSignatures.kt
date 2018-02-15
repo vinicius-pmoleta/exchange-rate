@@ -2,6 +2,7 @@ package com.exchangerate.core.structure
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.exchangerate.core.data.live.LiveDataReactiveConverter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,8 +30,9 @@ interface MviRenderer<in S : MviState, in V : MviView<*, *>> {
     fun render(state: S?, view: V)
 }
 
-open class MviViewModel<I : MviIntent, S : MviState>(
-        private val interpreter: MviIntentInterpreter<I>,
+open class MviViewModel<I : MviIntent, A: MviAction, S : MviState>(
+        private val interpreter: MviIntentInterpreter<I, A>,
+        private val router: MviRouter<A>,
         private val store: MviStore<S>
 ) : ViewModel() {
 
@@ -45,9 +47,10 @@ open class MviViewModel<I : MviIntent, S : MviState>(
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .flatMap { intent -> Observable.fromIterable(interpreter.translate(intent)) }
-                .flatMap { action -> store.dispatch(action) }
+                .flatMap { action -> router.route(action) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { error -> Log.e("MVI ERROR", "Error on MviViewModel", error) }
                 .subscribe()
     }
 
@@ -59,14 +62,19 @@ open class MviViewModel<I : MviIntent, S : MviState>(
     }
 }
 
-interface MviIntentInterpreter<in I : MviIntent> {
+interface MviIntentInterpreter<in I : MviIntent, out A : MviAction> {
 
-    fun translate(intent: I): List<MviAction>
+    fun translate(intent: I): List<A>
+}
+
+interface MviRouter<in A : MviAction> {
+
+    fun route(action: A) : Observable<Unit>
 }
 
 interface MviReducer<S : MviState> {
 
-    fun reduce(action: MviAction, state: S): Observable<S>
+    fun reduce(action: MviAction, state: S): S
 
     fun initialState(): S
 }
@@ -84,12 +92,10 @@ class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
     val stateObserver: BehaviorSubject<S> = BehaviorSubject
             .createDefault(reducer.initialState())
 
-    fun dispatch(action: MviAction): Observable<S> {
-        return reducer.reduce(action, state)
-                .doOnNext { newState ->
-                    middleware.forEach { it.intercept(state, action, newState) }
-                    state = newState
-                    stateObserver.onNext(state)
-                }
+    fun dispatch(action: MviAction) {
+        val newState = reducer.reduce(action, state)
+        middleware.forEach { it.intercept(state, action, newState) }
+        state = newState
+        stateObserver.onNext(state)
     }
 }

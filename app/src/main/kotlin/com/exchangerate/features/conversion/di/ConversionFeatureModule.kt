@@ -6,6 +6,7 @@ import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.conversion.business.ConversionInterpreter
 import com.exchangerate.features.conversion.business.ConversionProcessor
 import com.exchangerate.features.conversion.business.ConversionReducer
+import com.exchangerate.features.conversion.business.ConversionRouter
 import com.exchangerate.features.conversion.data.ConversionState
 import com.exchangerate.features.conversion.presentation.ConversionRenderer
 import com.exchangerate.features.conversion.presentation.ConversionScreenConverter
@@ -24,14 +25,20 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
+    fun provideRouter(store: MviStore<ConversionState>, processor: ConversionProcessor): ConversionRouter {
+        return ConversionRouter(store, processor)
+    }
+
+    @FeatureScope
+    @Provides
     fun provideProcessor(repository: RemoteExchangeRepository): ConversionProcessor {
         return ConversionProcessor(repository)
     }
 
     @FeatureScope
     @Provides
-    fun provideReducer(processor: ConversionProcessor): ConversionReducer {
-        return ConversionReducer(processor)
+    fun provideReducer(): ConversionReducer {
+        return ConversionReducer()
     }
 
     @FeatureScope
@@ -42,8 +49,8 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: ConversionInterpreter, store: MviStore<ConversionState>): ConversionViewModelFactory {
-        return ConversionViewModelFactory(interpreter, store)
+    fun provideViewModelFactory(interpreter: ConversionInterpreter, router: ConversionRouter, store: MviStore<ConversionState>): ConversionViewModelFactory {
+        return ConversionViewModelFactory(interpreter, router, store)
     }
 
     @FeatureScope
