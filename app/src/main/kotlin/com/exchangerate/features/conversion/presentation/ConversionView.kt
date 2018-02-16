@@ -10,7 +10,7 @@ interface ConversionView : MviView<ConversionIntent, ConversionState> {
 
     fun renderLoading(isLoading: Boolean)
 
-    fun renderCurrencyData(currencies: List<Currency>)
+    fun renderCurrencyData(currencies: List<Currency>, fromCurrency: String?, toCurrency: String?)
 
     fun renderConversionData(conversion: ConversionScreenModel)
 

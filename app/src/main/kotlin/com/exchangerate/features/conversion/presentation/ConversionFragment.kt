@@ -23,6 +23,7 @@ import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesInt
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.conversion_fragment.conversionProgressView
 import kotlinx.android.synthetic.main.conversion_fragment.view.conversionConvertedValueView
 import kotlinx.android.synthetic.main.conversion_fragment.view.conversionCurrencyFromView
@@ -41,6 +42,7 @@ class ConversionFragment : BaseFragment(), ConversionView {
     lateinit var renderer: ConversionRenderer
 
     private lateinit var viewModel: ConversionViewModel
+    private var currenciesAdapter: ArrayAdapter<String>? = null
 
     override fun initializeDependencyInjector() {
         DaggerConversionFeatureComponent.builder()
@@ -79,15 +81,22 @@ class ConversionFragment : BaseFragment(), ConversionView {
         conversionProgressView.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    override fun renderCurrencyData(currencies: List<Currency>) {
+    override fun renderCurrencyData(currencies: List<Currency>,
+                                    fromCurrency: String?,
+                                    toCurrency: String?) {
         val codes = ArrayList<String>()
         currencies.forEach { currency -> codes.add(currency.code) }
 
-        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, codes)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        if (currenciesAdapter == null) {
+            currenciesAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, codes)
+            currenciesAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        view?.conversionCurrencyFromView?.adapter = adapter
-        view?.conversionCurrencyToView?.adapter = adapter
+            view?.conversionCurrencyFromView?.adapter = currenciesAdapter
+            view?.conversionCurrencyToView?.adapter = currenciesAdapter
+        }
+
+        view?.conversionCurrencyFromView?.setSelection(codes.indexOf(fromCurrency))
+        view?.conversionCurrencyToView?.setSelection(codes.indexOf(toCurrency))
     }
 
     override fun renderConversionData(conversion: ConversionScreenModel) {
@@ -103,22 +112,19 @@ class ConversionFragment : BaseFragment(), ConversionView {
 
     private fun conversionIntent(): Observable<ConversionIntent> {
         view?.run {
-            return RxTextView
-                    .textChanges(this.conversionValueToConvertView)
-                    .filter { value -> value.isNotEmpty() }
-                    .switchMap { value ->
-                        RxAdapterView
-                                .itemSelections(this.conversionCurrencyFromView)
-                                .map { position -> this.conversionCurrencyFromView.getItemAtPosition(position) }
-                                .switchMap { fromCurrency ->
-                                    RxAdapterView
-                                            .itemSelections(this.conversionCurrencyToView)
-                                            .map { position -> this.conversionCurrencyToView.getItemAtPosition(position) }
-                                            .debounce(500, TimeUnit.MILLISECONDS)
-                                            .map { toCurrency ->
-                                                ApplyConversionIntent(fromCurrency.toString(), toCurrency.toString(), value.toString().toFloat())
-                                            }
-                                }
+            return Observables
+                    .combineLatest(
+                            RxAdapterView.itemSelections(this.conversionCurrencyFromView),
+                            RxAdapterView.itemSelections(this.conversionCurrencyToView),
+                            RxTextView.textChanges(this.conversionValueToConvertView))
+                    .filter { triple -> triple.third.isNotEmpty() }
+                    .distinctUntilChanged()
+                    .debounce(500, TimeUnit.MILLISECONDS)
+                    .map { triple ->
+                        ApplyConversionIntent(
+                                currenciesAdapter!!.getItem(triple.first),
+                                currenciesAdapter!!.getItem(triple.second),
+                                triple.third.toString().toFloat())
                     }
         }
         return Observable.empty()

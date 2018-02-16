@@ -30,7 +30,8 @@ interface MviRenderer<in S : MviState, in V : MviView<*, *>> {
     fun render(state: S?, view: V)
 }
 
-open class MviViewModel<I : MviIntent, A: MviAction, S : MviState>(
+open class MviViewModel<I : MviIntent, A : MviAction, S : MviState>(
+        private val filter: MviFilter<I, S>,
         private val interpreter: MviIntentInterpreter<I, A>,
         private val router: MviRouter<A>,
         private val store: MviStore<S>
@@ -46,6 +47,7 @@ open class MviViewModel<I : MviIntent, A: MviAction, S : MviState>(
         disposable = intents
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
+                .filter { intent -> filter.apply(intent, liveState.value) }
                 .flatMap { intent -> Observable.fromIterable(interpreter.translate(intent)) }
                 .flatMap { action -> router.route(action) }
                 .subscribeOn(Schedulers.io())
@@ -67,9 +69,14 @@ interface MviIntentInterpreter<in I : MviIntent, out A : MviAction> {
     fun translate(intent: I): List<A>
 }
 
+interface MviFilter<in I : MviIntent, in S : MviState> {
+
+    fun apply(intent: I, state: S?): Boolean
+}
+
 interface MviRouter<in A : MviAction> {
 
-    fun route(action: A) : Observable<Unit>
+    fun route(action: A): Observable<Unit>
 }
 
 interface MviReducer<S : MviState> {

@@ -3,6 +3,7 @@ package com.exchangerate.features.usage.di
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
+import com.exchangerate.features.usage.business.UsageFilter
 import com.exchangerate.features.usage.business.UsageInterpreter
 import com.exchangerate.features.usage.business.UsageProcessor
 import com.exchangerate.features.usage.business.UsageReducer
@@ -16,6 +17,12 @@ import dagger.Provides
 
 @Module
 class UsageFeatureModule {
+
+    @FeatureScope
+    @Provides
+    fun provideFilter(store: MviStore<UsageState>): UsageFilter {
+        return UsageFilter(store)
+    }
 
     @FeatureScope
     @Provides
@@ -49,10 +56,11 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: UsageInterpreter,
+    fun provideViewModelFactory(filter: UsageFilter,
+                                interpreter: UsageInterpreter,
                                 router: UsageRouter,
                                 store: MviStore<UsageState>): UsageViewModelFactory {
-        return UsageViewModelFactory(interpreter, router, store)
+        return UsageViewModelFactory(filter, interpreter, router, store)
     }
 
     @FeatureScope

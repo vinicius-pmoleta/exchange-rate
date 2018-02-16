@@ -3,6 +3,7 @@ package com.exchangerate.features.conversion.di
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
+import com.exchangerate.features.conversion.business.ConversionFilter
 import com.exchangerate.features.conversion.business.ConversionInterpreter
 import com.exchangerate.features.conversion.business.ConversionProcessor
 import com.exchangerate.features.conversion.business.ConversionReducer
@@ -16,6 +17,12 @@ import dagger.Provides
 
 @Module
 class ConversionFeatureModule {
+
+    @FeatureScope
+    @Provides
+    fun provideFilter(store: MviStore<ConversionState>): ConversionFilter {
+        return ConversionFilter(store)
+    }
 
     @FeatureScope
     @Provides
@@ -49,10 +56,11 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: ConversionInterpreter,
+    fun provideViewModelFactory(filter: ConversionFilter,
+                                interpreter: ConversionInterpreter,
                                 router: ConversionRouter,
                                 store: MviStore<ConversionState>): ConversionViewModelFactory {
-        return ConversionViewModelFactory(interpreter, router, store)
+        return ConversionViewModelFactory(filter, interpreter, router, store)
     }
 
     @FeatureScope

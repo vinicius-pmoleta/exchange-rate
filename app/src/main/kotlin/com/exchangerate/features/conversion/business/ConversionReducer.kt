@@ -22,9 +22,6 @@ class ConversionReducer : MviReducer<ConversionState> {
                             valueToConvert = action.valueToConvert,
                             convertedValue = 0F,
                             rate = 0F
-                    ),
-                    currencyData = state.currencyData.copy(
-                            isInitialized = true
                     )
             )
             is SuccessfulConversionResultAction -> state.copy(
@@ -39,15 +36,11 @@ class ConversionReducer : MviReducer<ConversionState> {
                     error = action.error
             )
             is PrepareToFetchCurrenciesAction -> state.copy(
-                    isLoading = true,
-                    currencyData = state.currencyData.copy(
-                            isInitialized = false
-                    )
+                    isLoading = true
             )
             is SuccessfulCurrenciesResultAction -> state.copy(
                     isLoading = false,
                     currencyData = state.currencyData.copy(
-                            isInitialized = true,
                             currencies = action.currencies
                     )
             )

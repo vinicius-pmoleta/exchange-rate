@@ -10,16 +10,19 @@ class ConversionRenderer(
     override fun render(state: ConversionState?, view: ConversionView) {
         state?.apply {
             view.renderLoading(state.isLoading)
-            state.currencyData.apply {
-                if (!this.isInitialized) {
-                    view.renderCurrencyData(this.currencies)
+            state.currencyData.let {
+                if (it.currencies.isNotEmpty()) {
+                    view.renderCurrencyData(
+                            it.currencies,
+                            state.conversionData.fromCurrency,
+                            state.conversionData.toCurrency)
                 }
             }
-            state.conversionData.apply {
-                val screenModel = screenConverter.prepareForPresentation(this)
+            state.conversionData.let {
+                val screenModel = screenConverter.prepareForPresentation(it)
                 view.renderConversionData(screenModel)
             }
-            state.error?.apply {
+            state.error?.let {
                 view.renderError()
             }
         }

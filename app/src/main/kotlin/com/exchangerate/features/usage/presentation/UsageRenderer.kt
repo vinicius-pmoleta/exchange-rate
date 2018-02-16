@@ -9,12 +9,12 @@ class UsageRenderer(private val screenConverter: UsageScreenConverter) : MviRend
     override fun render(state: UsageState?, view: UsageView) {
         state?.apply {
             view.renderLoading(state.isLoading)
-            state.data?.apply {
-                val screenModel = screenConverter.prepareForPresentation(this)
+            state.data?.let {
+                val screenModel = screenConverter.prepareForPresentation(it)
                 view.renderData(screenModel)
             }
-            state.error?.apply {
-                Log.e("UsageRenderer", "Error on usage state renderer", this)
+            state.error?.let {
+                Log.e("UsageRenderer", "Error on usage state renderer", it)
                 view.renderError()
             }
         }

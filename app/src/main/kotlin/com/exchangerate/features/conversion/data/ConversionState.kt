@@ -11,7 +11,6 @@ data class ConversionData(
 )
 
 data class CurrenciesData(
-        val isInitialized: Boolean = false,
         val currencies: List<Currency> = emptyList()
 )
 
