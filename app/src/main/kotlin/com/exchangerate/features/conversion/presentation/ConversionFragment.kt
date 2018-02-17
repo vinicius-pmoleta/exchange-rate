@@ -13,12 +13,12 @@ import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.Currency
 import com.exchangerate.features.conversion.di.ConversionFeatureModule
 import com.exchangerate.features.conversion.di.DaggerConversionFeatureComponent
 import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
+import com.exchangerate.features.conversion.presentation.model.CurrencyScreenModel
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
 import com.jakewharton.rxbinding2.widget.RxAdapterView
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -81,11 +81,9 @@ class ConversionFragment : BaseFragment(), ConversionView {
         conversionProgressView.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    override fun renderCurrencyData(currencies: List<Currency>,
-                                    fromCurrency: String?,
-                                    toCurrency: String?) {
+    override fun renderCurrencyData(data: CurrencyScreenModel) {
         val codes = ArrayList<String>()
-        currencies.forEach { currency -> codes.add(currency.code) }
+        data.currencies.forEach { currency -> codes.add(currency.code) }
 
         if (currenciesAdapter == null) {
             currenciesAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, codes)
@@ -95,13 +93,13 @@ class ConversionFragment : BaseFragment(), ConversionView {
             view?.conversionCurrencyToView?.adapter = currenciesAdapter
         }
 
-        view?.conversionCurrencyFromView?.setSelection(codes.indexOf(fromCurrency))
-        view?.conversionCurrencyToView?.setSelection(codes.indexOf(toCurrency))
+        view?.conversionCurrencyFromView?.setSelection(codes.indexOf(data.fromCurrency))
+        view?.conversionCurrencyToView?.setSelection(codes.indexOf(data.toCurrency))
     }
 
-    override fun renderConversionData(conversion: ConversionScreenModel) {
-        view?.conversionConvertedValueView?.text = conversion.convertedValue
-        view?.conversionRateView?.text = conversion.rate
+    override fun renderConversionData(data: ConversionScreenModel) {
+        view?.conversionConvertedValueView?.text = data.convertedValue
+        view?.conversionRateView?.text = data.rate
     }
 
     override fun renderError() {

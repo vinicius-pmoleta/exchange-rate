@@ -2,6 +2,7 @@ package com.exchangerate.features.conversion.presentation
 
 import com.exchangerate.core.structure.MviRenderer
 import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.presentation.model.CurrencyScreenModel
 
 class ConversionRenderer(
         private val screenConverter: ConversionScreenConverter
@@ -13,9 +14,12 @@ class ConversionRenderer(
             state.currencyData.let {
                 if (it.currencies.isNotEmpty()) {
                     view.renderCurrencyData(
-                            it.currencies,
-                            state.conversionData.fromCurrency,
-                            state.conversionData.toCurrency)
+                            CurrencyScreenModel(
+                                    it.currencies,
+                                    state.conversionData.fromCurrency,
+                                    state.conversionData.toCurrency
+                            )
+                    )
                 }
             }
             state.conversionData.let {

@@ -4,11 +4,11 @@ import com.exchangerate.core.structure.MviAction
 import com.exchangerate.core.structure.MviReducer
 import com.exchangerate.features.conversion.data.ConversionState
 import com.exchangerate.features.conversion.data.FailedConversionResultAction
+import com.exchangerate.features.conversion.data.FailedCurrenciesResultAction
 import com.exchangerate.features.conversion.data.PrepareToApplyConversionAction
 import com.exchangerate.features.conversion.data.PrepareToFetchCurrenciesAction
 import com.exchangerate.features.conversion.data.SuccessfulConversionResultAction
 import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
-import com.exchangerate.features.usage.data.FailedUsageResultAction
 
 class ConversionReducer : MviReducer<ConversionState> {
 
@@ -44,7 +44,7 @@ class ConversionReducer : MviReducer<ConversionState> {
                             currencies = action.currencies
                     )
             )
-            is FailedUsageResultAction -> state.copy(
+            is FailedCurrenciesResultAction -> state.copy(
                     isLoading = false,
                     error = action.error
             )

@@ -1,7 +1,11 @@
 package com.exchangerate.features.usage.business
 
 import com.exchangerate.core.data.repository.remote.data.Usage
-import com.exchangerate.features.usage.data.*
+import com.exchangerate.features.usage.data.FailedUsageResultAction
+import com.exchangerate.features.usage.data.PrepareToFetchUsageAction
+import com.exchangerate.features.usage.data.SuccessfulUsageResultAction
+import com.exchangerate.features.usage.data.UsageAction
+import com.exchangerate.features.usage.data.UsageState
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.IOException
@@ -12,15 +16,15 @@ class UsageReducerTest {
 
     @Test
     fun `verify old state not changed when unknown action is requested`() {
-        val unkknowAction = object : UsageAction {}
+        val unknownAction = object : UsageAction {}
         val oldState = UsageState(isLoading = false, error = IOException())
-        val newState = reducer.reduce(unkknowAction, oldState)
+        val newState = reducer.reduce(unknownAction, oldState)
 
         assertEquals(oldState, newState)
     }
 
     @Test
-    fun `verify that PrepareToFetchUsageAction modify state to isLoading = true`() {
+    fun `verify that prepare to fetch modify state to start loading`() {
         val oldState = UsageState(isLoading = false)
         val newState = reducer.reduce(PrepareToFetchUsageAction(), oldState)
 
@@ -28,7 +32,7 @@ class UsageReducerTest {
     }
 
     @Test
-    fun `verify that LoadUsageAction modify state to have data and isLoading=false if success`() {
+    fun `verify that successful result modify state to have data and stop loading`() {
         val oldState = UsageState(isLoading = true)
         val usage = Usage(10, 100, 90, 2)
         val newState = reducer.reduce(SuccessfulUsageResultAction(usage), oldState)
@@ -37,7 +41,7 @@ class UsageReducerTest {
     }
 
     @Test
-    fun `verify that LoadUsageAction modify state to have error and isLoading=false if error`() {
+    fun `verify that failed result modify state to have error and stop loading`() {
         val oldState = UsageState(isLoading = true)
         val error = IOException()
         val newState = reducer.reduce(FailedUsageResultAction(error), oldState)
