@@ -74,9 +74,12 @@ class UsageFragment : BaseFragment(), UsageView {
     }
 
     override fun renderData(usage: UsageScreenModel) {
-        view?.usagePercentageView?.text = getString(R.string.usage_information_percentage_used, usage.usedPercentage)
-        view?.usageAverageView?.text = getString(R.string.usage_information_daily_average_requests, usage.averagePerDay)
-        view?.usageRemainingRequestsView?.text = getString(R.string.usage_information_remaining_requests, usage.remainingRequests)
+        view?.usagePercentageView?.text = getString(
+                R.string.usage_information_percentage_used, usage.usedPercentage)
+        view?.usageAverageView?.text = getString(
+                R.string.usage_information_daily_average_requests, usage.averagePerDay)
+        view?.usageRemainingRequestsView?.text = getString(
+                R.string.usage_information_remaining_requests, usage.remainingRequests)
     }
 
     override fun renderError() {
