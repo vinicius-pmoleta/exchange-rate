@@ -11,6 +11,8 @@
     <string name="home_navigation_option_alerts">Alerts</string>
 
     <!-- Usage -->
-    <string name="usage_refresh_action_label">Refresh</string>
+    <string name="usage_information_percentage_used">%% used: %s</string>
+    <string name="usage_information_daily_average_requests">average: %s requests/day</string>
+    <string name="usage_information_remaining_requests">remaining requests: %s</string>
 
 </resources>

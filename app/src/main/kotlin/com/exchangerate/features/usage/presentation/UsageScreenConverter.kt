@@ -7,7 +7,11 @@ import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 class UsageScreenConverter {
 
     fun prepareForPresentation(usage: Usage): UsageScreenModel {
-        val usedPercentage = usage.sent.percent(usage.quota)
-        return UsageScreenModel(usage.averagePerDay, usedPercentage, usage.remaining)
+        val usedPercentage = "%.2f".format(usage.sent.percent(usage.quota))
+        return UsageScreenModel(
+                usage.averagePerDay.toString(),
+                usedPercentage,
+                usage.remaining.toString()
+        )
     }
 }

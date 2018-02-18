@@ -13,4 +13,10 @@
         <item name="itemTextColor">@drawable/navigation_options_selector</item>
     </style>
 
+    <style name="AppTheme.Usage" />
+
+    <style name="AppTheme.Usage.Information">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
 </resources>

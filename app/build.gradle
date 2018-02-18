@@ -17,6 +17,7 @@ project.ext {
     chuck_version = '1.1.0'
     leak_canary_version = '1.5.4'
     stetho_version = '1.5.0'
+    rx_binding_version = '2.0.0'
 }
 
 android {
@@ -101,7 +102,8 @@ dependencies {
     // REACTIVE
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile "com.jakewharton.rxbinding2:rxbinding:$rx_binding_version"
+    compile "com.jakewharton.rxbinding2:rxbinding-support-v4:$rx_binding_version"
 
     // KOTLIN
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
