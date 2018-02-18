@@ -6,6 +6,7 @@ import com.exchangerate.features.conversion.data.CurrenciesData
 import com.exchangerate.features.conversion.data.Currency
 import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
+import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertFalse
@@ -24,7 +25,7 @@ class ConversionFilterTest {
         val result = filter.apply(LoadCurrenciesIntent(), state)
 
         assertTrue(result)
-        verify(exactly = 0) { store.dispatch(SuccessfulCurrenciesResultAction(any())) }
+        verify { store wasNot Called }
     }
 
     @Test
@@ -37,5 +38,4 @@ class ConversionFilterTest {
         assertFalse(result)
         verify(exactly = 1) { store.dispatch(SuccessfulCurrenciesResultAction(data)) }
     }
-
 }

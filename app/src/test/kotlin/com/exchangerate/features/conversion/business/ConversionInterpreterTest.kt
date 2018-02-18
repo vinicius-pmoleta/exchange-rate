@@ -35,7 +35,7 @@ class ConversionInterpreterTest {
     fun `verify currencies intent translated into preparation and fetch actions`() {
         val actions = interpreter.translate(LoadCurrenciesIntent())
         assertEquals(2, actions.size)
-        assertEquals(PrepareToFetchCurrenciesAction(), actions[0])
-        assertEquals(FetchCurrenciesAction(), actions[1])
+        assertTrue(actions[0] is PrepareToFetchCurrenciesAction)
+        assertTrue(actions[1] is FetchCurrenciesAction)
     }
 }

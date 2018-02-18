@@ -5,6 +5,7 @@ import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.usage.data.SuccessfulUsageResultAction
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.model.UsageInitialIntent
+import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertFalse
@@ -22,7 +23,7 @@ class UsageFilterTest {
         val result = filter.apply(UsageInitialIntent(), UsageState())
 
         assertTrue(result)
-        verify(exactly = 0) { store.dispatch(SuccessfulUsageResultAction(any())) }
+        verify { store wasNot Called }
     }
 
     @Test
