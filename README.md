@@ -7,3 +7,4 @@ It's being based on general concepts of the MVI architecture and the following r
 - https://github.com/oldergod/android-architecture
 - http://hannesdorfmann.com/android/mosby3-mvi-1
 - https://suas.readme.io/docs
+- https://github.com/shazam/android-redux-sample
