@@ -35,6 +35,10 @@ import javax.inject.Inject
 
 class ConversionFragment : BaseFragment(), ConversionView {
 
+    companion object {
+        private val CONVERSION_DEBOUNCE_DURATION = 500L
+    }
+
     @Inject
     lateinit var viewModelFactory: ConversionViewModelFactory
 
@@ -117,7 +121,7 @@ class ConversionFragment : BaseFragment(), ConversionView {
                             RxTextView.textChanges(this.conversionValueToConvertView))
                     .filter { triple -> triple.third.isNotEmpty() }
                     .distinctUntilChanged()
-                    .debounce(500, TimeUnit.MILLISECONDS)
+                    .debounce(CONVERSION_DEBOUNCE_DURATION, TimeUnit.MILLISECONDS)
                     .map { triple ->
                         ApplyConversionIntent(
                                 currenciesAdapter!!.getItem(triple.first),
