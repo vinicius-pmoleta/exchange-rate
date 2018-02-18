@@ -1,6 +1,6 @@
 package com.exchangerate.core.di.module
 
-import com.exchangerate.core.data.repository.remote.UsageRepository
+import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -11,8 +11,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUsageRepository(retrofit: Retrofit): UsageRepository {
-        return retrofit.create(UsageRepository::class.java)
+    fun provideUsageRepository(retrofit: Retrofit): RemoteExchangeRepository {
+        return retrofit.create(RemoteExchangeRepository::class.java)
     }
 
 }

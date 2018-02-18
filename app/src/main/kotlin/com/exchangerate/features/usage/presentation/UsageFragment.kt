@@ -14,17 +14,18 @@ import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
+import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
+import com.exchangerate.features.usage.presentation.model.UsageInitialIntent
+import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.usage_fragment.view.*
+import kotlinx.android.synthetic.main.usage_fragment.view.usageLoadingView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageRefreshActionView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageStatusView
 import javax.inject.Inject
 
 class UsageFragment : BaseFragment(), UsageView {
-
-    companion object {
-        val TAG: String = UsageFragment::class.java.simpleName
-    }
 
     @Inject
     lateinit var viewModelFactory: UsageViewModelFactory
@@ -79,7 +80,7 @@ class UsageFragment : BaseFragment(), UsageView {
         Toast.makeText(context, R.string.default_error_remote_message, Toast.LENGTH_LONG).show()
     }
 
-    private fun initialIntent(): Observable<UsageIntent> = Observable.just(LoadUsageIntent())
+    private fun initialIntent(): Observable<UsageIntent> = Observable.just(UsageInitialIntent())
 
     private fun refreshIntent(): Observable<UsageIntent> {
         view?.run {

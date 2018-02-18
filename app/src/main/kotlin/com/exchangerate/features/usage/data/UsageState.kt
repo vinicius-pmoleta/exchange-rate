@@ -1,7 +1,7 @@
 package com.exchangerate.features.usage.data
 
+import com.exchangerate.core.data.repository.remote.data.Usage
 import com.exchangerate.core.structure.MviState
-import com.exchangerate.features.usage.data.Usage
 
 data class UsageState(
         val isLoading: Boolean = false,

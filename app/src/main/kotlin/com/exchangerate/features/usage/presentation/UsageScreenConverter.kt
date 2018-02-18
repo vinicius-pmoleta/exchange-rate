@@ -1,7 +1,8 @@
-package com.exchangerate.features.usage.presentation.model
+package com.exchangerate.features.usage.presentation
 
 import com.exchangerate.core.common.percent
-import com.exchangerate.features.usage.data.Usage
+import com.exchangerate.core.data.repository.remote.data.Usage
+import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 
 class UsageScreenConverter {
 

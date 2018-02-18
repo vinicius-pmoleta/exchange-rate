@@ -1,7 +1,7 @@
 package com.exchangerate.core.di.component
 
 import com.exchangerate.core.ExchangeRateApplication
-import com.exchangerate.core.data.repository.remote.UsageRepository
+import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.module.ApplicationModule
 import com.exchangerate.core.di.module.NetworkModule
 import com.exchangerate.core.di.module.RepositoryModule
@@ -16,6 +16,6 @@ interface ApplicationComponent {
 
     fun application(): ExchangeRateApplication
 
-    fun usageRepository(): UsageRepository
+    fun usageRepository(): RemoteExchangeRepository
 
 }

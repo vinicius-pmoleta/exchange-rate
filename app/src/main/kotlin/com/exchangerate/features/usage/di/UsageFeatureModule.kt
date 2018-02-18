@@ -1,20 +1,28 @@
 package com.exchangerate.features.usage.di
 
-import com.exchangerate.core.data.repository.remote.UsageRepository
+import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
+import com.exchangerate.features.usage.business.UsageFilter
 import com.exchangerate.features.usage.business.UsageInterpreter
 import com.exchangerate.features.usage.business.UsageProcessor
 import com.exchangerate.features.usage.business.UsageReducer
+import com.exchangerate.features.usage.business.UsageRouter
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.UsageRenderer
+import com.exchangerate.features.usage.presentation.UsageScreenConverter
 import com.exchangerate.features.usage.presentation.UsageViewModelFactory
-import com.exchangerate.features.usage.presentation.model.UsageScreenConverter
 import dagger.Module
 import dagger.Provides
 
 @Module
 class UsageFeatureModule {
+
+    @FeatureScope
+    @Provides
+    fun provideFilter(store: MviStore<UsageState>): UsageFilter {
+        return UsageFilter(store)
+    }
 
     @FeatureScope
     @Provides
@@ -24,14 +32,20 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideProcessor(repository: UsageRepository): UsageProcessor {
+    fun provideRouter(store: MviStore<UsageState>, processor: UsageProcessor): UsageRouter {
+        return UsageRouter(store, processor)
+    }
+
+    @FeatureScope
+    @Provides
+    fun provideProcessor(repository: RemoteExchangeRepository): UsageProcessor {
         return UsageProcessor(repository)
     }
 
     @FeatureScope
     @Provides
-    fun provideReducer(processor: UsageProcessor): UsageReducer {
-        return UsageReducer(processor)
+    fun provideReducer(): UsageReducer {
+        return UsageReducer()
     }
 
     @FeatureScope
@@ -42,8 +56,11 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideViewModelFactory(interpreter: UsageInterpreter, store: MviStore<UsageState>): UsageViewModelFactory {
-        return UsageViewModelFactory(interpreter, store)
+    fun provideViewModelFactory(filter: UsageFilter,
+                                interpreter: UsageInterpreter,
+                                router: UsageRouter,
+                                store: MviStore<UsageState>): UsageViewModelFactory {
+        return UsageViewModelFactory(filter, interpreter, router, store)
     }
 
     @FeatureScope

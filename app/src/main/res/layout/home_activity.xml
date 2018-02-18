@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.exchangerate.features.home.presentation.HomeActivity">
 
-    <FrameLayout
+    <com.exchangerate.features.home.presentation.NonScrollableViewPager
         android:id="@+id/homeContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
