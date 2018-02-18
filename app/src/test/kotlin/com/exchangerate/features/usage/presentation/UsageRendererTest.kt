@@ -35,7 +35,7 @@ class UsageRendererTest {
     @Test
     fun `verify data is rendered`() {
         val usage = Usage(10, 100, 90, 2)
-        val screenUsage = UsageScreenModel(2, 10f, 90)
+        val screenUsage = UsageScreenModel("2", "10.00", "90")
 
         every { screenConverter.prepareForPresentation(usage) } returns screenUsage
         val state = UsageState(isLoading = false, data = usage)

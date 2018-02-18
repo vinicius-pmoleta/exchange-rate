@@ -18,11 +18,12 @@ import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageInitialIntent
 import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.usage_fragment.view.usageLoadingView
-import kotlinx.android.synthetic.main.usage_fragment.view.usageRefreshActionView
-import kotlinx.android.synthetic.main.usage_fragment.view.usageStatusView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageAverageView
+import kotlinx.android.synthetic.main.usage_fragment.view.usagePercentageView
+import kotlinx.android.synthetic.main.usage_fragment.view.usagePullToRefreshView
+import kotlinx.android.synthetic.main.usage_fragment.view.usageRemainingRequestsView
 import javax.inject.Inject
 
 class UsageFragment : BaseFragment(), UsageView {
@@ -69,11 +70,16 @@ class UsageFragment : BaseFragment(), UsageView {
     }
 
     override fun renderLoading(isLoading: Boolean) {
-        view?.usageLoadingView?.visibility = if (isLoading) View.VISIBLE else View.GONE
+        view?.usagePullToRefreshView?.isRefreshing = isLoading
     }
 
     override fun renderData(usage: UsageScreenModel) {
-        view?.usageStatusView?.text = usage.toString()
+        view?.usagePercentageView?.text = getString(
+                R.string.usage_information_percentage_used, usage.usedPercentage)
+        view?.usageAverageView?.text = getString(
+                R.string.usage_information_daily_average_requests, usage.averagePerDay)
+        view?.usageRemainingRequestsView?.text = getString(
+                R.string.usage_information_remaining_requests, usage.remainingRequests)
     }
 
     override fun renderError() {
@@ -84,8 +90,8 @@ class UsageFragment : BaseFragment(), UsageView {
 
     private fun refreshIntent(): Observable<UsageIntent> {
         view?.run {
-            return RxView
-                    .clicks(view?.usageRefreshActionView as View)
+            return RxSwipeRefreshLayout
+                    .refreshes(view?.usagePullToRefreshView!!)
                     .map { _ -> LoadUsageIntent() }
         }
         return Observable.empty()

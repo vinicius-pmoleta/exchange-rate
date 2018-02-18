@@ -13,9 +13,8 @@ class UsageScreenConverterTest {
     fun `verify conversion for presentation from usage model`() {
         val usage = Usage(10, 100, 90, 2)
         val screenModel = screenConverter.prepareForPresentation(usage)
-        assertEquals(10F, screenModel.usedPercentage)
-        assertEquals(90, screenModel.remainingRequests)
-        assertEquals(2, screenModel.averagePerDay)
+        assertEquals("10.00", screenModel.usedPercentage)
+        assertEquals("90", screenModel.remainingRequests)
+        assertEquals("2", screenModel.averagePerDay)
     }
-
 }
