@@ -15,4 +15,7 @@
     <string name="usage_information_daily_average_requests">average: %s requests/day</string>
     <string name="usage_information_remaining_requests">remaining requests: %s</string>
 
+    <!-- Conversion -->
+    <string name="conversion_rate">with exchange rate of %s</string>
+
 </resources>

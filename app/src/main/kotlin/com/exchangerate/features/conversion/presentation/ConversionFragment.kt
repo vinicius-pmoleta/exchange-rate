@@ -82,7 +82,7 @@ class ConversionFragment : BaseFragment(), ConversionView {
     }
 
     override fun renderLoading(isLoading: Boolean) {
-        conversionProgressView.visibility = if (isLoading) View.VISIBLE else View.GONE
+        conversionProgressView.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
     }
 
     override fun renderCurrencyData(data: CurrencyScreenModel) {
@@ -103,7 +103,7 @@ class ConversionFragment : BaseFragment(), ConversionView {
 
     override fun renderConversionData(data: ConversionScreenModel) {
         view?.conversionConvertedValueView?.text = data.convertedValue
-        view?.conversionRateView?.text = data.rate
+        view?.conversionRateView?.text = getString(R.string.conversion_rate, data.rate)
     }
 
     override fun renderError() {

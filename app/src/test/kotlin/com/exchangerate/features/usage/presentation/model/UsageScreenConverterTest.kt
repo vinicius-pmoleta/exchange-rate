@@ -17,5 +17,4 @@ class UsageScreenConverterTest {
         assertEquals("90", screenModel.remainingRequests)
         assertEquals("2", screenModel.averagePerDay)
     }
-
 }
