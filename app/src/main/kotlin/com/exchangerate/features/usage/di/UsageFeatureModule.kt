@@ -10,7 +10,6 @@ import com.exchangerate.features.usage.business.UsageReducer
 import com.exchangerate.features.usage.business.UsageRouter
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.UsageRenderer
-import com.exchangerate.features.usage.presentation.UsageScreenConverter
 import com.exchangerate.features.usage.presentation.UsageViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -65,13 +64,7 @@ class UsageFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideScreenConverter(): UsageScreenConverter {
-        return UsageScreenConverter()
-    }
-
-    @FeatureScope
-    @Provides
-    fun provideRenderer(screenConverter: UsageScreenConverter): UsageRenderer {
-        return UsageRenderer(screenConverter)
+    fun provideRenderer(): UsageRenderer {
+        return UsageRenderer()
     }
 }

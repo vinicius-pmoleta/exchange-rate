@@ -1,113 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="81dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Spinner
-        android:id="@+id/conversionCurrencyToView"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        app:layout_constraintBottom_toBottomOf="@+id/conversionConvertedValueView"
-        app:layout_constraintEnd_toStartOf="@+id/conversionConvertedValueView"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
-        app:layout_constraintTop_toTopOf="@+id/conversionConvertedValueView" />
+    <data>
 
-    <TextView
-        android:id="@+id/conversionRateView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textSize="@dimen/text_size_medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/conversionProgressView"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="with exchange rate of 1.234" />
+        <import type="android.view.View" />
 
-    <TextView
-        android:id="@+id/conversionConvertedValueView"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginBottom="136dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textAlignment="textStart"
-        android:textSize="@dimen/text_size_large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
-        app:layout_constraintTop_toBottomOf="@+id/conversionRateView"
-        tools:text="1000.00" />
+        <variable
+            name="conversion"
+            type="com.exchangerate.features.conversion.presentation.model.ConversionScreenModel" />
+    </data>
 
-    <EditText
-        android:id="@+id/conversionValueToConvertView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="136dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:singleLine="true"
-        android:textAlignment="viewStart"
-        android:textSize="@dimen/text_size_large"
-        app:layout_constraintBottom_toTopOf="@+id/conversionRateView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1200.00" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="81dp">
 
-    <Spinner
-        android:id="@+id/conversionCurrencyFromView"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        app:layout_constraintBottom_toBottomOf="@+id/conversionValueToConvertView"
-        app:layout_constraintEnd_toStartOf="@+id/conversionValueToConvertView"
-        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
-        app:layout_constraintTop_toTopOf="@+id/conversionValueToConvertView" />
+        <Spinner
+            android:id="@+id/conversionCurrencyToView"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:entries="@{conversion.currencies}"
+            android:selectedItemPosition="@{conversion.toCurrencyPosition}"
+            app:layout_constraintBottom_toBottomOf="@+id/conversionConvertedValueView"
+            app:layout_constraintEnd_toStartOf="@+id/conversionConvertedValueView"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="@+id/conversionConvertedValueView" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_vertical_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        <TextView
+            android:id="@+id/conversionRateView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:singleLine="true"
+            android:text="@{@string/conversion_rate(conversion.rate)}"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/conversionProgressView"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="with exchange rate of 1.234" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_vertical_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        <TextView
+            android:id="@+id/conversionConvertedValueView"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@{conversion.convertedValue}"
+            android:textAlignment="textStart"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+            app:layout_constraintTop_toBottomOf="@+id/conversionRateView"
+            tools:text="1000.00" />
 
-    <ProgressBar
-        android:id="@+id/conversionProgressView"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/conversionValueToConvertView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintBottom_toTopOf="@+id/conversionRateView"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+            tools:text="1200.00" />
 
-</android.support.constraint.ConstraintLayout>
+        <Spinner
+            android:id="@+id/conversionCurrencyFromView"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:entries="@{conversion.currencies}"
+            android:selectedItemPosition="@{conversion.fromCurrencyPosition}"
+            app:layout_constraintBottom_toBottomOf="@+id/conversionValueToConvertView"
+            app:layout_constraintEnd_toStartOf="@+id/conversionValueToConvertView"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="@+id/conversionValueToConvertView" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <ProgressBar
+            android:id="@+id/conversionProgressView"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:visibility="@{conversion.isLoading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -10,7 +10,6 @@ import com.exchangerate.features.conversion.business.ConversionReducer
 import com.exchangerate.features.conversion.business.ConversionRouter
 import com.exchangerate.features.conversion.data.ConversionState
 import com.exchangerate.features.conversion.presentation.ConversionRenderer
-import com.exchangerate.features.conversion.presentation.ConversionScreenConverter
 import com.exchangerate.features.conversion.presentation.ConversionViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -65,13 +64,7 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideConverter(): ConversionScreenConverter {
-        return ConversionScreenConverter()
-    }
-
-    @FeatureScope
-    @Provides
-    fun provideRenderer(converter: ConversionScreenConverter): ConversionRenderer {
-        return ConversionRenderer(converter)
+    fun provideRenderer(): ConversionRenderer {
+        return ConversionRenderer()
     }
 }

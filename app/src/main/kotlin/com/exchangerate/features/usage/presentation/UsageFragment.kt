@@ -2,6 +2,7 @@ package com.exchangerate.features.usage.presentation
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
+import com.exchangerate.databinding.UsageFragmentBinding
 import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.di.DaggerUsageFeatureComponent
 import com.exchangerate.features.usage.di.UsageFeatureModule
@@ -20,10 +22,7 @@ import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.usage_fragment.view.usageAverageView
-import kotlinx.android.synthetic.main.usage_fragment.view.usagePercentageView
 import kotlinx.android.synthetic.main.usage_fragment.view.usagePullToRefreshView
-import kotlinx.android.synthetic.main.usage_fragment.view.usageRemainingRequestsView
 import javax.inject.Inject
 
 class UsageFragment : BaseFragment(), UsageView {
@@ -34,6 +33,7 @@ class UsageFragment : BaseFragment(), UsageView {
     @Inject
     lateinit var renderer: UsageRenderer
 
+    private lateinit var binding: UsageFragmentBinding
     private lateinit var viewModel: UsageViewModel
 
     override fun initializeDependencyInjector() {
@@ -44,7 +44,8 @@ class UsageFragment : BaseFragment(), UsageView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.usage_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.usage_fragment, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -69,17 +70,8 @@ class UsageFragment : BaseFragment(), UsageView {
         renderer.render(state, this)
     }
 
-    override fun renderLoading(isLoading: Boolean) {
-        view?.usagePullToRefreshView?.isRefreshing = isLoading
-    }
-
     override fun renderData(usage: UsageScreenModel) {
-        view?.usagePercentageView?.text = getString(
-                R.string.usage_information_percentage_used, usage.usedPercentage)
-        view?.usageAverageView?.text = getString(
-                R.string.usage_information_daily_average_requests, usage.averagePerDay)
-        view?.usageRemainingRequestsView?.text = getString(
-                R.string.usage_information_remaining_requests, usage.remainingRequests)
+        binding.usage = usage
     }
 
     override fun renderError() {

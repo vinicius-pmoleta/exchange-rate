@@ -1,52 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/usagePullToRefreshView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.exchangerate.features.usage.presentation.UsageFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <data>
+
+        <variable
+            name="usage"
+            type="com.exchangerate.features.usage.presentation.model.UsageScreenModel" />
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/usagePullToRefreshView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshing="@{usage.isLoading}"
+        tools:context="com.exchangerate.features.usage.presentation.UsageFragment">
 
-        <TextView
-            android:id="@+id/usageAverageView"
-            style="@style/AppTheme.Usage.Information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usageRemainingRequestsView"
-            tools:text="Average per day: 10" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/usagePercentageView"
-            style="@style/AppTheme.Usage.Information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/usageRemainingRequestsView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="% used: 50%" />
+            <TextView
+                android:id="@+id/usageAverageView"
+                style="@style/AppTheme.Usage.Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{@string/usage_information_daily_average_requests(usage.averagePerDay)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usageRemainingRequestsView"
+                tools:text="Average per day: 10" />
 
-        <TextView
-            android:id="@+id/usageRemainingRequestsView"
-            style="@style/AppTheme.Usage.Information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/usageAverageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usagePercentageView"
-            tools:text="# requests remaining: 500" />
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/usagePercentageView"
+                style="@style/AppTheme.Usage.Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/usage_information_percentage_used(usage.usedPercentage)}"
+                app:layout_constraintBottom_toTopOf="@+id/usageRemainingRequestsView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="% used: 50%" />
 
-</android.support.v4.widget.SwipeRefreshLayout>
+            <TextView
+                android:id="@+id/usageRemainingRequestsView"
+                style="@style/AppTheme.Usage.Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/usage_information_remaining_requests(usage.remainingRequests)}"
+                app:layout_constraintBottom_toTopOf="@+id/usageAverageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usagePercentageView"
+                tools:text="# requests remaining: 500" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</layout>

@@ -33,6 +33,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     signingConfigs {
         release {
             storeFile file("../environment/release-keystore.jks")
@@ -98,6 +102,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:design:$support_version"
+    kapt "com.android.databinding:compiler:${gradle_version}"
 
     // REACTIVE
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
