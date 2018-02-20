@@ -5,9 +5,7 @@ import com.exchangerate.features.usage.data.UsageState
 import com.exchangerate.features.usage.presentation.model.UsageIntent
 import com.exchangerate.features.usage.presentation.model.UsageScreenModel
 
-interface UsageView: MviView<UsageIntent, UsageState> {
-
-    fun renderLoading(isLoading: Boolean)
+interface UsageView : MviView<UsageIntent, UsageState> {
 
     fun renderData(usage: UsageScreenModel)
 
