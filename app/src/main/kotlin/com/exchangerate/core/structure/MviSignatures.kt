@@ -2,8 +2,10 @@ package com.exchangerate.core.structure
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.exchangerate.core.data.live.LiveDataReactiveConverter
+import com.exchangerate.core.structure.middleware.CrashMiddleware
+import com.exchangerate.core.structure.middleware.LoggerMiddleware
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -52,7 +54,7 @@ open class MviViewModel<I : MviIntent, A : MviAction, S : MviState>(
                 .flatMap { action -> router.route(action) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError { error -> Log.e("MVI ERROR", "Error on MviViewModel", error) }
+                .doOnError { error -> Crashlytics.logException(error) }
                 .subscribe()
     }
 
@@ -94,7 +96,9 @@ interface MviMiddleware {
 class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
 
     private var state = reducer.initialState()
-    private val middleware: List<MviMiddleware> = listOf(LoggerMiddleware())
+    private val middleware: List<MviMiddleware> = listOf(
+            LoggerMiddleware(), CrashMiddleware()
+    )
 
     val stateObserver: BehaviorSubject<S> = BehaviorSubject
             .createDefault(reducer.initialState())

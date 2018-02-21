@@ -6,11 +6,13 @@ buildscript {
         kotlin_version = '1.2.10'
         detekt_version = '1.0.0.RC5-6'
         firebase_plugin_version = '1.1.5'
+        fabric_plugin_version = '1.25.1'
     }
 
     repositories {
         maven { url 'https://maven.google.com' }
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://maven.fabric.io/public' }
         jcenter()
         mavenCentral()
     }
@@ -21,6 +23,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "com.google.firebase:firebase-plugins:$firebase_plugin_version"
+        classpath "io.fabric.tools:gradle:$fabric_plugin_version"
     }
 }
 
@@ -28,7 +31,7 @@ allprojects {
 
     repositories {
         maven { url 'https://maven.google.com' }
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
     }

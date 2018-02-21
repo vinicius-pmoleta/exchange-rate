@@ -15,7 +15,6 @@ class ConversionProcessor(private val repository: RemoteExchangeRepository) : Mv
                 .map { rates -> rates[toCurrency]!!.div(rates[fromCurrency]!!) }
                 .map { conversionRate -> ConversionResult(value * conversionRate, conversionRate) }
                 .toObservable()
-
     }
 
     fun loadCurrencies(): Observable<List<Currency>> {

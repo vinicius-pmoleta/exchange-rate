@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'io.fabric'
 
 apply from: "${rootDir}/environment/environment.gradle"
 apply from: "${rootDir}/gradle/quality.gradle"
@@ -129,15 +130,16 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$architecture_components_version"
 
     // FIREBASE
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {
+        transitive = true
+    }
     compile "com.google.firebase:firebase-core:$firebase_version"
-    compile "com.google.firebase:firebase-crash:$firebase_version"
     compile "com.google.firebase:firebase-perf:$firebase_version"
 
     // TEST
     testImplementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation 'io.mockk:mockk:1.7'
-
 
     // DEVELOPMENT
     debugCompile "com.readystatesoftware.chuck:library:$chuck_version"
