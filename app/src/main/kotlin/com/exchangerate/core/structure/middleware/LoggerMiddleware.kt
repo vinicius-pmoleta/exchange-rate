@@ -1,7 +1,10 @@
-package com.exchangerate.core.structure
+package com.exchangerate.core.structure.middleware
 
 import android.util.Log
 import com.exchangerate.BuildConfig
+import com.exchangerate.core.structure.MviAction
+import com.exchangerate.core.structure.MviMiddleware
+import com.exchangerate.core.structure.MviState
 
 class LoggerMiddleware : MviMiddleware {
 
@@ -16,9 +19,9 @@ class LoggerMiddleware : MviMiddleware {
         Log.d(TAG, "---------------------------")
         Log.d(TAG, "@@@@ LOGGER MIDDLEWARE @@@@")
         Log.d(TAG, "---------------------------")
-        Log.d(TAG, "[[ OLD STATE ]] " + oldState)
-        Log.d(TAG, "[[ ACTION    ]] " + action)
-        Log.d(TAG, "[[ NEW STATE ]] " + newState)
+        Log.d(TAG, "[[ OLD STATE ]] $oldState")
+        Log.d(TAG, "[[ ACTION    ]] $action")
+        Log.d(TAG, "[[ NEW STATE ]] $newState")
         Log.d(TAG, "---------------------------")
     }
 }
