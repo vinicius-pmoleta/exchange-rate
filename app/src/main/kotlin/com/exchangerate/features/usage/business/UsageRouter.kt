@@ -17,6 +17,7 @@ class UsageRouter(
     override fun route(action: UsageAction): Observable<Unit> {
         return when (action) {
             is FetchUsageAction -> processor.loadUsage()
+                    .doOnSubscribe { store.next(action) }
                     .map { usage ->
                         store.dispatch(SuccessfulUsageResultAction(usage))
                     }

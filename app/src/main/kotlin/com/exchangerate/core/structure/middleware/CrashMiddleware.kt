@@ -7,7 +7,7 @@ import com.exchangerate.core.structure.MviState
 
 class CrashMiddleware : MviMiddleware {
 
-    override fun intercept(oldState: MviState, action: MviAction, newState: MviState) {
+    override fun intercept(oldState: MviState, action: MviAction, newState: MviState?) {
         Crashlytics.log("$oldState + $action = $newState")
         Crashlytics.setString("old_state", "$oldState")
         Crashlytics.setString("action", "$action")

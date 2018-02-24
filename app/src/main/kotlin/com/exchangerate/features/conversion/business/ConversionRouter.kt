@@ -21,14 +21,15 @@ class ConversionRouter(
         return when (action) {
             is ApplyConversionAction -> processor
                     .applyConversion(action.valueToConvert, action.currencyFrom, action.currencyTo)
+                    .doOnSubscribe { store.next(action) }
                     .map { conversion ->
                         store.dispatch(SuccessfulConversionResultAction(conversion))
                     }
                     .onErrorReturn { error ->
                         store.dispatch(FailedConversionResultAction(error))
                     }
-            is FetchCurrenciesAction -> processor
-                    .loadCurrencies()
+            is FetchCurrenciesAction -> processor.loadCurrencies()
+                    .doOnSubscribe { store.next(action) }
                     .map { currencies ->
                         store.dispatch(SuccessfulCurrenciesResultAction(currencies))
                     }
