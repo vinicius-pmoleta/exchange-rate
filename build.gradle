@@ -10,11 +10,11 @@ buildscript {
     }
 
     repositories {
-        maven { url 'https://maven.google.com' }
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://maven.fabric.io/public' }
         jcenter()
         mavenCentral()
+        google()
     }
 
     dependencies {
@@ -30,10 +30,10 @@ buildscript {
 allprojects {
 
     repositories {
-        maven { url 'https://maven.google.com' }
         maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
+        google()
     }
 }
 

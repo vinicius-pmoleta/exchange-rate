@@ -1,5 +1,6 @@
 package com.exchangerate.features.conversion.di
 
+import com.exchangerate.core.data.repository.local.database.ExchangeRateDatabase
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
@@ -37,8 +38,9 @@ class ConversionFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideProcessor(repository: RemoteExchangeRepository): ConversionProcessor {
-        return ConversionProcessor(repository)
+    fun provideProcessor(repository: RemoteExchangeRepository,
+                         database: ExchangeRateDatabase): ConversionProcessor {
+        return ConversionProcessor(repository, database.conversionDao())
     }
 
     @FeatureScope

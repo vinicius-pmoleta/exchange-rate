@@ -1,5 +1,6 @@
 package com.exchangerate.features.conversion.business
 
+import android.util.Log
 import com.exchangerate.core.structure.MviRouter
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.conversion.data.ApplyConversionAction
@@ -34,6 +35,7 @@ class ConversionRouter(
                         store.dispatch(SuccessfulCurrenciesResultAction(currencies))
                     }
                     .onErrorReturn { error ->
+                        Log.e("Test", "Error", error)
                         store.dispatch(FailedCurrenciesResultAction(error))
                     }
             else -> Observable.just(store.dispatch(action))

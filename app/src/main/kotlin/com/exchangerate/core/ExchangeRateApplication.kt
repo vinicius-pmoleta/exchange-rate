@@ -5,7 +5,7 @@ import com.exchangerate.core.di.component.ApplicationComponent
 import com.exchangerate.core.di.component.DaggerApplicationComponent
 import com.exchangerate.core.di.module.ApplicationModule
 import com.exchangerate.core.di.module.NetworkModule
-import com.exchangerate.core.di.module.RepositoryModule
+import com.exchangerate.core.di.module.RemoteRepositoryModule
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 
@@ -32,7 +32,7 @@ class ExchangeRateApplication : Application() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .networkModule(NetworkModule())
-                .repositoryModule(RepositoryModule())
+                .remoteRepositoryModule(RemoteRepositoryModule())
                 .build()
     }
 

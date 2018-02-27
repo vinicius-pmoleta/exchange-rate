@@ -7,12 +7,11 @@ import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+class RemoteRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUsageRepository(retrofit: Retrofit): RemoteExchangeRepository {
+    fun provideRemoteRepository(retrofit: Retrofit): RemoteExchangeRepository {
         return retrofit.create(RemoteExchangeRepository::class.java)
     }
-
 }
