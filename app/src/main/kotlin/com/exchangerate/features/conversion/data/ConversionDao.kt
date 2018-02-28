@@ -14,7 +14,7 @@ interface ConversionDao {
     fun getAllCurrencies(): List<CurrencyEntity>
 
     @Query("SELECT * FROM rate WHERE currency = :currency")
-    fun getRateForCurrency(currency: String): RateEntity
+    fun getRateForCurrency(currency: String): RateEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrencies(currencies: List<CurrencyEntity>)

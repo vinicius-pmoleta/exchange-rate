@@ -13,7 +13,7 @@ interface RemoteExchangeRepository {
     fun getUsage(): Single<UsageResponse>
 
     @GET("latest.json")
-    fun getLatestRates(): Single<RatesResponse>
+    fun getLatestRates(): Observable<RatesResponse>
 
     @GET("currencies.json")
     fun getCurrencies(): Observable<Map<String, String>>

@@ -5,17 +5,9 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "rate")
-class RateEntity {
-
-    @PrimaryKey
-    var currency: String = ""
-
-    @ColumnInfo
-    var rate: Float = 0F
-
-    @ColumnInfo
-    var base: String = ""
-
-    @ColumnInfo
-    var timestamp: Long = 0L
-}
+data class RateEntity(
+        @PrimaryKey var currency: String = "",
+        @ColumnInfo var rate: Float = 0F,
+        @ColumnInfo var base: String = "",
+        @ColumnInfo var timestamp: Long = 0L
+)

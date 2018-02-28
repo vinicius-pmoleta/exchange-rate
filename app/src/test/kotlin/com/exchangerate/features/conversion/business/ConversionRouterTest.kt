@@ -41,7 +41,7 @@ class ConversionRouterTest {
     fun `verify successful conversion dispatch result`() {
         val conversion = ConversionResult(1500F, 1.5F)
         every {
-            processor.applyConversion(1000F, "EUR", "USD")
+            processor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.just(conversion)
 
         val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))
@@ -56,7 +56,7 @@ class ConversionRouterTest {
     fun `verify failed conversion dispatch error`() {
         val exception = IOException()
         every {
-            processor.applyConversion(1000F, "EUR", "USD")
+            processor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.error(exception)
 
         val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))

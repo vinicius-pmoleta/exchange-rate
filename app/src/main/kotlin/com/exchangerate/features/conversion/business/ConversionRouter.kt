@@ -1,6 +1,5 @@
 package com.exchangerate.features.conversion.business
 
-import android.util.Log
 import com.exchangerate.core.structure.MviRouter
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.conversion.data.ApplyConversionAction
@@ -21,7 +20,8 @@ class ConversionRouter(
     override fun route(action: ConversionAction): Observable<Unit> {
         return when (action) {
             is ApplyConversionAction -> processor
-                    .applyConversion(action.valueToConvert, action.currencyFrom, action.currencyTo)
+                    .applyConversion(action.valueToConvert, action.currencyFrom,
+                            action.currencyTo, System.currentTimeMillis() / 1000)
                     .doOnSubscribe { store.next(action) }
                     .map { conversion ->
                         store.dispatch(SuccessfulConversionResultAction(conversion))
@@ -35,7 +35,6 @@ class ConversionRouter(
                         store.dispatch(SuccessfulCurrenciesResultAction(currencies))
                     }
                     .onErrorReturn { error ->
-                        Log.e("Test", "Error", error)
                         store.dispatch(FailedCurrenciesResultAction(error))
                     }
             else -> Observable.just(store.dispatch(action))
