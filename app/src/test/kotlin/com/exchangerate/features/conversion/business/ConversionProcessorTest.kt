@@ -1,12 +1,10 @@
 package com.exchangerate.features.conversion.business
 
-import com.exchangerate.core.data.repository.local.database.entity.CurrencyEntity
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.data.repository.remote.data.RatesResponse
 import com.exchangerate.features.conversion.data.ConversionDao
 import com.exchangerate.features.conversion.data.ConversionResult
-import com.exchangerate.features.conversion.data.Currency
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
@@ -21,50 +19,6 @@ class ConversionProcessorTest {
     private val conversionDao: ConversionDao = mockk(relaxed = true)
 
     private val processor = ConversionProcessor(repository, conversionDao)
-
-    @Test
-    fun `verify currencies are fetched from remote repository when not available locally`() {
-        every { conversionDao.getAllCurrencies() } returns emptyList()
-        every {
-            repository.getCurrencies()
-        } returns Observable.just(mapOf(
-                Pair("EUR", "Euro"),
-                Pair("USD", "Dollar")
-        ))
-
-        val result = processor.loadCurrencies()
-        result.test()
-                .assertValue(listOf(
-                        Currency("EUR", "Euro"),
-                        Currency("USD", "Dollar")
-                ))
-                .assertOf {
-                    verify(exactly = 1) {
-                        conversionDao.insertCurrencies(listOf(
-                                CurrencyEntity("EUR", "Euro"),
-                                CurrencyEntity("USD", "Dollar")
-                        ))
-                    }
-                }
-    }
-
-    @Test
-    fun `verify currencies are fetched from local database when available`() {
-        every {
-            conversionDao.getAllCurrencies()
-        } returns listOf(
-                CurrencyEntity("EUR", "Euro"),
-                CurrencyEntity("USD", "Dollar")
-        )
-        every { repository.getCurrencies() } returns Observable.empty()
-
-        val result = processor.loadCurrencies()
-        result.test()
-                .assertValue(listOf(
-                        Currency("EUR", "Euro"),
-                        Currency("USD", "Dollar")
-                ))
-    }
 
     @Test
     fun `verify conversion using local rates when available and not expired`() {

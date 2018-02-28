@@ -14,12 +14,13 @@ import io.reactivex.Observable
 
 class ConversionRouter(
         private val store: MviStore<ConversionState>,
-        private val processor: ConversionProcessor
+        private val conversionProcessor: ConversionProcessor,
+        private val currenciesProcessor: CurrenciesProcessor
 ) : MviRouter<ConversionAction> {
 
     override fun route(action: ConversionAction): Observable<Unit> {
         return when (action) {
-            is ApplyConversionAction -> processor
+            is ApplyConversionAction -> conversionProcessor
                     .applyConversion(action.valueToConvert, action.currencyFrom,
                             action.currencyTo, System.currentTimeMillis() / 1000)
                     .doOnSubscribe { store.next(action) }
@@ -29,7 +30,7 @@ class ConversionRouter(
                     .onErrorReturn { error ->
                         store.dispatch(FailedConversionResultAction(error))
                     }
-            is FetchCurrenciesAction -> processor.loadCurrencies()
+            is FetchCurrenciesAction -> currenciesProcessor.loadCurrencies()
                     .doOnSubscribe { store.next(action) }
                     .map { currencies ->
                         store.dispatch(SuccessfulCurrenciesResultAction(currencies))
