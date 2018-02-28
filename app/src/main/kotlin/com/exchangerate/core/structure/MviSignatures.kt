@@ -90,7 +90,7 @@ interface MviReducer<S : MviState> {
 
 interface MviMiddleware {
 
-    fun intercept(oldState: MviState, action: MviAction, newState: MviState)
+    fun intercept(oldState: MviState, action: MviAction, newState: MviState? = null)
 }
 
 class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
@@ -102,6 +102,10 @@ class MviStore<S : MviState>(private val reducer: MviReducer<S>) {
 
     val stateObserver: BehaviorSubject<S> = BehaviorSubject
             .createDefault(reducer.initialState())
+
+    fun next(action: MviAction) {
+        middleware.forEach { it.intercept(state, action) }
+    }
 
     fun dispatch(action: MviAction) {
         val newState = reducer.reduce(action, state)

@@ -22,9 +22,11 @@ class ConversionRouterTest {
 
     private val store: MviStore<ConversionState> = mockk(relaxed = true)
 
-    private val processor: ConversionProcessor = mockk(relaxed = true)
+    private val conversionProcessor: ConversionProcessor = mockk(relaxed = true)
 
-    private val router = ConversionRouter(store, processor)
+    private val currenciesProcessor: CurrenciesProcessor = mockk(relaxed = true)
+
+    private val router = ConversionRouter(store, conversionProcessor, currenciesProcessor)
 
     @Test
     fun `verify unknown action forwarded to store dispatch`() {
@@ -41,7 +43,7 @@ class ConversionRouterTest {
     fun `verify successful conversion dispatch result`() {
         val conversion = ConversionResult(1500F, 1.5F)
         every {
-            processor.applyConversion(1000F, "EUR", "USD")
+            conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.just(conversion)
 
         val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))
@@ -56,7 +58,7 @@ class ConversionRouterTest {
     fun `verify failed conversion dispatch error`() {
         val exception = IOException()
         every {
-            processor.applyConversion(1000F, "EUR", "USD")
+            conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.error(exception)
 
         val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))
@@ -70,7 +72,7 @@ class ConversionRouterTest {
     @Test
     fun `verify successful currencies fetch dispatch result`() {
         val currencies = listOf(Currency("USD", "Dollar"), Currency("EUR", "Euro"))
-        every { processor.loadCurrencies() } returns Observable.just(currencies)
+        every { currenciesProcessor.loadCurrencies() } returns Observable.just(currencies)
 
         val result = router.route(FetchCurrenciesAction())
 
@@ -83,7 +85,7 @@ class ConversionRouterTest {
     @Test
     fun `verify failed currencies fetch dispatch error`() {
         val exception = IOException()
-        every { processor.loadCurrencies() } returns Observable.error(exception)
+        every { currenciesProcessor.loadCurrencies() } returns Observable.error(exception)
 
         val result = router.route(FetchCurrenciesAction())
 

@@ -12,7 +12,7 @@ class LoggerMiddleware : MviMiddleware {
         val TAG: String = LoggerMiddleware::class.java.simpleName
     }
 
-    override fun intercept(oldState: MviState, action: MviAction, newState: MviState) {
+    override fun intercept(oldState: MviState, action: MviAction, newState: MviState?) {
         if (!BuildConfig.DEBUG) {
             return
         }
