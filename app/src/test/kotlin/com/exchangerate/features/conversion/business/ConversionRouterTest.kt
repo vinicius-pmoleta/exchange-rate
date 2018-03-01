@@ -46,12 +46,16 @@ class ConversionRouterTest {
             conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.just(conversion)
 
-        val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))
+        val action = ApplyConversionAction("EUR", "USD", 1000F)
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(SuccessfulConversionResultAction(conversion)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 
     @Test
@@ -61,12 +65,16 @@ class ConversionRouterTest {
             conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.error(exception)
 
-        val result = router.route(ApplyConversionAction("EUR", "USD", 1000F))
+        val action = ApplyConversionAction("EUR", "USD", 1000F)
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(FailedConversionResultAction(exception)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 
     @Test
@@ -74,12 +82,16 @@ class ConversionRouterTest {
         val currencies = listOf(Currency("USD", "Dollar"), Currency("EUR", "Euro"))
         every { currenciesProcessor.loadCurrencies() } returns Observable.just(currencies)
 
-        val result = router.route(FetchCurrenciesAction())
+        val action = FetchCurrenciesAction()
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(SuccessfulCurrenciesResultAction(currencies)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 
     @Test
@@ -87,11 +99,15 @@ class ConversionRouterTest {
         val exception = IOException()
         every { currenciesProcessor.loadCurrencies() } returns Observable.error(exception)
 
-        val result = router.route(FetchCurrenciesAction())
+        val action = FetchCurrenciesAction()
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(FailedCurrenciesResultAction(exception)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 }
