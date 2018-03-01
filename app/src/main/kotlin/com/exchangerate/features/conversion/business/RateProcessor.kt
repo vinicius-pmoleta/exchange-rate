@@ -3,13 +3,13 @@ package com.exchangerate.features.conversion.business
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.structure.MviProcessor
-import com.exchangerate.features.conversion.data.ConversionDao
+import com.exchangerate.features.conversion.data.RateDao
 import com.exchangerate.features.conversion.data.ConversionResult
 import io.reactivex.Observable
 
-class ConversionProcessor(
+class RateProcessor(
         private val repository: RemoteExchangeRepository,
-        private val conversionDao: ConversionDao
+        private val rateDao: RateDao
 ) : MviProcessor {
 
     companion object {
@@ -22,8 +22,8 @@ class ConversionProcessor(
                         nowTimestamp: Long): Observable<ConversionResult> {
         return Observable.just(
                 Pair(
-                        conversionDao.getRateForCurrency(fromCurrency),
-                        conversionDao.getRateForCurrency(toCurrency)
+                        rateDao.getRateForCurrency(fromCurrency),
+                        rateDao.getRateForCurrency(toCurrency)
                 ))
                 .flatMap { localRates ->
                     if (isStoredRateValid(localRates.first, nowTimestamp) &&
@@ -46,7 +46,7 @@ class ConversionProcessor(
                                 list.add(RateEntity(entry.key, entry.value, response.base, response.timestamp))
                             })
                             .toObservable()
-                            .doOnNext { entities -> conversionDao.insertRates(entities) }
+                            .doOnNext { entities -> rateDao.insertRates(entities) }
                             .map { _ -> Pair(response.rates[fromCurrency]!!, response.rates[toCurrency]!!) }
                 }
 

@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 
 @Dao
-interface ConversionDao {
+interface RateDao {
 
     @Query("SELECT * FROM rate WHERE currency = :currency")
     fun getRateForCurrency(currency: String): RateEntity?

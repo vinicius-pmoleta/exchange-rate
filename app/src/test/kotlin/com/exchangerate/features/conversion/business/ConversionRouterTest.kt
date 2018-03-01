@@ -22,11 +22,11 @@ class ConversionRouterTest {
 
     private val store: MviStore<ConversionState> = mockk(relaxed = true)
 
-    private val conversionProcessor: ConversionProcessor = mockk(relaxed = true)
+    private val rateProcessor: RateProcessor = mockk(relaxed = true)
 
     private val currenciesProcessor: CurrenciesProcessor = mockk(relaxed = true)
 
-    private val router = ConversionRouter(store, conversionProcessor, currenciesProcessor)
+    private val router = ConversionRouter(store, rateProcessor, currenciesProcessor)
 
     @Test
     fun `verify unknown action forwarded to store dispatch`() {
@@ -43,7 +43,7 @@ class ConversionRouterTest {
     fun `verify successful conversion dispatch result`() {
         val conversion = ConversionResult(1500F, 1.5F)
         every {
-            conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
+            rateProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.just(conversion)
 
         val action = ApplyConversionAction("EUR", "USD", 1000F)
@@ -62,7 +62,7 @@ class ConversionRouterTest {
     fun `verify failed conversion dispatch error`() {
         val exception = IOException()
         every {
-            conversionProcessor.applyConversion(1000F, "EUR", "USD", any())
+            rateProcessor.applyConversion(1000F, "EUR", "USD", any())
         } returns Observable.error(exception)
 
         val action = ApplyConversionAction("EUR", "USD", 1000F)

@@ -3,7 +3,7 @@ package com.exchangerate.features.conversion.business
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.data.repository.remote.data.RatesResponse
-import com.exchangerate.features.conversion.data.ConversionDao
+import com.exchangerate.features.conversion.data.RateDao
 import com.exchangerate.features.conversion.data.ConversionResult
 import io.mockk.Called
 import io.mockk.every
@@ -12,25 +12,25 @@ import io.mockk.verify
 import io.reactivex.Observable
 import org.junit.Test
 
-class ConversionProcessorTest {
+class RateProcessorTest {
 
     private val repository: RemoteExchangeRepository = mockk(relaxed = true)
 
-    private val conversionDao: ConversionDao = mockk(relaxed = true)
+    private val rateDao: RateDao = mockk(relaxed = true)
 
-    private val processor = ConversionProcessor(repository, conversionDao)
+    private val processor = RateProcessor(repository, rateDao)
 
     @Test
     fun `verify conversion using local rates when available and not expired`() {
         every {
-            conversionDao.getRateForCurrency("GBP")
+            rateDao.getRateForCurrency("GBP")
         } returns RateEntity("GBP", 0.5F, "EUR", 1)
         every {
-            conversionDao.getRateForCurrency("USD")
+            rateDao.getRateForCurrency("USD")
         } returns RateEntity("USD", 1.5F, "EUR", 1)
 
         val result = processor.applyConversion(
-                1000F, "GBP", "USD", ConversionProcessor.RATE_TTL
+                1000F, "GBP", "USD", RateProcessor.RATE_TTL
         )
 
         result.test()
@@ -45,7 +45,7 @@ class ConversionProcessorTest {
         val timestamp = 0L
 
         every {
-            conversionDao.getRateForCurrency(any())
+            rateDao.getRateForCurrency(any())
         } returns null
         every {
             repository.getLatestRates()
@@ -69,7 +69,7 @@ class ConversionProcessorTest {
                 .assertValue(ConversionResult(3000F, 3F))
                 .assertOf {
                     verify(exactly = 1) {
-                        conversionDao.insertRates(listOf(
+                        rateDao.insertRates(listOf(
                                 RateEntity("GBP", 0.5F, "EUR", timestamp),
                                 RateEntity("EUR", 1.0F, "EUR", timestamp),
                                 RateEntity("USD", 1.5F, "EUR", timestamp)
@@ -80,13 +80,13 @@ class ConversionProcessorTest {
 
     @Test
     fun `verify conversion using remote rates when available locally but are expired`() {
-        val timestamp = ConversionProcessor.RATE_TTL + 1
+        val timestamp = RateProcessor.RATE_TTL + 1
 
         every {
-            conversionDao.getRateForCurrency("GBP")
+            rateDao.getRateForCurrency("GBP")
         } returns RateEntity("GBP", 0.5F, "EUR", 0)
         every {
-            conversionDao.getRateForCurrency("GBP")
+            rateDao.getRateForCurrency("GBP")
         } returns RateEntity("USD", 1.0F, "EUR", 0)
         every {
             repository.getLatestRates()
@@ -103,14 +103,14 @@ class ConversionProcessorTest {
         )
 
         val result = processor.applyConversion(
-                1000F, "GBP", "USD", ConversionProcessor.RATE_TTL
+                1000F, "GBP", "USD", RateProcessor.RATE_TTL
         )
 
         result.test()
                 .assertValue(ConversionResult(3000F, 3F))
                 .assertOf {
                     verify(exactly = 1) {
-                        conversionDao.insertRates(listOf(
+                        rateDao.insertRates(listOf(
                                 RateEntity("GBP", 0.5F, "EUR", timestamp),
                                 RateEntity("EUR", 1.0F, "EUR", timestamp),
                                 RateEntity("USD", 1.5F, "EUR", timestamp)
