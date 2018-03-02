@@ -2,8 +2,8 @@ package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviFilter
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.SuccessfulCurrenciesResultAction
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
 

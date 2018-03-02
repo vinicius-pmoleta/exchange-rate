@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.exchangerate.R
 import com.exchangerate.core.structure.BaseActivity
 import com.exchangerate.features.conversion.presentation.ConversionFragment
+import com.exchangerate.features.history.presentation.HistoryFragment
 import com.exchangerate.features.usage.presentation.UsageFragment
 import kotlinx.android.synthetic.main.home_activity.homeContent
 import kotlinx.android.synthetic.main.home_activity.homeNavigation
@@ -29,6 +30,7 @@ class HomeActivity : BaseActivity() {
         contentsAdapter.contents.let {
             it.put(R.id.home_navigation_option_settings, Pair(0, UsageFragment()))
             it.put(R.id.home_navigation_option_conversion, Pair(1, ConversionFragment()))
+            it.put(R.id.home_navigation_option_history, Pair(2, HistoryFragment()))
         }
 
         homeContent.isSwipeEnabled = false

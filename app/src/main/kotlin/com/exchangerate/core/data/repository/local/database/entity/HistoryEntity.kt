@@ -10,6 +10,5 @@ data class HistoryEntity(
         @ColumnInfo var fromCurrency: String = "",
         @ColumnInfo var toCurrency: String = "",
         @ColumnInfo var valueToConvert: Float = 0F,
-        @ColumnInfo var convertedValue: Float = 0F,
         @ColumnInfo var rate: Float = 0F
 )

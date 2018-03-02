@@ -13,7 +13,7 @@ import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.databinding.ConversionFragmentBinding
-import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.data.model.ConversionState
 import com.exchangerate.features.conversion.di.ConversionFeatureModule
 import com.exchangerate.features.conversion.di.DaggerConversionFeatureComponent
 import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
@@ -47,17 +47,17 @@ class ConversionFragment : BaseFragment(), ConversionView {
 
     override fun initializeDependencyInjector() {
         DaggerConversionFeatureComponent.builder()
-                .applicationComponent((activity.application as ExchangeRateApplication).applicationComponent)
+                .applicationComponent((activity?.application as ExchangeRateApplication).applicationComponent)
                 .conversionFeatureModule(ConversionFeatureModule())
                 .build().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.conversion_fragment, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ConversionViewModel::class.java)
         setup()

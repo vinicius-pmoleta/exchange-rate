@@ -17,10 +17,10 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/home_navigation_option_alerts"
-        android:enabled="false"
-        android:icon="@drawable/ic_add_alert_black_24dp"
-        android:title="@string/home_navigation_option_alerts"
+        android:id="@+id/home_navigation_option_history"
+        android:enabled="true"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/home_navigation_option_history"
         app:showAsAction="ifRoom" />
 
 </menu>

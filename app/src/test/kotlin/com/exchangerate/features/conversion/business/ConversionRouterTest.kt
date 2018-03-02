@@ -1,16 +1,16 @@
 package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.conversion.data.ApplyConversionAction
-import com.exchangerate.features.conversion.data.ConversionAction
-import com.exchangerate.features.conversion.data.ConversionResult
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.Currency
-import com.exchangerate.features.conversion.data.FailedConversionResultAction
-import com.exchangerate.features.conversion.data.FailedCurrenciesResultAction
-import com.exchangerate.features.conversion.data.FetchCurrenciesAction
-import com.exchangerate.features.conversion.data.SuccessfulConversionResultAction
-import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.ApplyConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionResult
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.Currency
+import com.exchangerate.features.conversion.data.model.FailedConversionResultAction
+import com.exchangerate.features.conversion.data.model.FailedCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.FetchCurrenciesAction
+import com.exchangerate.features.conversion.data.model.SuccessfulConversionResultAction
+import com.exchangerate.features.conversion.data.model.SuccessfulCurrenciesResultAction
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

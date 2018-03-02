@@ -7,6 +7,7 @@ import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.features.conversion.data.CurrenciesDao
 import com.exchangerate.features.conversion.data.RateDao
+import com.exchangerate.features.history.data.HistoryDao
 
 @Database(
         entities = [CurrencyEntity::class, RateEntity::class, HistoryEntity::class],
@@ -17,4 +18,6 @@ abstract class ExchangeRateDatabase : RoomDatabase() {
     abstract fun currenciesDao(): CurrenciesDao
 
     abstract fun rateDao(): RateDao
+
+    abstract fun historyDao(): HistoryDao
 }

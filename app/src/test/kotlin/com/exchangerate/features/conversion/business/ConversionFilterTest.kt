@@ -1,10 +1,10 @@
 package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.CurrenciesData
-import com.exchangerate.features.conversion.data.Currency
-import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.CurrenciesData
+import com.exchangerate.features.conversion.data.model.Currency
+import com.exchangerate.features.conversion.data.model.SuccessfulCurrenciesResultAction
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent
 import io.mockk.Called
 import io.mockk.mockk

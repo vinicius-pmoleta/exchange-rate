@@ -1,11 +1,11 @@
 package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviIntentInterpreter
-import com.exchangerate.features.conversion.data.ApplyConversionAction
-import com.exchangerate.features.conversion.data.ConversionAction
-import com.exchangerate.features.conversion.data.PrepareToApplyConversionAction
-import com.exchangerate.features.conversion.data.PrepareToFetchCurrenciesAction
-import com.exchangerate.features.conversion.data.FetchCurrenciesAction
+import com.exchangerate.features.conversion.data.model.ApplyConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionAction
+import com.exchangerate.features.conversion.data.model.PrepareToApplyConversionAction
+import com.exchangerate.features.conversion.data.model.PrepareToFetchCurrenciesAction
+import com.exchangerate.features.conversion.data.model.FetchCurrenciesAction
 import com.exchangerate.features.conversion.presentation.model.ApplyConversionIntent
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import com.exchangerate.features.conversion.presentation.model.LoadCurrenciesIntent

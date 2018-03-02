@@ -1,9 +1,9 @@
 package com.exchangerate.features.conversion.presentation
 
-import com.exchangerate.features.conversion.data.ConversionData
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.CurrenciesData
-import com.exchangerate.features.conversion.data.Currency
+import com.exchangerate.features.conversion.data.model.ConversionData
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.CurrenciesData
+import com.exchangerate.features.conversion.data.model.Currency
 import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
 import io.mockk.Called
 import io.mockk.CapturingSlot

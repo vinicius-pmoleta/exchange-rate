@@ -1,15 +1,18 @@
 package com.exchangerate.features.conversion.business
 
+import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.structure.MviProcessor
 import com.exchangerate.features.conversion.data.RateDao
-import com.exchangerate.features.conversion.data.ConversionResult
+import com.exchangerate.features.conversion.data.model.ConversionResult
+import com.exchangerate.features.history.data.HistoryDao
 import io.reactivex.Observable
 
 class RateProcessor(
         private val repository: RemoteExchangeRepository,
-        private val rateDao: RateDao
+        private val rateDao: RateDao,
+        private val historyDao: HistoryDao
 ) : MviProcessor {
 
     companion object {
@@ -33,8 +36,13 @@ class RateProcessor(
                         fetchRemoteRatesAndStore(fromCurrency, toCurrency)
                     }
                 }
-                .map { rates -> rates.second.div(rates.first) }
-                .map { conversionRate -> ConversionResult(value * conversionRate, conversionRate) }
+                .map { rates ->
+                    val conversionRate = rates.second.div(rates.first)
+                    historyDao.insertHistory(HistoryEntity(
+                            nowTimestamp, fromCurrency, toCurrency, value, conversionRate
+                    ))
+                    ConversionResult(value * conversionRate, conversionRate)
+                }
     }
 
     private fun fetchRemoteRatesAndStore(fromCurrency: String,

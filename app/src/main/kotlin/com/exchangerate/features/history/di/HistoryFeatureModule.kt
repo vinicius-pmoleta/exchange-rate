@@ -1,5 +1,8 @@
 package com.exchangerate.features.history.di
 
+import android.os.Handler
+import android.os.Looper
+import com.exchangerate.core.data.repository.local.database.ExchangeRateDatabase
 import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.history.business.HistoryFilter
@@ -7,11 +10,13 @@ import com.exchangerate.features.history.business.HistoryInterpreter
 import com.exchangerate.features.history.business.HistoryProcessor
 import com.exchangerate.features.history.business.HistoryReducer
 import com.exchangerate.features.history.business.HistoryRouter
-import com.exchangerate.features.history.data.HistoryState
+import com.exchangerate.features.history.data.model.HistoryState
 import com.exchangerate.features.history.presentation.HistoryRenderer
 import com.exchangerate.features.history.presentation.HistoryViewModelFactory
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 @Module
 class HistoryFeatureModule {
@@ -36,8 +41,11 @@ class HistoryFeatureModule {
 
     @FeatureScope
     @Provides
-    fun provideProcessor(): HistoryProcessor {
-        return HistoryProcessor()
+    fun provideProcessor(database: ExchangeRateDatabase): HistoryProcessor {
+        val mainHandler: (Runnable) -> Unit = { Handler(Looper.getMainLooper()).post(it) }
+        val mainExecutor = Executor(mainHandler)
+        val backgroundExecutor = Executors.newCachedThreadPool()
+        return HistoryProcessor(database.historyDao(), backgroundExecutor, mainExecutor)
     }
 
     @FeatureScope

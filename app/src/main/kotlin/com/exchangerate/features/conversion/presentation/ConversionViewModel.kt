@@ -7,8 +7,8 @@ import com.exchangerate.core.structure.MviViewModel
 import com.exchangerate.features.conversion.business.ConversionFilter
 import com.exchangerate.features.conversion.business.ConversionInterpreter
 import com.exchangerate.features.conversion.business.ConversionRouter
-import com.exchangerate.features.conversion.data.ConversionAction
-import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.data.model.ConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionState
 import com.exchangerate.features.conversion.presentation.model.ConversionIntent
 import javax.inject.Inject
 

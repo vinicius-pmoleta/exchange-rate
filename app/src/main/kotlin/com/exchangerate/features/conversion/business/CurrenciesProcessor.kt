@@ -4,7 +4,7 @@ import com.exchangerate.core.data.repository.local.database.entity.CurrencyEntit
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.structure.MviProcessor
 import com.exchangerate.features.conversion.data.CurrenciesDao
-import com.exchangerate.features.conversion.data.Currency
+import com.exchangerate.features.conversion.data.model.Currency
 import io.reactivex.Flowable
 import io.reactivex.Observable
 

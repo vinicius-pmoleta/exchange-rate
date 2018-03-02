@@ -8,7 +8,7 @@
     <!-- Navigation -->
     <string name="home_navigation_option_settings">Settings</string>
     <string name="home_navigation_option_conversion">Conversion</string>
-    <string name="home_navigation_option_alerts">Alerts</string>
+    <string name="home_navigation_option_history">History</string>
 
     <!-- Usage -->
     <string name="usage_information_percentage_used">%% used: %s</string>

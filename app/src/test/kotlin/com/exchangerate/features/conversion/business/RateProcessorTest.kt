@@ -4,7 +4,7 @@ import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.data.repository.remote.data.RatesResponse
 import com.exchangerate.features.conversion.data.RateDao
-import com.exchangerate.features.conversion.data.ConversionResult
+import com.exchangerate.features.conversion.data.model.ConversionResult
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
