@@ -25,7 +25,7 @@ class HistoryAdapter : PagedListAdapter<HistoryEntity, HistoryViewHolder>(Histor
     }
 }
 
-class HistoryViewHolder(val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root)
+data class HistoryViewHolder(val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root)
 
 class HistoryDiff : DiffUtil.ItemCallback<HistoryEntity>() {
 

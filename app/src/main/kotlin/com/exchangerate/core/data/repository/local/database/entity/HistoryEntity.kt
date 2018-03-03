@@ -6,9 +6,9 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "history")
 data class HistoryEntity(
-        @PrimaryKey var timestamp: Long = -1,
-        @ColumnInfo var fromCurrency: String = "",
-        @ColumnInfo var toCurrency: String = "",
-        @ColumnInfo var valueToConvert: Float = 0F,
-        @ColumnInfo var rate: Float = 0F
+        @PrimaryKey var timestamp: Long,
+        @ColumnInfo var fromCurrency: String,
+        @ColumnInfo var toCurrency: String,
+        @ColumnInfo var valueToConvert: Float,
+        @ColumnInfo var rate: Float
 )

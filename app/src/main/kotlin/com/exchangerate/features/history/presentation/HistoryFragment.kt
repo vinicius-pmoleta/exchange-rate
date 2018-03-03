@@ -50,8 +50,8 @@ class HistoryFragment : BaseFragment(), HistoryView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HistoryViewModel::class.java)
-        setup()
         configureHistoryList()
+        setup()
     }
 
     private fun setup() {
@@ -77,7 +77,9 @@ class HistoryFragment : BaseFragment(), HistoryView {
 
     override fun renderData(screenModel: HistoryScreenModel) {
         binding.history = screenModel
-        adapter.submitList(screenModel.history)
+        screenModel.history?.let {
+            adapter.submitList(screenModel.history)
+        }
     }
 
     override fun renderError() {
