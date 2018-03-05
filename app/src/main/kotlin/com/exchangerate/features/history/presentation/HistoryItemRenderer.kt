@@ -3,7 +3,8 @@ package com.exchangerate.features.history.presentation
 import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.features.history.presentation.model.HistoryItemScreenModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class HistoryItemRenderer {
 
