@@ -1,10 +1,12 @@
 package com.exchangerate.features.conversion.business
 
+import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.data.repository.local.database.entity.RateEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.core.data.repository.remote.data.RatesResponse
 import com.exchangerate.features.conversion.data.RateDao
 import com.exchangerate.features.conversion.data.model.ConversionResult
+import com.exchangerate.features.history.data.HistoryDao
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +20,9 @@ class RateProcessorTest {
 
     private val rateDao: RateDao = mockk(relaxed = true)
 
-    private val processor = RateProcessor(repository, rateDao)
+    private val historyDao: HistoryDao = mockk(relaxed = true)
+
+    private val processor = RateProcessor(repository, rateDao, historyDao)
 
     @Test
     fun `verify conversion using local rates when available and not expired`() {
@@ -76,6 +80,13 @@ class RateProcessorTest {
                         ))
                     }
                 }
+                .assertOf {
+                    verify(exactly = 1) {
+                        historyDao.insertHistory(
+                                HistoryEntity(timestamp, "GBP", "USD", 1000F, 3F)
+                        )
+                    }
+                }
     }
 
     @Test
@@ -115,6 +126,13 @@ class RateProcessorTest {
                                 RateEntity("EUR", 1.0F, "EUR", timestamp),
                                 RateEntity("USD", 1.5F, "EUR", timestamp)
                         ))
+                    }
+                }
+                .assertOf {
+                    verify(exactly = 1) {
+                        historyDao.insertHistory(
+                                HistoryEntity(RateProcessor.RATE_TTL, "GBP", "USD", 1000F, 3F)
+                        )
                     }
                 }
     }
