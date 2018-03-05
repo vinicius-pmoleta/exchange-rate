@@ -21,7 +21,7 @@ class HistoryAdapter : PagedListAdapter<HistoryEntity, HistoryViewHolder>(Histor
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.binding.history = renderer.render(getItem(position))
+        holder.binding.history = renderer.convert(getItem(position))
     }
 }
 

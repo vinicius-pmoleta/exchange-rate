@@ -29,8 +29,9 @@ project.afterEvaluate {
                 '**/*Fragment*.*',
                 '**/*Application.*',
                 '**/*View.*',
-                '**/*Adapter.*',
-                '**/*Holder.*',
+                '**/*ViewPager.*',
+                '**/presentation/*Adapter.*',
+                '**/presentation/*Holder.*',
 
                 '**/*$InjectAdapter.class',
                 '**/*$ModuleAdapter.class',
@@ -43,7 +44,9 @@ project.afterEvaluate {
                 '**/Glide*.*',
                 '**/Generated*.*',
 
-                '**/model/*ScreenModel.*',
+                '**/data/model/*',
+                '**/presentation/model/*',
+                '**/presentation/*ViewModel*.*',
                 '**/repository/*'
         ]
 

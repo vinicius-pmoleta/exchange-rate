@@ -8,7 +8,7 @@ import java.util.Locale
 
 class HistoryItemRenderer {
 
-    fun render(entity: HistoryEntity?) : HistoryItemScreenModel? {
+    fun convert(entity: HistoryEntity?) : HistoryItemScreenModel? {
         return entity?.let {
             HistoryItemScreenModel(
                     formatTimestamp(entity.timestamp),
