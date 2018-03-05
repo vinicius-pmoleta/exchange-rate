@@ -23,8 +23,6 @@ class HistoryAdapter : PagedListAdapter<HistoryEntity, HistoryViewHolder>(Histor
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.binding.history = renderer.render(getItem(position))
     }
-
-
 }
 
 data class HistoryViewHolder(val binding: HistoryItemBinding) : RecyclerView.ViewHolder(binding.root)

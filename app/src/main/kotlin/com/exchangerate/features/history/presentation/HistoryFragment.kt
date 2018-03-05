@@ -2,6 +2,9 @@ package com.exchangerate.features.history.presentation
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.LivePagedListProvider
+import android.arch.paging.PagedList
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
@@ -13,6 +16,7 @@ import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
+import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.databinding.HistoryFragmentBinding
 import com.exchangerate.features.history.data.model.HistoryState
@@ -79,10 +83,11 @@ class HistoryFragment : BaseFragment(), HistoryView {
         renderer.render(state, this)
     }
 
-    override fun renderData(screenModel: HistoryScreenModel) {
+    override fun renderData(screenModel: HistoryScreenModel, pagedListConfiguration: PagedList.Config) {
         binding.history = screenModel
         screenModel.history?.let {
-            adapter.submitList(screenModel.history)
+            val historyLiveData = LivePagedListBuilder(screenModel.history, pagedListConfiguration).build()
+            historyLiveData.observe(this, Observer { pagedList -> adapter.submitList(pagedList) })
         }
     }
 

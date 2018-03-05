@@ -1,6 +1,6 @@
 package com.exchangerate.features.history.presentation.model
 
-import android.arch.paging.PagedList
+import android.arch.paging.DataSource
 import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 
 data class HistoryItemScreenModel(
@@ -14,5 +14,5 @@ data class HistoryItemScreenModel(
 
 data class HistoryScreenModel(
         val isLoading: Boolean = false,
-        val history: PagedList<HistoryEntity>?
+        val history: DataSource.Factory<Int, HistoryEntity>?
 )

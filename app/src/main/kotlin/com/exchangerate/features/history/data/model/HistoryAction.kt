@@ -1,6 +1,6 @@
 package com.exchangerate.features.history.data.model
 
-import android.arch.paging.PagedList
+import android.arch.paging.DataSource
 import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.structure.MviAction
 
@@ -11,7 +11,7 @@ class PrepareToLoadHistoryAction : HistoryAction()
 class LoadHistoryAction : HistoryAction()
 
 data class SuccessfulHistoryResultAction(
-        val data: PagedList<HistoryEntity>
+        val data: DataSource.Factory<Int, HistoryEntity>
 ) : HistoryAction()
 
 data class FailedHistoryResultAction(
