@@ -5,6 +5,7 @@ import com.exchangerate.features.history.presentation.model.HistoryItemScreenMod
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class HistoryItemRenderer {
 
@@ -23,7 +24,8 @@ class HistoryItemRenderer {
 
     private fun formatTimestamp(timestamp: Long) : String {
         val timeFormat = SimpleDateFormat("dd/MM HH:mm", Locale.getDefault())
-        return timeFormat.format(Date(timestamp))
+        timeFormat.timeZone = TimeZone.getTimeZone("UTC")
+        return timeFormat.format(Date(timestamp * 1000))
     }
 
     private fun formatValue(value: Float) : String {
