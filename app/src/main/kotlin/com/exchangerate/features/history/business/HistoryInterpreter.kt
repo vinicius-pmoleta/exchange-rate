@@ -12,7 +12,6 @@ class HistoryInterpreter : MviIntentInterpreter<HistoryIntent, HistoryAction> {
     override fun translate(intent: HistoryIntent): List<HistoryAction> {
         return when (intent) {
             is HistoryInitialIntent -> listOf(PrepareToLoadHistoryAction(), LoadHistoryAction())
-            else -> emptyList()
         }
     }
 }

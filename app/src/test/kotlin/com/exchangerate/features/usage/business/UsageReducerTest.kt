@@ -48,5 +48,4 @@ class UsageReducerTest {
 
         assertEquals(UsageState(isLoading = false, error = error), newState)
     }
-
 }

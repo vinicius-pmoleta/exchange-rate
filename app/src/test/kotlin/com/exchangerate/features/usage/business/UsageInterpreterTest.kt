@@ -3,6 +3,7 @@ package com.exchangerate.features.usage.business
 import com.exchangerate.features.usage.data.FetchUsageAction
 import com.exchangerate.features.usage.data.PrepareToFetchUsageAction
 import com.exchangerate.features.usage.presentation.model.LoadUsageIntent
+import com.exchangerate.features.usage.presentation.model.UsageInitialIntent
 import com.exchangerate.features.usage.presentation.model.UsageIntent
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -17,6 +18,14 @@ class UsageInterpreterTest {
         val unknownIntent = object : UsageIntent {}
         val actions = interpreter.translate(unknownIntent)
         assertTrue(actions.isEmpty())
+    }
+
+    @Test
+    fun `assert that intent for initial content is loading and fetching actions`() {
+        val actions = interpreter.translate(UsageInitialIntent())
+        assertEquals(2, actions.size)
+        assertTrue(actions[0] is PrepareToFetchUsageAction)
+        assertTrue(actions[1] is FetchUsageAction)
     }
 
     @Test

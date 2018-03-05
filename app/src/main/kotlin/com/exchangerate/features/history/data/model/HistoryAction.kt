@@ -4,16 +4,16 @@ import android.arch.paging.DataSource
 import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.structure.MviAction
 
-sealed class HistoryAction : MviAction
+interface HistoryAction : MviAction
 
-class PrepareToLoadHistoryAction : HistoryAction()
+class PrepareToLoadHistoryAction : HistoryAction
 
-class LoadHistoryAction : HistoryAction()
+class LoadHistoryAction : HistoryAction
 
 data class SuccessfulHistoryResultAction(
         val data: DataSource.Factory<Int, HistoryEntity>
-) : HistoryAction()
+) : HistoryAction
 
 data class FailedHistoryResultAction(
         val error: Throwable
-) : HistoryAction()
+) : HistoryAction
