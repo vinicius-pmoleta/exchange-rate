@@ -18,28 +18,74 @@
             android:id="@+id/historyItemFromCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@{history.fromCurrency}"
-            app:layout_constraintEnd_toStartOf="@+id/historyItemToCurrency"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/historyItemValueToConvert"
+            app:layout_constraintStart_toStartOf="@+id/historyItemValueToConvert"
+            app:layout_constraintTop_toBottomOf="@+id/historyItemValueToConvert"
             tools:text="FROM" />
 
         <TextView
             android:id="@+id/historyItemToCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:text="@{history.toCurrency}"
+            app:layout_constraintBottom_toBottomOf="@+id/historyItemConversionRate"
+            app:layout_constraintEnd_toEndOf="@+id/historyItemConvertedValue"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/historyItemConvertedValue"
+            app:layout_constraintTop_toTopOf="@+id/historyItemConversionRate"
+            tools:text="TO" />
+
+        <TextView
+            android:id="@+id/historyItemTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{history.timestamp}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/historyItemConversionRate"
+            app:layout_constraintStart_toStartOf="@+id/historyItemConversionRate"
+            app:layout_constraintTop_toBottomOf="@+id/historyItemConversionRate"
+            tools:text="dd/mm hh:mm" />
+
+        <TextView
+            android:id="@+id/historyItemValueToConvert"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@{history.toCurrency}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/historyItemFromCurrency"
+            android:text="@{history.valueToConvert}"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="TO" />
+            tools:text="1000.00" />
+
+        <TextView
+            android:id="@+id/historyItemConvertedValue"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{history.convertedValue}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2000.00" />
+
+        <TextView
+            android:id="@+id/historyItemConversionRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@{history.rate}"
+            app:layout_constraintBottom_toBottomOf="@+id/historyItemFromCurrency"
+            app:layout_constraintEnd_toStartOf="@+id/historyItemToCurrency"
+            app:layout_constraintStart_toEndOf="@+id/historyItemFromCurrency"
+            app:layout_constraintTop_toTopOf="@+id/historyItemFromCurrency"
+            tools:text="with rate of 2.000" />
     </android.support.constraint.ConstraintLayout>
 
 </layout>

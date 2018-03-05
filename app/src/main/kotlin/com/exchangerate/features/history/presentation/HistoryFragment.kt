@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +62,8 @@ class HistoryFragment : BaseFragment(), HistoryView {
     }
 
     private fun configureHistoryList() {
+        historyView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        historyView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         adapter = HistoryAdapter()
         historyView.adapter = adapter
     }
