@@ -3,7 +3,7 @@ package com.exchangerate.features.conversion.business
 import com.exchangerate.core.data.repository.local.database.entity.CurrencyEntity
 import com.exchangerate.core.data.repository.remote.RemoteExchangeRepository
 import com.exchangerate.features.conversion.data.CurrenciesDao
-import com.exchangerate.features.conversion.data.Currency
+import com.exchangerate.features.conversion.data.model.Currency
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

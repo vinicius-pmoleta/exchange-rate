@@ -6,6 +6,6 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "currency")
 data class CurrencyEntity(
-        @PrimaryKey var code: String = "",
-        @ColumnInfo var name: String = ""
+        @PrimaryKey var code: String,
+        @ColumnInfo var name: String
 )

@@ -1,4 +1,4 @@
-package com.exchangerate.features.conversion.data
+package com.exchangerate.features.conversion.data.model
 
 data class ConversionResult(
         val convertedValue: Float,

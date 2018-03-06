@@ -38,17 +38,17 @@ class UsageFragment : BaseFragment(), UsageView {
 
     override fun initializeDependencyInjector() {
         DaggerUsageFeatureComponent.builder()
-                .applicationComponent((activity.application as ExchangeRateApplication).applicationComponent)
+                .applicationComponent((activity?.application as ExchangeRateApplication).applicationComponent)
                 .usageFeatureModule(UsageFeatureModule())
                 .build().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.usage_fragment, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UsageViewModel::class.java)
         setup()

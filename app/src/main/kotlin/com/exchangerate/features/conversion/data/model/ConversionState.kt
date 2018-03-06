@@ -1,4 +1,4 @@
-package com.exchangerate.features.conversion.data
+package com.exchangerate.features.conversion.data.model
 
 import com.exchangerate.core.structure.MviState
 

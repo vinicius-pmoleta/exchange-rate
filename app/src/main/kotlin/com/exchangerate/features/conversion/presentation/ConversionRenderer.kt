@@ -1,8 +1,8 @@
 package com.exchangerate.features.conversion.presentation
 
 import com.exchangerate.core.structure.MviRenderer
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.Currency
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.Currency
 import com.exchangerate.features.conversion.presentation.model.ConversionScreenModel
 
 class ConversionRenderer : MviRenderer<ConversionState, ConversionView> {

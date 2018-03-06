@@ -2,7 +2,11 @@ package com.exchangerate.features.usage.business
 
 import com.exchangerate.core.data.repository.remote.data.Usage
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.usage.data.*
+import com.exchangerate.features.usage.data.FailedUsageResultAction
+import com.exchangerate.features.usage.data.FetchUsageAction
+import com.exchangerate.features.usage.data.SuccessfulUsageResultAction
+import com.exchangerate.features.usage.data.UsageAction
+import com.exchangerate.features.usage.data.UsageState
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -20,12 +24,12 @@ class UsageRouterTest {
 
     @Test
     fun `verify action forwarded to store if no action on router`() {
-        val unkknowAction = object : UsageAction {}
-        val result = router.route(unkknowAction)
+        val unknownAction = object : UsageAction {}
+        val result = router.route(unknownAction)
 
         result.test()
                 .assertValue(
-                        verify(exactly = 1) { store.dispatch(unkknowAction) }
+                        verify(exactly = 1) { store.dispatch(unknownAction) }
                 )
     }
 
@@ -34,12 +38,16 @@ class UsageRouterTest {
         val usage = Usage(10, 100, 90, 1)
         every { processor.loadUsage() } returns Observable.just(usage)
 
-        val result = router.route(FetchUsageAction())
+        val action = FetchUsageAction()
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(SuccessfulUsageResultAction(usage)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 
     @Test
@@ -47,11 +55,15 @@ class UsageRouterTest {
         val error = IOException()
         every { processor.loadUsage() } returns Observable.error(error)
 
-        val result = router.route(FetchUsageAction())
+        val action = FetchUsageAction()
+        val result = router.route(action)
 
         result.test()
                 .assertValue(
                         verify(exactly = 1) { store.dispatch(FailedUsageResultAction(error)) }
                 )
+                .assertOf {
+                    verify(exactly = 1) { store.next(action) }
+                }
     }
 }

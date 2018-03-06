@@ -2,25 +2,25 @@ package com.exchangerate.features.conversion.business
 
 import com.exchangerate.core.structure.MviRouter
 import com.exchangerate.core.structure.MviStore
-import com.exchangerate.features.conversion.data.ApplyConversionAction
-import com.exchangerate.features.conversion.data.ConversionAction
-import com.exchangerate.features.conversion.data.ConversionState
-import com.exchangerate.features.conversion.data.FailedConversionResultAction
-import com.exchangerate.features.conversion.data.FailedCurrenciesResultAction
-import com.exchangerate.features.conversion.data.FetchCurrenciesAction
-import com.exchangerate.features.conversion.data.SuccessfulConversionResultAction
-import com.exchangerate.features.conversion.data.SuccessfulCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.ApplyConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionAction
+import com.exchangerate.features.conversion.data.model.ConversionState
+import com.exchangerate.features.conversion.data.model.FailedConversionResultAction
+import com.exchangerate.features.conversion.data.model.FailedCurrenciesResultAction
+import com.exchangerate.features.conversion.data.model.FetchCurrenciesAction
+import com.exchangerate.features.conversion.data.model.SuccessfulConversionResultAction
+import com.exchangerate.features.conversion.data.model.SuccessfulCurrenciesResultAction
 import io.reactivex.Observable
 
 class ConversionRouter(
         private val store: MviStore<ConversionState>,
-        private val conversionProcessor: ConversionProcessor,
+        private val rateProcessor: RateProcessor,
         private val currenciesProcessor: CurrenciesProcessor
 ) : MviRouter<ConversionAction> {
 
     override fun route(action: ConversionAction): Observable<Unit> {
         return when (action) {
-            is ApplyConversionAction -> conversionProcessor
+            is ApplyConversionAction -> rateProcessor
                     .applyConversion(action.valueToConvert, action.currencyFrom,
                             action.currencyTo, System.currentTimeMillis() / 1000)
                     .doOnSubscribe { store.next(action) }

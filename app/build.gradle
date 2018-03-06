@@ -9,7 +9,7 @@ apply from: "${rootDir}/environment/environment.gradle"
 apply from: "${rootDir}/gradle/quality.gradle"
 
 project.ext {
-    support_version = '26.1.0'
+    support_version = '27.1.0'
     firebase_version = '11.8.0'
     dagger_version = '2.11'
     retrofit_version = '2.3.0'
@@ -19,20 +19,26 @@ project.ext {
     chuck_version = '1.1.0'
     leak_canary_version = '1.5.4'
     stetho_version = '1.5.0'
-    rx_binding_version = '2.0.0'
+    rx_binding_version = '2.1.1'
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.exchangerate"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     dataBinding {
@@ -132,6 +138,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$room_database_version"
     implementation "android.arch.persistence.room:rxjava2:$room_database_version"
     kapt "android.arch.persistence.room:compiler:$room_database_version"
+    implementation "android.arch.paging:runtime:1.0.0-alpha6"
 
     // FIREBASE
     compile('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {

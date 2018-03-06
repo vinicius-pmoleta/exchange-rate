@@ -6,11 +6,11 @@ import com.exchangerate.core.di.FeatureScope
 import com.exchangerate.core.structure.MviStore
 import com.exchangerate.features.conversion.business.ConversionFilter
 import com.exchangerate.features.conversion.business.ConversionInterpreter
-import com.exchangerate.features.conversion.business.ConversionProcessor
 import com.exchangerate.features.conversion.business.ConversionReducer
 import com.exchangerate.features.conversion.business.ConversionRouter
 import com.exchangerate.features.conversion.business.CurrenciesProcessor
-import com.exchangerate.features.conversion.data.ConversionState
+import com.exchangerate.features.conversion.business.RateProcessor
+import com.exchangerate.features.conversion.data.model.ConversionState
 import com.exchangerate.features.conversion.presentation.ConversionRenderer
 import com.exchangerate.features.conversion.presentation.ConversionViewModelFactory
 import dagger.Module
@@ -34,16 +34,16 @@ class ConversionFeatureModule {
     @FeatureScope
     @Provides
     fun provideRouter(store: MviStore<ConversionState>,
-                      conversionProcessor: ConversionProcessor,
+                      rateProcessor: RateProcessor,
                       currenciesProcessor: CurrenciesProcessor): ConversionRouter {
-        return ConversionRouter(store, conversionProcessor, currenciesProcessor)
+        return ConversionRouter(store, rateProcessor, currenciesProcessor)
     }
 
     @FeatureScope
     @Provides
     fun provideConversionProcessor(repository: RemoteExchangeRepository,
-                                   database: ExchangeRateDatabase): ConversionProcessor {
-        return ConversionProcessor(repository, database.conversionDao())
+                                   database: ExchangeRateDatabase): RateProcessor {
+        return RateProcessor(repository, database.rateDao(), database.historyDao())
     }
 
     @FeatureScope
