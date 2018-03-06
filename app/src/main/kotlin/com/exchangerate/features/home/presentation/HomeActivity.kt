@@ -34,6 +34,7 @@ class HomeActivity : BaseActivity() {
         }
 
         homeContent.isSwipeEnabled = false
+        homeContent.offscreenPageLimit = contentsAdapter.contents.size - 1
         homeContent.adapter = contentsAdapter
     }
 

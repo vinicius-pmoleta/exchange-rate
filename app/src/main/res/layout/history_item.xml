@@ -89,11 +89,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@{history.rate}"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="@+id/historyItemFromCurrency"
             app:layout_constraintEnd_toStartOf="@+id/historyItemToCurrency"
             app:layout_constraintStart_toEndOf="@+id/historyItemFromCurrency"
+            app:layout_constraintTop_toBottomOf="@+id/historyItemValueToConvert"
             tools:text="with rate of 2.000" />
     </android.support.constraint.ConstraintLayout>
 
