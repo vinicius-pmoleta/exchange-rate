@@ -67,7 +67,7 @@ class HistoryFragment : BaseFragment(), HistoryView {
 
     private fun configureHistoryList() {
         historyView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        historyView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+        historyView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         adapter = HistoryAdapter()
         historyView.adapter = adapter
     }
