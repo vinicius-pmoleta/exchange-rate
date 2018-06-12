@@ -1,6 +1,8 @@
 package com.exchangerate.core
 
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
 import com.exchangerate.core.di.component.ApplicationComponent
 import com.exchangerate.core.di.component.DaggerApplicationComponent
 import com.exchangerate.core.di.module.ApplicationModule
@@ -12,6 +14,11 @@ import com.squareup.leakcanary.LeakCanary
 class ExchangeRateApplication : Application() {
 
     lateinit var applicationComponent: ApplicationComponent
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
 
     override fun onCreate() {
         super.onCreate()
