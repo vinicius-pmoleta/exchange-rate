@@ -1,9 +1,9 @@
 buildscript {
 
     project.ext {
-        gradle_version = '3.0.1'
-        googleServices_version = '3.1.0'
-        kotlin_version = '1.2.10'
+        gradle_version = '3.1.3'
+        googleServices_version = '4.0.1'
+        kotlin_version = '1.2.41'
         detekt_version = '1.0.0.RC5-6'
         firebase_plugin_version = '1.1.5'
         fabric_plugin_version = '1.25.1'
@@ -12,9 +12,9 @@ buildscript {
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://maven.fabric.io/public' }
-        jcenter()
-        mavenCentral()
         google()
+        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -31,9 +31,9 @@ allprojects {
 
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
-        jcenter()
-        mavenCentral()
         google()
+        mavenCentral()
+        jcenter()
     }
 }
 

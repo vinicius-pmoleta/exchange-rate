@@ -3,7 +3,6 @@ package com.exchangerate.features.history.presentation
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.LivePagedListProvider
 import android.arch.paging.PagedList
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -16,7 +15,6 @@ import android.widget.Toast
 import com.exchangerate.R
 import com.exchangerate.core.ExchangeRateApplication
 import com.exchangerate.core.data.live.LiveDataOperator
-import com.exchangerate.core.data.repository.local.database.entity.HistoryEntity
 import com.exchangerate.core.structure.BaseFragment
 import com.exchangerate.databinding.HistoryFragmentBinding
 import com.exchangerate.features.history.data.model.HistoryState
