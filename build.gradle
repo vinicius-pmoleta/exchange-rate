@@ -7,6 +7,33 @@ buildscript {
         detekt_version = '1.0.0.RC5-6'
         firebase_plugin_version = '1.1.5'
         fabric_plugin_version = '1.25.1'
+
+        compile_sdk_version = 27
+        min_sdk_version = 19
+        target_sdk_version = 27
+        build_tools_version = '27.0.3'
+
+        support_version = '27.1.1'
+        architecture_components_version = '1.1.1'
+        room_database_version = '1.1.0'
+        constraint_layout_version = '1.1.1'
+        multidex_version = '1.0.3'
+        paging_version = '1.0.0'
+
+        dagger_version = '2.11'
+        retrofit_version = '2.3.0'
+        okhttp_logging_interceptor_version = '3.10.0'
+        firebase_version = '16.0.0'
+        firebase_ui_auth_version = '4.0.1'
+        chuck_version = '1.1.0'
+        leak_canary_version = '1.5.4'
+        stetho_version = '1.5.0'
+        rx_binding_version = '2.1.1'
+        rx_android_version = '2.0.2'
+        rx_kotlin_version = '2.2.0'
+
+        junit_version = '4.12'
+        mockk_version = '1.7.15'
     }
 
     repositories {

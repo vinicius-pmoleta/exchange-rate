@@ -1,9 +1,9 @@
 package com.exchangerate.core.structure
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
-import com.exchangerate.core.data.live.LiveDataReactiveConverter
 import com.exchangerate.core.structure.middleware.CrashMiddleware
 import com.exchangerate.core.structure.middleware.LoggerMiddleware
 import io.reactivex.Observable
@@ -40,7 +40,7 @@ open class MviViewModel<I : MviIntent, A : MviAction, S : MviState>(
 ) : ViewModel() {
 
     private val liveState: LiveData<S> by lazy {
-        LiveDataReactiveConverter.fromPublisher(store.stateObserver)
+        LiveDataReactiveStreams.fromPublisher(store.stateObserver)
     }
 
     private lateinit var disposable: Disposable
